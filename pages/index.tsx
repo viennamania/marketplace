@@ -3,7 +3,7 @@ import styles from "../styles/Home.module.css";
 import Link from "next/link";
 import {
   MediaRenderer,
-  useActiveListings,
+  useValidDirectListings,
   useContract,
 } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
@@ -11,8 +11,21 @@ import { marketplaceContractAddress } from "../addresses";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
-  const { data: listings, isLoading: loadingListings } = useActiveListings(marketplace);
+
+  /////const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+
+  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace-v3");
+
+  ////const { data: listings, isLoading: loadingListings } = useValidDirectListings(marketplace);
+
+  const {
+    data: directListings,
+    isLoading: loadingListings,
+    error,
+  } = useValidDirectListings(marketplace);
+
+
+  console.log("directListings", directListings);
 
   return (
     <>
@@ -55,7 +68,7 @@ const Home: NextPage = () => {
             ) : (
               // Otherwise, show the listings
               <div className={styles.listingGrid}>
-                {listings?.map((listing) => (
+                {directListings?.map((listing) => (
                   <div
                     key={listing.id}
                     className={styles.listingShortView}
@@ -76,10 +89,13 @@ const Home: NextPage = () => {
                       </Link>
                     </h2>
 
+{/*
                     <p>
                       <b>{listing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
                       {listing.buyoutCurrencyValuePerToken.symbol}
                     </p>
+                    */}
+                    
                   </div>
                 ))}
               </div>

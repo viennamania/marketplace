@@ -9,19 +9,40 @@ import "../styles/globals.css";
 const activeChain = "polygon";
 
 function MyApp({ Component, pageProps }: AppProps) {
+
   return (
     <ThirdwebProvider activeChain={activeChain}>
       <Head>
         <title>Granderby Marketplace with MOMOCON</title>
+
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
         <meta
           name="description"
-          content="Learn How To Use Thirdweb's Marketplace with Next.JS To List Your NFTs For Sale, Accept Bids, and Buy NFTs"
+          content="Granderby Marketplace"
         />
         <meta
           name="keywords"
-          content="Thirdweb, Marketplace, NFT Marketplace Tutorial, NFT Auction Tutorial, How To Make OpenSea"
+          content="Granderby, Marketplace, NFT Marketplace, NFT Auction"
         />
+
+
+
+
+        <meta property="og:type" content="website"></meta>
+        <meta property="og:site_name" content="GRANDERBY"></meta>
+        <meta property="og:title" content="GRANDERBY"></meta>
+        <meta property="og:description" content="powered by MOMOCON"></meta>
+        <meta property="og:image" content="/intro-bg.png"></meta>
+
+        <meta property="og:image:width" content="1400"></meta>
+        <meta property="og:image:height" content="1400"></meta>
+
+        <meta name="twitter:card" content="summary_large_image"></meta>
+        <meta name="twitter:image" content="/intro-bg.png"></meta>
+
+
+
       </Head>
       <Header />
       <Component {...pageProps} />

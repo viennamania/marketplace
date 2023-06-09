@@ -157,7 +157,7 @@ const Create: NextPage = () => {
             type="text"
             name="contractAddress"
             className={styles.textInput}
-            placeholder="NFT Contract Address"
+            placeholder="0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60"
           />
 
           {/* NFT Token ID Field */}
@@ -186,7 +186,7 @@ const Create: NextPage = () => {
         </div>
       </div>
     </form>
-    
+
   );
 
 };

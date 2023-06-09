@@ -19,7 +19,9 @@ const Home: NextPage = () => {
       {/* Content */}
       <div className={styles.container}>
         {/* Top Section */}
-        <h1 className={styles.h1}>NFT Marketplace w/ thirdweb + Next.JS</h1>
+        <h1 className={styles.h1}>NFT Marketplace w/ Granderby + MOMOCON</h1>
+        
+        {/*
         <p className={styles.explain}>
           Build an NFT marketplace using{" "}
           <b>
@@ -35,6 +37,7 @@ const Home: NextPage = () => {
           </b>{" "}
           to list your ERC721 and ERC1155 tokens for auction or for direct sale.
         </p>
+  */}
 
         <hr className={styles.divider} />
 

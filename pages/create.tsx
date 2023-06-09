@@ -3,17 +3,20 @@ import {
   useNetwork,
   useNetworkMismatch,
 } from "@thirdweb-dev/react";
+
 import {
   ChainId,
   NATIVE_TOKEN_ADDRESS,
   TransactionResult,
 } from "@thirdweb-dev/sdk";
+
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { marketplaceContractAddress } from "../addresses";
 import styles from "../styles/Home.module.css";
 
 const Create: NextPage = () => {
+
   // Next JS Router hook to redirect to other pages
   const router = useRouter();
   const networkMismatch = useNetworkMismatch();
@@ -115,6 +118,7 @@ const Create: NextPage = () => {
   }
 
   return (
+
     <form onSubmit={(e) => handleCreateListing(e)}>
       <div className={styles.container}>
         {/* Form Section */}
@@ -182,7 +186,9 @@ const Create: NextPage = () => {
         </div>
       </div>
     </form>
+    
   );
+
 };
 
 export default Create;

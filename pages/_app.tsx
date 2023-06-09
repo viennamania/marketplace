@@ -6,13 +6,13 @@ import ThirdwebGuideFooter from "../components/ThirdwebGuideFooter";
 import "../styles/globals.css";
 
 // This is the chain your dApp will work on.
-const activeChain = "goerli";
+const activeChain = "polygon";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider activeChain={activeChain}>
       <Head>
-        <title>thirdweb Marketplace with Next.JS</title>
+        <title>Granderby Marketplace with MOMOCON</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta
           name="description"

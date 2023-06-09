@@ -1,7 +1,16 @@
+
+/*
 import {
   useContract,
   useNetwork,
   useNetworkMismatch,
+} from "@thirdweb-dev/react";
+*/
+
+import {
+  useCreateDirectListing,
+  useContract,
+  Web3Button,
 } from "@thirdweb-dev/react";
 
 import {
@@ -19,13 +28,25 @@ const Create: NextPage = () => {
 
   // Next JS Router hook to redirect to other pages
   const router = useRouter();
+  /*
   const networkMismatch = useNetworkMismatch();
   const [, switchNetwork] = useNetwork();
+  */
 
   // Connect to our marketplace contract via the useContract hook
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+  ///const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+
+  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace-v3");
+
+  const {
+    mutateAsync: createDirectListing,
+    isLoading,
+    error,
+  } = useCreateDirectListing(marketplace);
+
 
   // This function gets called when the form is submitted.
+  /*
   async function handleCreateListing(e: any) {
     try {
       // Ensure user is on the correct network
@@ -116,76 +137,47 @@ const Create: NextPage = () => {
       console.error(error);
     }
   }
+  */
+
 
   return (
 
-    <form onSubmit={(e) => handleCreateListing(e)}>
+
       <div className={styles.container}>
-        {/* Form Section */}
+
+
+
         <div className={styles.collectionContainer}>
           <h1 className={styles.ourCollection}>
             Upload your NFT to the marketplace:
           </h1>
 
-          {/* Toggle between direct listing and auction listing */}
-          <div className={styles.listingTypeContainer}>
-            <input
-              type="radio"
-              name="listingType"
-              id="directListing"
-              value="directListing"
-              defaultChecked
-              className={styles.listingType}
-            />
-            <label htmlFor="directListing" className={styles.listingTypeLabel}>
-              Direct Listing
-            </label>
-            <input
-              type="radio"
-              name="listingType"
-              id="auctionListing"
-              value="auctionListing"
-              className={styles.listingType}
-            />
-            <label htmlFor="auctionListing" className={styles.listingTypeLabel}>
-              Auction Listing
-            </label>
-          </div>
 
-          {/* NFT Contract Address Field */}
-          <input
-            type="text"
-            name="contractAddress"
-            className={styles.textInput}
-            placeholder="0x41FBA0bd9f4DC9a968a10aEBb792af6A09969F60"
-          />
-
-          {/* NFT Token ID Field */}
-          <input
-            type="text"
-            name="tokenId"
-            className={styles.textInput}
-            placeholder="NFT Token ID"
-          />
-
-          {/* Sale Price For Listing Field */}
-          <input
-            type="text"
-            name="price"
-            className={styles.textInput}
-            placeholder="Sale Price"
-          />
-
-          <button
-            type="submit"
-            className={styles.mainButton}
-            style={{ marginTop: 32, borderStyle: "none" }}
+          <Web3Button
+            contractAddress={marketplace }
+            action={() =>
+              createDirectListing({
+                assetContractAddress: "{{ marketplace} }",
+                tokenId: "{{token_id}}",
+                pricePerToken: "{{price_per_token}}",
+                currencyContractAddress: "{{currency_contract_address}}",
+                isReservedListing: false,
+                quantity: "{{quantity}}",
+                startTimestamp: new Date(),
+                endTimestamp: new Date(
+                  new Date().getTime() + 7 * 24 * 60 * 60 * 1000,
+                ),
+              })
+            }
           >
-            List NFT
-          </button>
+            Create Direct Listing
+          </Web3Button>
+
+
         </div>
       </div>
-    </form>
+
+
 
   );
 

@@ -88,17 +88,23 @@ const ListingPage: NextPage = () => {
     */
 
       // If the listing type is an auction listing, then we can create a bid.
+      /*
       if (directListing?.type === ListingType.Auction) {
 
         ////////await marketplace?.auction.makeBid(listingId, bidAmount);
 
       }
+      */
 
+      /*
       alert(
         `${
           directListing?.type === ListingType.Auction ? "Bid" : "Offer"
         } created successfully!`
       );
+      */
+     alert("Offer created successfully!");
+
     } catch (error) {
       console.error(error);
       alert(error);
@@ -115,7 +121,9 @@ const ListingPage: NextPage = () => {
       }
 
       // Simple one-liner for buying the NFT
+      /*
       await marketplace?.buyFromListing(listingId, 1);
+      */
 
 
       alert("NFT bought successfully!");

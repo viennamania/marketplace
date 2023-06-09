@@ -7,12 +7,17 @@ import type { SchemaOf } from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
+
+/*
 type FormProps<TFormValues> = {
+
   onSubmit: SubmitHandler<TFormValues>;
   children: (methods: UseFormReturn<TFormValues>) => React.ReactNode;
   useFormProps?: UseFormProps<TFormValues>;
   validationSchema?: SchemaOf<TFormValues>;
+
 } & Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'>;
+
 
 export const Form = <
   TFormValues extends Record<string, any> = Record<string, any>
@@ -23,6 +28,7 @@ export const Form = <
   validationSchema,
   ...formProps
 }: FormProps<TFormValues>) => {
+
   const methods = useForm<TFormValues>({
     ...useFormProps,
     ...(validationSchema && { resolver: yupResolver(validationSchema) }),
@@ -38,3 +44,4 @@ export const Form = <
     </form>
   );
 };
+*/

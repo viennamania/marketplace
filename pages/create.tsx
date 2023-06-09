@@ -152,7 +152,7 @@ const Create: NextPage = () => {
             Upload your NFT to the marketplace:
           </h1>
 
-
+{/*
           <Web3Button
             contractAddress={marketplace }
             action={() =>
@@ -172,7 +172,7 @@ const Create: NextPage = () => {
           >
             Create Direct Listing
           </Web3Button>
-
+          */}
 
         </div>
       </div>

@@ -2,6 +2,7 @@ import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.css";
+import Image from "next/image";
 
 export default function Header() {
   // Helpful thirdweb hooks to connect and manage the wallet from metamask.
@@ -10,14 +11,16 @@ export default function Header() {
   const disconnectWallet = useDisconnect();
 
   return (
+
     <div className={styles.header}>
       <div className={styles.left}>
         <div>
           <Link href="/" passHref role="button">
-            <img
+            <Image
               src={`/logo.png`}
               alt="Thirdweb Logo"
               width={135}
+              height={135}
               style={{ cursor: "pointer" }}
             />
           </Link>
@@ -45,5 +48,6 @@ export default function Header() {
         )}
       </div>
     </div>
+    
   );
 }

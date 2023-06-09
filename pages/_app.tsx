@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import Header from "../components/Header";
 import ThirdwebGuideFooter from "../components/ThirdwebGuideFooter";
+import Footer from "../components/Footer";
 import "../styles/globals.css";
 
 // This is the chain your dApp will work on.
@@ -11,7 +12,9 @@ const activeChain = "polygon";
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
-    <ThirdwebProvider activeChain={activeChain}>
+    <ThirdwebProvider
+      activeChain={activeChain}
+    >
       <Head>
         <title>Granderby Marketplace with MOMOCON</title>
 
@@ -25,8 +28,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           name="keywords"
           content="Granderby, Marketplace, NFT Marketplace, NFT Auction"
         />
-
-
 
 
         <meta property="og:type" content="website"></meta>
@@ -44,11 +45,22 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
       </Head>
+      
       <Header />
+
       <Component {...pageProps} />
+      {/*
       <ThirdwebGuideFooter />
+  */}
+
+{/*
+      <Footer />
+*/}
+
     </ThirdwebProvider>
+
   );
+
 }
 
 export default MyApp;

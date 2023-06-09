@@ -4,13 +4,16 @@ import {
   useNetworkMismatch,
   useListing,
   useContract,
+  useDirectListing,
 } from "@thirdweb-dev/react";
+
 import {
   ChainId,
   ListingType,
   Marketplace,
   NATIVE_TOKENS,
 } from "@thirdweb-dev/sdk";
+
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
@@ -31,13 +34,23 @@ const ListingPage: NextPage = () => {
   const [, switchNetwork] = useNetwork();
 
   // Initialize the marketplace contract
-  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace");
+  const { contract: marketplace } = useContract(marketplaceContractAddress, "marketplace-v3");
 
   // Fetch the listing from the marketplace contract
+  /*
   const { data: listing, isLoading: loadingListing } = useListing(
     marketplace,
     listingId
   );
+  */
+
+  const {
+    //mutateAsync: createDirectListing,
+    data: directListing,
+    isLoading: loadingListing,
+    error,
+  } = useDirectListing(marketplace, listingId);
+
 
   // Store the bid amount the user entered into the bidding textbox
   const [bidAmount, setBidAmount] = useState<string>("");
@@ -46,18 +59,23 @@ const ListingPage: NextPage = () => {
     return <div className={styles.loadingOrError}>Loading...</div>;
   }
 
-  if (!listing) {
+
+  console.log("directListing", directListing);
+
+  if (!directListing) {
     return <div className={styles.loadingOrError}>Listing not found</div>;
   }
 
+  
   async function createBidOrOffer() {
     try {
       // Ensure user is on the correct network
       if (networkMismatch) {
-        switchNetwork && switchNetwork(ChainId.Goerli);
+        switchNetwork && switchNetwork(ChainId.Polygon);
         return;
       }
 
+      /*
       // If the listing type is a direct listing, then we can create an offer.
       if (listing?.type === ListingType.Direct) {
         await marketplace?.direct.makeOffer(
@@ -67,15 +85,18 @@ const ListingPage: NextPage = () => {
           bidAmount // The offer amount the user entered
         );
       }
+    */
 
       // If the listing type is an auction listing, then we can create a bid.
-      if (listing?.type === ListingType.Auction) {
-        await marketplace?.auction.makeBid(listingId, bidAmount);
+      if (directListing?.type === ListingType.Auction) {
+
+        ////////await marketplace?.auction.makeBid(listingId, bidAmount);
+
       }
 
       alert(
         `${
-          listing?.type === ListingType.Auction ? "Bid" : "Offer"
+          directListing?.type === ListingType.Auction ? "Bid" : "Offer"
         } created successfully!`
       );
     } catch (error) {
@@ -83,6 +104,7 @@ const ListingPage: NextPage = () => {
       alert(error);
     }
   }
+
 
   async function buyNft() {
     try {
@@ -93,7 +115,9 @@ const ListingPage: NextPage = () => {
       }
 
       // Simple one-liner for buying the NFT
-      await marketplace?.buyoutListing(listingId, 1);
+      await marketplace?.buyFromListing(listingId, 1);
+
+
       alert("NFT bought successfully!");
     } catch (error) {
       console.error(error);
@@ -102,29 +126,39 @@ const ListingPage: NextPage = () => {
   }
 
   return (
+
     <div className={styles.container} style={{}}>
       <div className={styles.listingContainer}>
         <div className={styles.leftListing}>
           <MediaRenderer
-            src={listing.asset.image}
+            src={directListing.asset.image}
             className={styles.mainNftImage}
           />
         </div>
 
         <div className={styles.rightListing}>
-          <h1>{listing.asset.name}</h1>
+          <h1>{directListing.asset.name}</h1>
           <p>
             Owned by{" "}
             <b>
-              {listing.sellerAddress?.slice(0, 6) +
+              {/*
+              {directListing.sellerAddress?.slice(0, 6) +
                 "..." +
-                listing.sellerAddress?.slice(36, 40)}
+                directListing.sellerAddress?.slice(36, 40)}
+              */}
+                {directListing.creatorAddress?.slice(0, 6) +
+                "..." +
+                directListing.creatorAddress?.slice(36, 40)}
             </b>
           </p>
 
           <h2>
-            <b>{listing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
-            {listing.buyoutCurrencyValuePerToken.symbol}
+            {/*
+            <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
+            {directListing.buyoutCurrencyValuePerToken.symbol}
+                */}
+            <b>{directListing.currencyValuePerToken.displayValue}</b>{" "}
+            {directListing.currencyValuePerToken.symbol}
           </h2>
 
           <div
@@ -171,7 +205,9 @@ const ListingPage: NextPage = () => {
                 Make Offer
               </button>
             </div>
+
           </div>
+
         </div>
       </div>
     </div>

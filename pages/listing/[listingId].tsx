@@ -6,6 +6,9 @@ import {
   useContract,
   useDirectListing,
   Web3Button,
+  useAddress,
+  useBalance,
+  useTokenBalance,
 } from "@thirdweb-dev/react";
 
 
@@ -14,9 +17,14 @@ import {
   ListingType,
   Marketplace,
   NATIVE_TOKENS,
+  NATIVE_TOKEN_ADDRESS,
 } from "@thirdweb-dev/sdk";
 
+import { BigNumber, ethers } from 'ethers';
+
 import {
+  tokenContractAddressGRD,
+  tokenContractAddressUSDC,
   marketplaceContractAddress,
 } from '@/config/contractAddresses';
 //import { marketplaceContractAddress } from "../../addresses";
@@ -37,6 +45,23 @@ const ListingPage: NextPage = () => {
   // This means that if the user visits /listing/0 then the listingId will be 0.
   // If the user visits /listing/1 then the listingId will be 1.
   const { listingId } = router.query as { listingId: string };
+
+  const address = useAddress();
+
+  const { data: balance, isLoading: isLoadingBalance } = useBalance(NATIVE_TOKEN_ADDRESS);
+
+  const { contract: tokenContractGRD } = useContract(
+    tokenContractAddressGRD,
+    'token'
+  );
+  const { data: tokenBalanceGRD } = useTokenBalance(tokenContractGRD, address);
+
+  const { contract: tokenContractUSDC } = useContract(
+    tokenContractAddressUSDC,
+    'token'
+  );
+  const { data: tokenBalanceUSDC } = useTokenBalance(tokenContractUSDC, address);
+
 
   // Hooks to detect user is on the right network and switch them if they are not
   const networkMismatch = useNetworkMismatch();
@@ -134,6 +159,13 @@ const ListingPage: NextPage = () => {
       await marketplace?.buyFromListing(listingId, 1);
       */
 
+      // The ID of the listing you want to buy from
+      //const listingId = 0;
+      // Quantity of the asset you want to buy
+      const quantityDesired = 1;
+
+      await marketplace?.directListings.buyFromListing(listingId, quantityDesired, address);
+
 
       alert("NFT bought successfully!");
 
@@ -147,6 +179,32 @@ const ListingPage: NextPage = () => {
 
     <div className={styles.container} style={{}}>
       <div className={styles.listingContainer}>
+
+
+
+        {/*
+        <h3>
+          <b>
+            {!balance?.value
+              ? 'Loading...'
+              : Number(
+                  ethers.utils.formatUnits(balance?.value, 18)
+                ).toFixed(2)}
+          </b>{' '}
+          {balance?.symbol}
+        </h3>
+              */}
+        <h3>
+          Balance: <b>{Number(tokenBalanceGRD?.displayValue).toFixed(2)}</b>{' '}
+          {tokenBalanceGRD?.symbol}
+        </h3>
+        {/*
+        <h3>
+          <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
+          {tokenBalanceUSDC?.symbol}
+        </h3>
+              */}
+
 
         <h3>{directListing.asset.name}</h3>
 

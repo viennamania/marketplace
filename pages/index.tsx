@@ -156,6 +156,17 @@ const Home: NextPage = () => {
                     className={styles.listingShortView}
                     onClick={() => router.push(`/listing/${listing.id}`)}
                   >
+
+                    <h2 className={styles.nameContainer}>
+                      
+                      <Link href={`/listing/${listing.id}`} className={styles.name}>
+                      
+                        {listing.asset.name}
+                        
+                      </Link>
+                        
+                    </h2>
+
                     <MediaRenderer
                       src={listing.asset.image}
                       style={{
@@ -163,13 +174,10 @@ const Home: NextPage = () => {
                         // Fit the image to the container
                         width: "100%",
                         height: "100%",
+                        padding: "10px",
                       }}
                     />
-                    <h2 className={styles.nameContainer}>
-                      <Link href={`/listing/${listing.id}`} className={styles.name}>
-                        {listing.asset.name}
-                      </Link>
-                    </h2>
+
 
 
                     <p>

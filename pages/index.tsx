@@ -32,7 +32,7 @@ const Home: NextPage = () => {
       {/* Content */}
       <div className={styles.container}>
         {/* Top Section */}
-        <h1 className={styles.h1}>NFT Marketplace w/ Granderby + MOMOCON</h1>
+        <h1 className={styles.h1}>Granderby Marketplace</h1>
         
         {/*
         <p className={styles.explain}>
@@ -66,6 +66,7 @@ const Home: NextPage = () => {
             loadingListings ? (
               <div>Loading listings...</div>
             ) : (
+
               // Otherwise, show the listings
               <div className={styles.listingGrid}>
                 {directListings?.map((listing) => (
@@ -89,20 +90,25 @@ const Home: NextPage = () => {
                       </Link>
                     </h2>
 
-{/*
+
                     <p>
-                      <b>{listing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
-                      {listing.buyoutCurrencyValuePerToken.symbol}
+                      <b>{listing.currencyValuePerToken.displayValue}</b>{" "}
+                      {listing.currencyValuePerToken.symbol}
                     </p>
-                    */}
+                    
                     
                   </div>
                 ))}
               </div>
             )
+
           }
+
         </div>
+
+
       </div>
+
     </>
   );
 };

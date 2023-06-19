@@ -1,13 +1,27 @@
-import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
+
 import Link from "next/link";
 import React from "react";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 
+//import { useAddress, useMetamask, useDisconnect } from "@thirdweb-dev/react";
+
+import {
+  ConnectWallet,
+  useDisconnect,
+  ThirdwebNftMedia,
+  useAddress,
+  useContract,
+  useContractRead,
+  useOwnedNFTs,
+  useTokenBalance,
+  Web3Button,
+} from '@thirdweb-dev/react';
+
 export default function Header() {
   // Helpful thirdweb hooks to connect and manage the wallet from metamask.
   const address = useAddress();
-  const connectWithMetamask = useMetamask();
+  //const connectWithMetamask = useMetamask();
   const disconnectWallet = useDisconnect();
 
   return (
@@ -18,15 +32,20 @@ export default function Header() {
           <Link href="/" passHref role="button">
             <Image
               src={`/logo.png`}
-              alt="Thirdweb Logo"
-              width={135}
-              height={135}
+              alt="Logo"
+              width={45}
+              height={45}
               style={{ cursor: "pointer" }}
             />
           </Link>
         </div>
       </div>
+
       <div className={styles.right}>
+
+      <ConnectWallet theme="dark" />
+
+{/*
         {address ? (
           <>
             <a
@@ -46,7 +65,10 @@ export default function Header() {
             Connect Wallet
           </a>
         )}
+        */}
+
       </div>
+
     </div>
     
   );

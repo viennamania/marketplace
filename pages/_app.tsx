@@ -1,20 +1,28 @@
-import { ThirdwebProvider } from "@thirdweb-dev/react";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import Header from "../components/Header";
+import Header from "@/components/Header";
 import ThirdwebGuideFooter from "../components/ThirdwebGuideFooter";
 import Footer from "../components/Footer";
 import "../styles/globals.css";
 
+
+import {
+  ThirdwebProvider,
+  paperWallet,
+  metamaskWallet,
+} from '@thirdweb-dev/react';
+
 // This is the chain your dApp will work on.
-const activeChain = "polygon";
+import { Polygon } from '@thirdweb-dev/chains';
+
+
 
 function MyApp({ Component, pageProps }: AppProps) {
 
   return (
-    <ThirdwebProvider
-      activeChain={activeChain}
-    >
+
+    <>
+
       <Head>
         <title>Granderby Marketplace with MOMOCON</title>
 
@@ -42,9 +50,25 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta name="twitter:card" content="summary_large_image"></meta>
         <meta name="twitter:image" content="/intro-bg.png"></meta>
 
-
-
       </Head>
+
+      <ThirdwebProvider
+            activeChain={Polygon}
+            supportedWallets={[
+              metamaskWallet(),
+
+              paperWallet({
+                clientId: 'efa05253-e8b1-4adb-b978-996f8f2f409c',
+              }),
+            ]}
+            sdkOptions={{
+              gasless: {
+                openzeppelin: {
+                  relayerUrl: process.env.NEXT_PUBLIC_OPENZEPPELIN_URL,
+                },
+              },
+            }}
+          >      
       
       <Header />
 
@@ -58,6 +82,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 */}
 
     </ThirdwebProvider>
+
+    </>
+
 
   );
 

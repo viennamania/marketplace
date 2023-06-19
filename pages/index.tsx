@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       <div className={styles.container}>
 
         {/* Top Section */}
-        <h3>Granderby Marketplace</h3>
+        <h3>GRANDERBY Marketplace</h3>
         
         {/*
         <p className={styles.explain}>

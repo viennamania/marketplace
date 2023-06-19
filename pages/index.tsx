@@ -5,12 +5,29 @@ import {
   MediaRenderer,
   useValidDirectListings,
   useContract,
+  Web3Button,
+  useAddress,
+  useBalance,
+  useTokenBalance,
 } from "@thirdweb-dev/react";
+
+import {
+  ChainId,
+  ListingType,
+  Marketplace,
+  NATIVE_TOKENS,
+  NATIVE_TOKEN_ADDRESS,
+} from "@thirdweb-dev/sdk";
+
+
 import { useRouter } from "next/router";
 
 import {
+  tokenContractAddressGRD,
+  tokenContractAddressUSDC,
   marketplaceContractAddress,
 } from '@/config/contractAddresses';
+
 //import { marketplaceContractAddress } from "../addresses";
 
 import Image from '@/components/ui/image';
@@ -37,7 +54,25 @@ const Home: NextPage = () => {
   } = useValidDirectListings(marketplace);
 
 
-  console.log("directListings", directListings);
+  
+  const address = useAddress();
+
+  const { data: balance, isLoading: isLoadingBalance } = useBalance(NATIVE_TOKEN_ADDRESS);
+
+  const { contract: tokenContractGRD } = useContract(
+    tokenContractAddressGRD,
+    'token'
+  );
+  const { data: tokenBalanceGRD } = useTokenBalance(tokenContractGRD, address);
+
+  const { contract: tokenContractUSDC } = useContract(
+    tokenContractAddressUSDC,
+    'token'
+  );
+  const { data: tokenBalanceUSDC } = useTokenBalance(tokenContractUSDC, address);
+
+
+  //console.log("directListings", directListings);
 
   return (
     <>
@@ -47,6 +82,33 @@ const Home: NextPage = () => {
 
         {/* Top Section */}
         <h3>GRANDERBY Marketplace</h3>
+
+        {address &&
+        <>
+
+        {/*
+        <h3>
+          <b>
+            {!balance?.value
+              ? 'Loading...'
+              : Number(
+                  ethers.utils.formatUnits(balance?.value, 18)
+                ).toFixed(2)}
+          </b>{' '}
+          {balance?.symbol}
+        </h3>
+              */}
+        <h3>
+          My Balance: <b>{Number(tokenBalanceGRD?.displayValue).toFixed(2)}</b>{' '}
+          {tokenBalanceGRD?.symbol}
+        </h3>
+        {/*
+        <h3>
+          <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
+          {tokenBalanceUSDC?.symbol}
+        </h3>
+              */}
+
         
         {/*
         <p className={styles.explain}>
@@ -65,6 +127,9 @@ const Home: NextPage = () => {
           to list your ERC721 and ERC1155 tokens for auction or for direct sale.
         </p>
   */}
+
+        </>
+        }
 
         <hr className={styles.divider} />
 

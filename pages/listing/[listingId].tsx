@@ -181,6 +181,8 @@ const ListingPage: NextPage = () => {
       <div className={styles.listingContainer}>
 
 
+        {address &&
+        <>
 
         {/*
         <h3>
@@ -195,7 +197,7 @@ const ListingPage: NextPage = () => {
         </h3>
               */}
         <h3>
-          Balance: <b>{Number(tokenBalanceGRD?.displayValue).toFixed(2)}</b>{' '}
+          My Balance: <b>{Number(tokenBalanceGRD?.displayValue).toFixed(2)}</b>{' '}
           {tokenBalanceGRD?.symbol}
         </h3>
         {/*
@@ -205,6 +207,9 @@ const ListingPage: NextPage = () => {
         </h3>
               */}
 
+        </>
+        }
+        
 
         <h3>{directListing.asset.name}</h3>
 
@@ -261,17 +266,26 @@ const ListingPage: NextPage = () => {
             </button>
           */}
 
-            <Web3Button
-              theme="dark"
-              action={(contract) =>
-                ////contract?.call('withdraw', [[nft.metadata.id]])
-                buyNft()
+          {directListing.quantity === "0" ?
+            <div>
+              Sell completed.
+            </div>
+          :
 
-              }
-              contractAddress={marketplaceContractAddress}
-            >
-              Buy
-            </Web3Button>
+          <Web3Button
+            theme="dark"
+            action={(contract) =>
+              ////contract?.call('withdraw', [[nft.metadata.id]])
+              buyNft()
+
+            }
+            contractAddress={marketplaceContractAddress}
+          >
+            Buy
+          </Web3Button>
+
+          }
+
 
 
             {/*

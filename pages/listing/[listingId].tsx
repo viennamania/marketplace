@@ -5,7 +5,9 @@ import {
   useListing,
   useContract,
   useDirectListing,
+  Web3Button,
 } from "@thirdweb-dev/react";
+
 
 import {
   ChainId,
@@ -14,10 +16,17 @@ import {
   NATIVE_TOKENS,
 } from "@thirdweb-dev/sdk";
 
+import {
+  marketplaceContractAddress,
+} from '@/config/contractAddresses';
+//import { marketplaceContractAddress } from "../../addresses";
+
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { marketplaceContractAddress } from "../../addresses";
+
+
+
 import styles from "../../styles/Home.module.css";
 
 const ListingPage: NextPage = () => {
@@ -116,7 +125,7 @@ const ListingPage: NextPage = () => {
     try {
       // Ensure user is on the correct network
       if (networkMismatch) {
-        switchNetwork && switchNetwork(ChainId.Goerli);
+        switchNetwork && switchNetwork(ChainId.Polygon);
         return;
       }
 
@@ -127,6 +136,7 @@ const ListingPage: NextPage = () => {
 
 
       alert("NFT bought successfully!");
+
     } catch (error) {
       console.error(error);
       alert(error);
@@ -145,7 +155,9 @@ const ListingPage: NextPage = () => {
         </div>
 
         <div className={styles.rightListing}>
-          <h1>{directListing.asset.name}</h1>
+          
+          <h3>{directListing.asset.name}</h3>
+
           <p>
             Owned by{" "}
             <b>
@@ -177,6 +189,8 @@ const ListingPage: NextPage = () => {
               alignItems: "center",
             }}
           >
+
+{/*
             <button
               style={{ borderStyle: "none" }}
               className={styles.mainButton}
@@ -184,6 +198,20 @@ const ListingPage: NextPage = () => {
             >
               Buy
             </button>
+          */}
+
+            <Web3Button
+              theme="dark"
+              action={(contract) =>
+                ////contract?.call('withdraw', [[nft.metadata.id]])
+                buyNft()
+
+              }
+              contractAddress={marketplaceContractAddress}
+            >
+              Buy
+            </Web3Button>
+
 
             {/*
             <p style={{ color: "grey" }}>|</p>

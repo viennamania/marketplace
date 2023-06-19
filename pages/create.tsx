@@ -21,7 +21,13 @@ import {
 
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { marketplaceContractAddress } from "../addresses";
+
+import {
+  marketplaceContractAddress,
+} from '@/config/contractAddresses';
+
+//import { marketplaceContractAddress } from "../addresses";
+
 import styles from "../styles/Home.module.css";
 
 const Create: NextPage = () => {

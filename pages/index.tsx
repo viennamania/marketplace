@@ -7,7 +7,11 @@ import {
   useContract,
 } from "@thirdweb-dev/react";
 import { useRouter } from "next/router";
-import { marketplaceContractAddress } from "../addresses";
+
+import {
+  marketplaceContractAddress,
+} from '@/config/contractAddresses';
+//import { marketplaceContractAddress } from "../addresses";
 
 import Image from '@/components/ui/image';
 

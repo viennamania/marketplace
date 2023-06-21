@@ -196,20 +196,22 @@ const ListingPage: NextPage = () => {
           {balance?.symbol}
         </h3>
               */}
+              {/*
         <h3>
           My Balance: <b>{Number(tokenBalanceGRD?.displayValue).toFixed(2)}</b>{' '}
           {tokenBalanceGRD?.symbol}
         </h3>
-        {/*
+            */}
+        
         <h3>
-          <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
+          My Balance: <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
           {tokenBalanceUSDC?.symbol}
         </h3>
-              */}
+              
 
         </>
         }
-        
+
 
         <h3>{directListing.asset.name}</h3>
 

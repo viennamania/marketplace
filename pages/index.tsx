@@ -106,7 +106,7 @@ const Home: NextPage = () => {
             */}
         
         <h3>
-          <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
+          My Balance: <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
           {tokenBalanceUSDC?.symbol}
         </h3>
               

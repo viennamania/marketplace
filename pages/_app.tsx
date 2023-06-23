@@ -10,6 +10,7 @@ import {
   ThirdwebProvider,
   paperWallet,
   metamaskWallet,
+  walletConnect,
 } from '@thirdweb-dev/react';
 
 // This is the chain your dApp will work on.
@@ -55,12 +56,14 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThirdwebProvider
             activeChain={Polygon}
             supportedWallets={[
+              walletConnect(),
               metamaskWallet(),
 
               paperWallet({
                 clientId: 'efa05253-e8b1-4adb-b978-996f8f2f409c',
               }),
             ]}
+            /*
             sdkOptions={{
               gasless: {
                 openzeppelin: {
@@ -68,6 +71,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 },
               },
             }}
+            */
+           
           >      
       
       <Header />

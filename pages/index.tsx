@@ -38,6 +38,10 @@ import { Instagram } from '@/components/icons/brands/instagram';
 import { Twitter } from '@/components/icons/brands/twitter';
 import AnchorLink from '@/components/ui/links/anchor-link';
 
+import LiveNftPricingSlider from '@/components/ui/live-nft-horse-pricing-slider';
+
+
+
 const Home: NextPage = () => {
   const router = useRouter();
 
@@ -81,18 +85,29 @@ const Home: NextPage = () => {
       <div className="mt-32 flex flex-col justify-center items-center">
 
 
-
-
-        <div className=" w-full flex justify-center items-center p-5">
+        <div className=" w-full justify-center items-center p-5  ">
           <Image
             //fill
-            src="/banner.png"
+            src="/banner.jpeg"
             alt="banner"
             width={2048}
             height={64}
             className="object-contain rounded-lg"
           />
         </div>
+
+{/*
+        <div className=" w-full justify-center items-center p-5 lg:hidden ">
+          <Image
+            //fill
+            src="/banner-sm.png"
+            alt="banner"
+            width={2048}
+            height={64}
+            className="object-contain rounded-lg"
+          />
+        </div>
+  */}
   
 
         {address &&
@@ -157,17 +172,22 @@ const Home: NextPage = () => {
 */}
 
 
-        <div className=" w-full flex justify-center items-center p-5">
-          <video
-            id="intro-video"
-            src="/mov/intro.mp4"
-            muted
-            autoPlay
-            className="rounded-lg"
-          ></video>
-        </div>
+{/*
+<div className="flex flex-wrap">
 
 
+                 
+                <div className="mt-5 w-full sm:mb-0 sm:w-1/2 sm:ltr:pr-6 sm:rtl:pl-6 md:w-[calc(100%-256px)] lg:w-[calc(100%-288px)] 2xl:w-[calc(100%-320px)] 3xl:w-[calc(100%-358px)]">
+
+
+<div className="w-[calc(100%-256px)]">
+                <LiveNftPricingSlider limits={4} />
+
+</div>
+
+</div>
+
+*/}
         <div className="m-10">
           {
             // If the listings are loading, show a loading message
@@ -175,57 +195,82 @@ const Home: NextPage = () => {
               <>
                 <div>Loading listings...</div>
 
-                
-
-            
+                <div className=" w-full flex justify-center items-center p-5">
+                  <video
+                    id="intro-video"
+                    src="/mov/intro.mp4"
+                    muted
+                    autoPlay
+                    className="rounded-lg"
+                  ></video>
+                </div>
 
               </>
             ) : (
 
+              <>
 
+                {/*
+                <div className="mt-5 w-full sm:mb-0 sm:w-1/2 sm:ltr:pr-6 sm:rtl:pl-6 md:w-[calc(100%-256px)] lg:w-[calc(100%-288px)] 2xl:w-[calc(100%-320px)] 3xl:w-[calc(100%-358px)]">
+              */} 
+                {/*
+                  <AssetSlider coins={assetSlideData} />
+                */}
+
+                <div className=" w-full flex justify-center items-center p-5">
+                  <video
+                    id="intro-video"
+                    src="/mov/nft.mp4"
+                    muted
+                    autoPlay
+                    className="rounded-lg"
+                  ></video>
+                </div>
 
               
-              <div className={styles.listingGrid}>
-                {directListings?.map((listing) => (
-                  <div
-                    key={listing.id}
-                    className={styles.listingShortView}
-                    onClick={() => router.push(`/listing/${listing.id}`)}
-                  >
+                <div className={styles.listingGrid}>
+                  {directListings?.map((listing) => (
+                    <div
+                      key={listing.id}
+                      className={styles.listingShortView}
+                      onClick={() => router.push(`/listing/${listing.id}`)}
+                    >
 
-                    <h2 className={styles.nameContainer}>
-                      
-                      <Link href={`/listing/${listing.id}`} className={styles.name}>
-                      
-                        {listing.asset.name}
+                      <h2 className={styles.nameContainer}>
                         
-                      </Link>
+                        <Link href={`/listing/${listing.id}`} className={styles.name}>
                         
-                    </h2>
+                          {listing.asset.name}
+                          
+                        </Link>
+                          
+                      </h2>
 
-                    <MediaRenderer
-                      src={listing.asset.image}
-                      style={{
-                        borderRadius: 16,
-                        // Fit the image to the container
-                        width: "100%",
-                        height: "100%",
-                        padding: "10px",
-                      }}
-                    />
+                      <MediaRenderer
+                        src={listing.asset.image}
+                        style={{
+                          borderRadius: 16,
+                          // Fit the image to the container
+                          width: "100%",
+                          height: "100%",
+                          padding: "10px",
+                        }}
+                      />
 
 
 
-                    <p>
-                      <b>{listing.currencyValuePerToken.displayValue}</b>{" "}
-                      {listing.currencyValuePerToken.symbol}
-                    </p>
-                    
-                    
-                  </div>
-                ))}
-              </div>
+                      <p>
+                        <b>{listing.currencyValuePerToken.displayValue}</b>{" "}
+                        {listing.currencyValuePerToken.symbol}
+                      </p>
+                      
+                      
+                    </div>
+                  ))}
+                </div>
 
+
+              </>
       
             )
 
@@ -233,46 +278,6 @@ const Home: NextPage = () => {
 
         </div>
 
-        <hr className={styles.divider} />
-
-        <footer>
-
-            <div className="flex-cols mt-10 flex items-center justify-center gap-3 bg-gray-800 pb-5 pt-10 text-white ">
-              <div>Copyright ©MOMOCON</div>
-
-{/*
-              <AnchorLink href="/terms">Terms of Service</AnchorLink>
-
-              <div>Privacy Policy</div>
-        */}
-            </div>
-
-{/*
-            <div className=" flex-cols flex items-center justify-center gap-3 bg-gray-800 pb-20 pt-3 text-white ">
-              <div>
-                <Image src={LogoMomocon} alt="MOMOCON" width={48} height={48} />
-              </div>
-
-              <AnchorLink
-                href="https://www.instagram.com/nftgranderby"
-                target="_blank"
-                className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white"
-              >
-                <Instagram className="h-4 w-4" /> Instagram
-              </AnchorLink>
-              <AnchorLink
-                href="https://twitter.com/nftgranderby"
-                target="_blank"
-                className="flex items-center gap-1 rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white"
-              >
-                <Twitter className="h-4 w-4" /> Twitter
-              </AnchorLink>
-            </div>
-      */}
-
-
-
-      </footer>
 
 
       </div>

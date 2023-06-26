@@ -82,9 +82,9 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ThirdwebGuideFooter />
   */}
 
-{/*
+
       <Footer />
-*/}
+
 
     </ThirdwebProvider>
 

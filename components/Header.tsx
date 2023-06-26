@@ -43,7 +43,7 @@ export default function Header() {
 
       <div className={styles.right}>
 
-      <ConnectWallet theme="dark" />
+      <ConnectWallet theme="light" />
 
 {/*
         {address ? (

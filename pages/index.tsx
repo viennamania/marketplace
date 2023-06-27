@@ -223,6 +223,7 @@ const Home: NextPage = () => {
                     src="/mov/nft.mp4"
                     muted
                     autoPlay
+                    loop
                     className="rounded-lg"
                   ></video>
                 </div>

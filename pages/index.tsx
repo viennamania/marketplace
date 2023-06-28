@@ -101,7 +101,7 @@ const Home: NextPage = () => {
 
   //let countDownDate = new Date().getTime() + timeToDays;
 
-  let countDownDate = d1;
+  let countDownDate = d1.getTime() + 60 * 60 * 9 * 1000;
 
 
   useEffect(() => {

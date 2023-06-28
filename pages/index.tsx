@@ -110,7 +110,7 @@ const Home: NextPage = () => {
     var updateTime = setInterval(() => {
       var now = new Date().getTime();
 
-      var difference = countDownDate - now;
+      var difference = countDownDate.valueOf() - now;
 
       var newDays = Math.floor(difference / (1000 * 60 * 60 * 24));
       var newHours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));

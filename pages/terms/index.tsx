@@ -156,7 +156,7 @@ const MintPage: NextPageWithLayout = () => {
   */
 
   return (
-    <div className="text-left leading-loose">
+    <div className=" text-sm leading-loose p-10 mt-20 text-justify">
       <div>
         <b>MOMOCON SG PTE. LTD.</b>
         <br />

@@ -41,6 +41,12 @@ import AnchorLink from '@/components/ui/links/anchor-link';
 import LiveNftPricingSlider from '@/components/ui/live-nft-horse-pricing-slider';
 
 
+import { useEffect, useState } from 'react'
+import { TimerContainer } from '@/components/TimerContainer'
+///import { Header } from '@/components/Header'
+import { TimerInput } from '@/components/TimerInput'
+
+
 
 const Home: NextPage = () => {
   const router = useRouter();
@@ -78,6 +84,74 @@ const Home: NextPage = () => {
 
   //console.log("directListings", directListings);
 
+
+  const [time, setTime] = useState<number>(1);
+  const [newTime, setNewTime] = useState<number>(0)
+  const [days, setDays] = useState<number>(0);
+  const [hours, setHours] = useState<number>(0);
+  const [minutes, setMinutes] = useState<number>(0);
+  const [seconds, setSeconds] = useState<number>(0);
+  const [message, setMessage] = useState<string>("");
+
+  //const timeToDays = time * 60 * 60 * 24 * 1000;
+  //const timeToDays = 60 * 60 * 24 * 1000 + 60 * 60 * 8 * 1000;
+
+  var dString = "Jun, 30, 2023";
+  var d1 = new Date(dString);
+
+  //let countDownDate = new Date().getTime() + timeToDays;
+
+  let countDownDate = d1;
+
+
+  useEffect(() => {
+
+
+    var updateTime = setInterval(() => {
+      var now = new Date().getTime();
+
+      var difference = countDownDate - now;
+
+      var newDays = Math.floor(difference / (1000 * 60 * 60 * 24));
+      var newHours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var newMinutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+      var newSeconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+      setDays(newDays);
+      setHours(newHours);
+      setMinutes(newMinutes);
+      setSeconds(newSeconds);
+
+
+      if (difference <= 0) {
+        clearInterval(updateTime);
+        setMessage("The Launch Has Started");
+        setDays(0);
+        setHours(0);
+        setMinutes(0);
+        setSeconds(0);
+      }
+    })
+
+    return () => {
+      clearInterval(updateTime);
+    }
+
+  }, [time]);
+
+  const handleClick = () => {
+
+    setTime(newTime);
+    console.log(time);
+    setNewTime(0);
+  };
+
+  const handleChange = (e: any) => {
+    let inputTime = e.target.value;
+    setNewTime(inputTime);
+
+  };
+
   return (
     <>
 
@@ -95,6 +169,22 @@ const Home: NextPage = () => {
             className="object-contain rounded-lg"
           />
         </div>
+
+{/*
+        <Header message={message} />
+  */}
+
+<TimerContainer
+  days={days}
+  hours={hours}
+  minutes={minutes}
+  seconds={seconds}
+/>
+{/*
+<TimerInput value={newTime} handleClick={handleClick} handleChange={handleChange} />
+*/}
+
+        
 
 {/*
         <div className=" w-full justify-center items-center p-5 lg:hidden ">

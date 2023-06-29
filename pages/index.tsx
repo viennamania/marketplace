@@ -318,8 +318,10 @@ const Home: NextPage = () => {
                   ></video>
                 </div>
 
-              
+
+{/*              
                 <div className={styles.listingGrid}>
+
                   {directListings?.map((listing) => (
                     <div
                       key={listing.id}
@@ -358,7 +360,11 @@ const Home: NextPage = () => {
                       
                     </div>
                   ))}
+
                 </div>
+
+          */}
+
 
 
               </>

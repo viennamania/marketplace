@@ -158,6 +158,7 @@ const Home: NextPage = () => {
       {/* Content */}
       <div className="mt-32 flex flex-col justify-center items-center">
 
+{/*
 
         <div className=" w-full justify-center items-center p-5  ">
           <Image
@@ -169,17 +170,21 @@ const Home: NextPage = () => {
             className="object-contain rounded-lg"
           />
         </div>
-
+  */}
+  
 {/*
         <Header message={message} />
   */}
 
+{/*
 <TimerContainer
   days={days}
   hours={hours}
   minutes={minutes}
   seconds={seconds}
 />
+*/}
+
 {/*
 <TimerInput value={newTime} handleClick={handleClick} handleChange={handleChange} />
 */}
@@ -319,7 +324,7 @@ const Home: NextPage = () => {
                 </div>
 
 
-{/*              
+           
                 <div className={styles.listingGrid}>
 
                   {directListings?.map((listing) => (
@@ -363,7 +368,7 @@ const Home: NextPage = () => {
 
                 </div>
 
-          */}
+        
 
 
 

@@ -355,6 +355,7 @@ const Home: NextPage = () => {
                           
                       </h2>
 
+{/*
                       <MediaRenderer
                         src={listing.asset.image}
                         style={{
@@ -365,6 +366,19 @@ const Home: NextPage = () => {
                           padding: "10px",
                         }}
                       />
+                      */}
+
+                      <div className=" w-full justify-center items-center p-5  ">
+                      <Image
+                        //fill
+                        src={listing.asset.image ? listing.asset.image : "/banner.jpeg"}
+                        alt="nft"
+                        width={1024}
+                        height={1024}
+                        className="object-contain rounded-lg"
+                      />
+                      </div>
+
 
 
 

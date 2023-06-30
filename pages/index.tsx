@@ -281,8 +281,13 @@ const Home: NextPage = () => {
 </div>
 
 </div>
-
 */}
+
+        <div className="mt-5 w-full text-2xl">
+          Listings: {directListings?.length}
+        </div>
+
+
         <div className="m-10">
           {
             // If the listings are loading, show a loading message
@@ -302,7 +307,7 @@ const Home: NextPage = () => {
                 </div>
             */}
 
-            
+
               </>
             ) : (
 
@@ -315,6 +320,7 @@ const Home: NextPage = () => {
                   <AssetSlider coins={assetSlideData} />
                 */}
 
+{/*
                 <div className=" w-full flex justify-center items-center p-5">
                   <video
                     id="intro-video"
@@ -325,7 +331,7 @@ const Home: NextPage = () => {
                     className="rounded-lg"
                   ></video>
                 </div>
-
+              */}
 
            
                 <div className={styles.listingGrid}>

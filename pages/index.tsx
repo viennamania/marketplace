@@ -171,7 +171,7 @@ const Home: NextPage = () => {
           />
         </div>
   */}
-  
+
 {/*
         <Header message={message} />
   */}
@@ -290,6 +290,7 @@ const Home: NextPage = () => {
               <>
                 <div>Loading listings...</div>
 
+{/*
                 <div className=" w-full flex justify-center items-center p-5">
                   <video
                     id="intro-video"
@@ -299,7 +300,9 @@ const Home: NextPage = () => {
                     className="rounded-lg"
                   ></video>
                 </div>
+            */}
 
+            
               </>
             ) : (
 

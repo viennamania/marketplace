@@ -371,7 +371,7 @@ const Home: NextPage = () => {
                       <div className=" w-full justify-center items-center p-5  ">
                       <Image
                         //fill
-                        src={listing.asset.image ? listing.asset.image : "/banner.jpeg"}
+                        src={listing.asset.image ? listing.asset.image : "/default-nft.png"}
                         alt="nft"
                         width={1024}
                         height={1024}

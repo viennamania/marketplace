@@ -16,7 +16,7 @@ import {
 // This is the chain your dApp will work on.
 import { Polygon } from '@thirdweb-dev/chains';
 
-
+import { Analytics } from '@vercel/analytics/react';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
@@ -78,6 +78,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
 
       <Component {...pageProps} />
+      <Analytics />
       {/*
       <ThirdwebGuideFooter />
   */}

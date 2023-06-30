@@ -100,6 +100,7 @@ const ListingPage: NextPage = () => {
     return <div className={styles.loadingOrError}>Listing not found</div>;
   }
 
+
   
   async function createBidOrOffer() {
     try {
@@ -203,11 +204,12 @@ const ListingPage: NextPage = () => {
         </h3>
             */}
         
+        {/*
         <h3>
           My Balance: <b>{Number(tokenBalanceUSDC?.displayValue).toFixed(2)}</b>{' '}
           {tokenBalanceUSDC?.symbol}
         </h3>
-              
+          */}              
 
         </>
         }
@@ -268,6 +270,7 @@ const ListingPage: NextPage = () => {
             </button>
           */}
 
+
           {directListing.quantity === "0" ?
             <div>
               Sell completed.
@@ -288,6 +291,9 @@ const ListingPage: NextPage = () => {
 
           }
 
+          
+
+         
 
 
             {/*

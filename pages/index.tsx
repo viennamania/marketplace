@@ -343,6 +343,8 @@ const Home: NextPage = () => {
                       onClick={() => router.push(`/listing/${listing.id}`)}
                     >
 
+<span className="text-xs mt-2 mb-2">Listing: {listing.id}</span>   
+
                       <h2 className={styles.nameContainer}>
                         
                         <Link href={`/listing/${listing.id}`} className={styles.name}>

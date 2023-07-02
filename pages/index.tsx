@@ -98,7 +98,7 @@ const Home: NextPage = () => {
   //const timeToDays = time * 60 * 60 * 24 * 1000;
   //const timeToDays = 60 * 60 * 24 * 1000 + 60 * 60 * 8 * 1000;
 
-  var dString = "Jun, 30, 2023";
+  var dString = "July, 28, 2023";
   var d1 = new Date(dString);
 
   //let countDownDate = new Date().getTime() + timeToDays;
@@ -158,7 +158,7 @@ const Home: NextPage = () => {
     <>
 
       {/* Content */}
-      <div className="mt-32 flex flex-col justify-center items-center">
+      <div className="mt-28 flex flex-col justify-center items-center">
 
 {/*
 
@@ -178,14 +178,25 @@ const Home: NextPage = () => {
         <Header message={message} />
   */}
 
-{/*
-<TimerContainer
-  days={days}
-  hours={hours}
-  minutes={minutes}
-  seconds={seconds}
-/>
-*/}
+
+
+          <div className=" w-full justify-center items-center pl-10 pr-10 ">
+            <Image
+              //fill
+              src="/soldout.jpeg"
+              alt="banner"
+              width={2048}
+              height={64}
+              className="object-contain rounded-lg"
+            />
+          </div>
+          <TimerContainer
+            days={days}
+            hours={hours}
+            minutes={minutes}
+            seconds={seconds}
+          />
+
 
 {/*
 <TimerInput value={newTime} handleClick={handleClick} handleChange={handleChange} />
@@ -286,14 +297,7 @@ const Home: NextPage = () => {
 */}
 
 
-            <Image
-              //fill
-              src="/soldout.jpeg"
-              alt="banner"
-              width={2048}
-              height={64}
-              className="object-contain rounded-lg"
-            />
+
 
 {/*
         <div className="mt-5 w-full text-2xl">

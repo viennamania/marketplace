@@ -19,6 +19,7 @@ export default function Footer() {
   return (
 
     <footer>
+      
       <div className=" flex-cols flex items-center justify-center gap-3 bg-gray-800 pb-5 pt-10 text-white ">
         <div>Copyright ©MOMOCON</div>
 

@@ -48,6 +48,8 @@ import { TimerInput } from '@/components/TimerInput'
 
 
 
+
+
 const Home: NextPage = () => {
   const router = useRouter();
 
@@ -283,30 +285,30 @@ const Home: NextPage = () => {
 </div>
 */}
 
+
+            <Image
+              //fill
+              src="/soldout.jpeg"
+              alt="banner"
+              width={2048}
+              height={64}
+              className="object-contain rounded-lg"
+            />
+
+{/*
         <div className="mt-5 w-full text-2xl">
           Listings: {directListings?.length}
         </div>
-
+*/}
 
         <div className="m-10">
           {
             // If the listings are loading, show a loading message
             loadingListings ? (
               <>
+              {/*
                 <div>Loading listings...</div>
-
-{/*
-                <div className=" w-full flex justify-center items-center p-5">
-                  <video
-                    id="intro-video"
-                    src="/mov/intro.mp4"
-                    muted
-                    autoPlay
-                    className="rounded-lg"
-                  ></video>
-                </div>
-            */}
-
+                */}
 
               </>
             ) : (

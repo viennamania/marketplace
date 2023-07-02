@@ -71,7 +71,7 @@ const dummyPosts: BlogPost[] = [
 ======================================= */
 ///const HomePage = () => {
 
-const MintPage: NextPageWithLayout = () => {
+const TermsPage: NextPageWithLayout = () => {
   const { layout } = useLayout();
 
   const address = useAddress();
@@ -1634,8 +1634,8 @@ const MintPage: NextPageWithLayout = () => {
   );
 };
 
-MintPage.getLayout = function getLayout(page) {
+TermsPage.getLayout = function getLayout(page) {
   return <RootLayout>{page}</RootLayout>;
 };
 
-export default MintPage;
+export default TermsPage;

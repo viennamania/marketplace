@@ -99,7 +99,7 @@ h4{ font-size: 1.625em; font-family: 'SUIT'; font-weight: 600; line-height:40px;
 #header { position: fixed; top: 0; width: 100%; height: 7.5em; z-index: 999;  transition: all 0.2s ease-in-out;}
 #header.nav-up { top: -100px; transition: all 0.2s ease-in; }
 #header .header-wrap { position: relative; display: flex; justify-content: space-between; align-items: center;height: 100%; padding: 0 40px; }
-#header .logo{	background: url(../images/logo.svg) no-repeat center center; background-size: contain; width: 5.625em; height: 5.625em; }
+#header .logo{	background: url(../images/logo.png) no-repeat center center; background-size: contain; width: 5.625em; height: 5.625em; }
 #header .logo a{ display: block; text-indent: -9999px; width: 100%; height: 100%;}
 #header.nav-down{ height: 140px; background: #fff; transition: all .2s ease; border-bottom: 1px solid #d1d1d1}
 #gnb{display: flex; justify-content: space-between; }
@@ -349,7 +349,7 @@ h4{ font-size: 1.625em; font-family: 'SUIT'; font-weight: 600; line-height:40px;
 	.gnb li a{ color: #1F1F1F; font-size: 1.5em; text-align: center;}
 	
 	/* logo */
-	.logo-gnb,.gnb .home,[class*="btn-gnb"] { display: block !important;background: url(../images/logo.svg) no-repeat center center; background-size: contain; width: 5.625em; height: 5.625em; text-indent: -9999px; overflow: hidden; }
+	.logo-gnb,.gnb .home,[class*="btn-gnb"] { display: block !important;background: url(../images/logo.png) no-repeat center center; background-size: contain; width: 5.625em; height: 5.625em; text-indent: -9999px; overflow: hidden; }
 	.btn-gnb-open { position: relative; width: 2.25em; height: 2.25em; background: url("../images/ico-menu.svg") no-repeat center; background-size: contain; padding: 10px;}
 	.btn-gnb-open span:after { bottom: -7px; }
     .btn-gnb-close { position: absolute; top: 3em; right: 1em; width: 2.25em; height: 2.25em; padding: 1em; background: url("../images/ico-close.svg") no-repeat center 100%; background-size: contain; text-indent: -9999px; overflow: hidden; }

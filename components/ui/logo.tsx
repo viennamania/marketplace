@@ -3,7 +3,7 @@ import Image from '@/components/ui/image';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import { useIsMounted } from '@/lib/hooks/use-is-mounted';
 import { useIsDarkMode } from '@/lib/hooks/use-is-dark-mode';
-import lightLogo from '@/assets/images/logo.svg';
+import lightLogo from '@/assets/images/logo.png';
 import darkLogo from '@/assets/images/logo-white.svg';
 import routes from '@/config/routes';
 import { LAYOUT_OPTIONS } from '@/lib/constants';

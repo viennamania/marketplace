@@ -1,7 +1,7 @@
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import Header from "@/components/Header";
-import ThirdwebGuideFooter from "../components/ThirdwebGuideFooter";
+import OpenseaGuideFooter from "../components/OpenseaGuideFooter";
 import Footer from "../components/Footer";
 import "../styles/globals.css";
 
@@ -79,9 +79,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <Component {...pageProps} />
       <Analytics />
-      {/*
-      <ThirdwebGuideFooter />
-  */}
+
+
+      
+      <OpenseaGuideFooter />
+  
 
 
       <Footer />

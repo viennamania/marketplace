@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <meta property="og:image:height" content="1400"></meta>
 
         <meta name="twitter:card" content="summary_large_image"></meta>
-        <meta name="twitter:image" content="/intro-bg.jpeg"></meta>
+        <meta name="twitter:image" content="/soldout.jpeg"></meta>
 
       </Head>
 

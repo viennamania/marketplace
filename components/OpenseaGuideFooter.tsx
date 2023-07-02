@@ -26,7 +26,7 @@ export default function OpenseaGuideFooter() {
       <div
         style={{
           position: "fixed",
-          bottom: 14,
+          bottom: 18,
           right: 18,
         }}
       >

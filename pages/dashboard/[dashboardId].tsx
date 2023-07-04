@@ -10,6 +10,8 @@ import Image from '@/components/ui/image';
 import Button from '@/components/ui/button';
 import AnchorLink from '@/components/ui/links/anchor-link';
 
+
+
 //import { renderPaperCheckoutLink } from '@paperxyz/js-client-sdk';
 
 //import { useAccount } from 'wagmi';
@@ -68,6 +70,7 @@ export type BlogPost = {
 export type HolderWallet = {
   address: string;
   balance: number;
+  nfts: any;
 };
 
 const dummyPosts: BlogPost[] = [
@@ -224,16 +227,16 @@ const DashboardPage: NextPage = () => {
 
   useEffect(() => {
 
-    /*
+    
     const settings = {
       apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key.
       network: Network.MATIC_MAINNET, // Replace with your network.
     };
 
     const alchemy = new Alchemy(settings);
-    */
+    
 
-    console.log("dashboardId", dashboardId);
+    ///console.log("dashboardId", dashboardId);
 
 
 
@@ -299,7 +302,7 @@ const DashboardPage: NextPage = () => {
 
         const arr20Address = arrAddress.slice(i, i + 20);
 
-        console.log("arr20Address", arr20Address);
+        //console.log("arr20Address", arr20Address);
 
         const res = await axios({
           method: 'post',
@@ -317,13 +320,30 @@ const DashboardPage: NextPage = () => {
 
         for (var j = 0; j < result.length; j++) {
 
+
+
+
+
           //console.log("result[j]", result[j]);
           const balance = result[j]?.balance ? result[j]?.balance : 0;
 
           let balanceInEth = Number(ethers.utils.formatEther(balance)).toFixed(2);
 
 
-          const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth) };
+
+
+
+  // Get all NFTs
+  const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
+    omitMetadata: false, // // Flag to omit metadata
+    contractAddresses: [nftDropContractAddressHorse],
+  });
+
+
+  //console.log("response", response);
+
+
+          const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts };
 
           arrHolderWallet.push(holderWallet);
 
@@ -361,6 +381,7 @@ const DashboardPage: NextPage = () => {
         <div className="text-lg">Wallets with 1 or more MATIC</div>
 
         <div className='flex flex-row gap-2'>
+          
           <Link href="/dashboard/0" passHref role="button">0</Link>
           <Link href="/dashboard/1" passHref role="button">1</Link>
           <Link href="/dashboard/2" passHref role="button">2</Link>
@@ -371,6 +392,12 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/7" passHref role="button">7</Link>
           <Link href="/dashboard/8" passHref role="button">8</Link>
           <Link href="/dashboard/9" passHref role="button">9</Link>
+
+
+        </div>
+        <div className='flex flex-row gap-2'>
+
+
           <Link href="/dashboard/10" passHref role="button">10</Link>
           <Link href="/dashboard/11" passHref role="button">11</Link>
           <Link href="/dashboard/12" passHref role="button">12</Link>
@@ -381,6 +408,11 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/17" passHref role="button">17</Link>
           <Link href="/dashboard/18" passHref role="button">18</Link>
           <Link href="/dashboard/19" passHref role="button">19</Link>
+
+
+        </div>
+        <div className='flex flex-row gap-2'>
+
           <Link href="/dashboard/20" passHref role="button">20</Link>
           <Link href="/dashboard/21" passHref role="button">21</Link>
           <Link href="/dashboard/22" passHref role="button">22</Link>
@@ -396,17 +428,38 @@ const DashboardPage: NextPage = () => {
         <table className="table-auto">
           <thead>
             <tr>
-              <th className="px-4 py-2">Number</th>
+              <th className="px-4 py-2">Num</th>
               <th className="px-4 py-2">Wallet Address</th>
-              <th className="px-4 py-2">Balance(MATIC)</th>
+              <th className="px-4 py-2">MATIC</th>
+              <th className="px-4 py-2">Horses(TokenId)</th>
             </tr>
           </thead>
           <tbody>
             {walletListData.map((item, index) => (
               <tr key={index}>
-                <td className="border px-4 py-2">{pageNumber*(20) + index + 1}</td>
-                <td className="border px-4 py-2">{item.address}</td>
+                <td className="border px-4 py-2 text-right">{pageNumber*(20) + index + 1}</td>
+                <td className="border px-4 py-2 text-xs">{item.address}</td>
                 <td className="border px-4 py-2 text-right">{item.balance}</td>
+                <td className="border px-4 py-2 flex flex-row gap-2">
+
+                  
+                {item.nfts.map((nft: any, index: any) => (
+
+                  <Link
+                    key={index}
+                    className=""
+                    href={"#"}
+                    onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
+                    >
+                    {nft.tokenId}
+
+                  </Link>
+
+                ))}
+
+                 
+                
+                </td>
               </tr>
             ))}
           </tbody>

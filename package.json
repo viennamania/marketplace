@@ -38,6 +38,7 @@
     "react-countdown": "^2.3.5",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.44.3",
+    "react-papaparse": "^4.1.0",
     "react-share": "^4.4.1",
     "react-table": "^7.8.0",
     "react-use": "^17.4.0",

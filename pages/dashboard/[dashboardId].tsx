@@ -10,6 +10,8 @@ import Image from '@/components/ui/image';
 import Button from '@/components/ui/button';
 import AnchorLink from '@/components/ui/links/anchor-link';
 
+import { useCopyToClipboard } from 'react-use';
+import { Copy } from '@/components/icons/copy';
 
 
 //import { renderPaperCheckoutLink } from '@paperxyz/js-client-sdk';
@@ -130,6 +132,16 @@ const DashboardPage: NextPageWithLayout<
 //const DashboardPage: NextPageWithLayout = () => {
 const DashboardPage: NextPage = () => {
 
+  let [copyButtonStatus, setCopyButtonStatus] = useState('Copy');
+  let [_, copyToClipboard] = useCopyToClipboard();
+  const handleCopyToClipboard = (url: any) => {
+    copyToClipboard(url);
+    setCopyButtonStatus('Copied!');
+    setTimeout(() => {
+      setCopyButtonStatus(copyButtonStatus);
+    }, 1000);
+  };
+
 
   const router = useRouter();
 
@@ -158,6 +170,8 @@ const DashboardPage: NextPage = () => {
   console.log('owenedNfts', ownedNfts);
 
   const [loading, setLoading] = useState(true);
+
+
   const [hasNFT, setHasNFT] = useState(false);
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
@@ -227,6 +241,7 @@ const DashboardPage: NextPage = () => {
 
   useEffect(() => {
 
+
     
     const settings = {
       apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key.
@@ -244,6 +259,9 @@ const DashboardPage: NextPage = () => {
 
 
     const getBalance = async () => {
+
+
+      setLoading(true);
 
 
       const arrAddress : String[] = [];
@@ -356,7 +374,7 @@ const DashboardPage: NextPage = () => {
 
       setWalletListData(arrHolderWallet);
 
-      
+      setLoading(false);
 
 
     };
@@ -425,6 +443,13 @@ const DashboardPage: NextPage = () => {
         
         <div className="text-lg">Page {pageNumber}</div>
 
+
+      {loading ? (
+        <div className="text-lg">Loading...</div>
+      ) : (
+        
+
+
         <table className="table-auto">
           <thead>
             <tr>
@@ -438,32 +463,69 @@ const DashboardPage: NextPage = () => {
             {walletListData.map((item, index) => (
               <tr key={index}>
                 <td className="border px-4 py-2 text-right">{pageNumber*(20) + index + 1}</td>
-                <td className="border px-4 py-2 text-xs">{item.address}</td>
+
+                <td className="border px-4 py-2 text-xs">
+
+                  <div className='flex flex-row gap-2'>
+
+                    {item.address.substring(0, 6) + "..." + item.address.substring(item.address.length - 4)}
+
+                    <div className="pl-2">
+                      <button
+                        onClick= {() => {
+                        
+                          handleCopyToClipboard(item.address)
+
+                          /*
+                          copyToClipboard(tiem.address);
+                          setCopyButtonStatus('Copied!');
+                          setTimeout(() => {
+                            setCopyButtonStatus(copyButtonStatus);
+                          }, 1000);
+                          */
+                        }}
+                      >
+
+                        <div className="flex flex-row gap-2 justify-center items-center">
+                          <span className="text-md flex h-8 w-8 items-center justify-center rounded-full border border-gray-200 text-gray-600 transition-all hover:border-gray-300 hover:text-gray-900 dark:border-gray-700 dark:text-gray-400 xl:h-14 xl:w-14">
+                            <Copy className="h-4 w-4 lg:h-5 lg:w-5" />
+                          </span>
+                          <span className="mt-2 block text-xs -tracking-widest text-gray-600 dark:text-gray-400">
+                            {copyButtonStatus}
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </td>
                 <td className="border px-4 py-2 text-right">{item.balance}</td>
-                <td className="border px-4 py-2 flex flex-row gap-2">
+                <td className="border px-4 py-2 flex flex-row gap-2 justify-center items-center">
 
                   
-                {item.nfts.map((nft: any, index: any) => (
+                  {item.nfts.map((nft: any, index: any) => (
 
-                  <Link
-                    key={index}
-                    className=""
-                    href={"#"}
-                    onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
-                    >
-                    {nft.tokenId}
 
-                  </Link>
+                    <Link
+                      key={index}
+                      className=""
+                      href={"#"}
+                      onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
+                      >
+                      {nft.tokenId}
 
-                ))}
+                    </Link>
 
-                 
+                  ))}
                 
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+
+      )}
 
       </div>
 

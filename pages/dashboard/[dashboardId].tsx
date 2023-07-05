@@ -558,7 +558,7 @@ const DashboardPage: NextPage = () => {
                       className=''
                     >
 
-                      <td className='p-2 text-right'>{nft.tokenId}</td>
+                      <td className='w-[30px] text-right'>{nft.tokenId}</td>
 
                       <td className='p-2'>{item.attributes[index].asset}</td>
 

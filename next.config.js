@@ -10,6 +10,7 @@ const nextConfig = {
       'ipfs.io',
       'via.placeholder.com',
       'ipfs-2.thirdwebcdn.com',
+      'res.cloudinary.com',
     ],
   },
 }

@@ -73,6 +73,7 @@ export type HolderWallet = {
   address: string;
   balance: number;
   nfts: any;
+  attributes: any;
 };
 
 const dummyPosts: BlogPost[] = [
@@ -351,17 +352,60 @@ const DashboardPage: NextPage = () => {
 
 
 
-  // Get all NFTs
-  const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
-    omitMetadata: false, // // Flag to omit metadata
-    contractAddresses: [nftDropContractAddressHorse],
-  });
+          // Get all NFTs
+          const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
+            omitMetadata: false, // // Flag to omit metadata
+            contractAddresses: [nftDropContractAddressHorse],
+          });
 
 
-  //console.log("response", response);
+          //console.log("response", response);
+
+          const attributes = [];
+
+          for (var k = 0; k < response.ownedNfts.length; k++) {
+
+            if (response.ownedNfts[k].tokenUri?.gateway) {
+
+              /*
+              fetch(response.ownedNfts[k].tokenUri?.gateway!)
+              .then((response) => response.json())
+              .then((responseJson) => {
+                //return responseJson.movies;
+                console.log("responseJson", responseJson.attributes[0].value);
+                console.log("responseJson", responseJson.attributes[1].value);
+
+                const asset = responseJson.attributes[0].value;
+                const grade = responseJson.attributes[1].value;
+
+                //attributes = { asset, grade };
+
+                //attributes.push({ asset, grade });
+
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+              */
 
 
-          const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts };
+              const res = await fetch(response.ownedNfts[k].tokenUri?.gateway!);
+              const responseJson = await res.json();
+
+              //console.log("responseJson", responseJson.attributes[0].value);
+              //console.log("responseJson", responseJson.attributes[1].value);
+
+              const asset = responseJson.attributes[0].value;
+              const grade = responseJson.attributes[1].value;
+
+              attributes.push({ asset, grade });
+
+            }
+
+          }
+
+
+          const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts, attributes: attributes};
 
           arrHolderWallet.push(holderWallet);
 
@@ -468,21 +512,18 @@ const DashboardPage: NextPage = () => {
 
                   <div className='flex flex-row gap-2'>
 
-                    {item.address.substring(0, 6) + "..." + item.address.substring(item.address.length - 4)}
+                    {/*item.address.substring(0, 6) + "..." + item.address.substring(item.address.length - 4)*/}
 
+                    {item.address}
+
+{/*
                     <div className="pl-2">
                       <button
                         onClick= {() => {
                         
                           handleCopyToClipboard(item.address)
 
-                          /*
-                          copyToClipboard(tiem.address);
-                          setCopyButtonStatus('Copied!');
-                          setTimeout(() => {
-                            setCopyButtonStatus(copyButtonStatus);
-                          }, 1000);
-                          */
+    
                         }}
                       >
 
@@ -496,28 +537,60 @@ const DashboardPage: NextPage = () => {
                         </div>
                       </button>
                     </div>
+                      */}
 
                   </div>
 
                 </td>
+
                 <td className="border px-4 py-2 text-right">{item.balance}</td>
-                <td className="border px-4 py-2 flex flex-row gap-2 justify-center items-center">
+
+                <td className="border px-4 py-2 flex flex-col gap-0 justify-left items-left">
 
                   
+                  <table className="table-auto"> 
+
                   {item.nfts.map((nft: any, index: any) => (
 
 
-                    <Link
+                    <tr
                       key={index}
-                      className=""
-                      href={"#"}
-                      onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
-                      >
-                      {nft.tokenId}
+                      className=''
+                    >
 
-                    </Link>
+                      <td className='p-2 text-right'>{nft.tokenId}</td>
+
+                      <td className='p-2'>{item.attributes[index].asset}</td>
+
+                      <td className='p-2'>{item.attributes[index].grade}</td>
+
+                      <td>
+                        <Link
+                          key={index}
+                          className=" gap-2 flex flex-row justify-center items-center p-1 border-gray-600 text-gray-400 transition-all hover:border-gray-300 hover:text-gray-100 dark:border-gray-700 dark:text-gray-400 "
+                          href={"#"}
+                          onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
+                          >
+
+                        {/*
+                          <Image
+                            src={nft.media[0].thumbnail}
+                            alt={nft.tokenId}
+                            width={50}
+                            height={50}
+                            className="rounded-lg"
+                          />
+                        */}
+
+                        </Link>
+                      </td>
+
+                    </tr>
+
 
                   ))}
+
+                  </table>
                 
                 </td>
               </tr>

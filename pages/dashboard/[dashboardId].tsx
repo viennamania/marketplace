@@ -359,7 +359,7 @@ const DashboardPage: NextPage = () => {
           });
 
 
-          //console.log("response", response);
+          ///console.log("response", response);
 
           const attributes = [];
 
@@ -397,8 +397,9 @@ const DashboardPage: NextPage = () => {
 
               const asset = responseJson.attributes[0].value;
               const grade = responseJson.attributes[1].value;
+              const image = responseJson.image;
 
-              attributes.push({ asset, grade });
+              attributes.push({ asset, grade, image });
 
             }
 
@@ -572,15 +573,16 @@ const DashboardPage: NextPage = () => {
                           onClick={() => window.open("https://opensea.io/assets/matic/"+ nftDropContractAddressHorse + "/"+nft.tokenId, "_blank")}
                           >
 
-                        {/*
+                        
                           <Image
-                            src={nft.media[0].thumbnail}
+                            //src={nft.media[0].thumbnail}
+                            src={item.attributes[index].image}
                             alt={nft.tokenId}
                             width={50}
                             height={50}
                             className="rounded-lg"
                           />
-                        */}
+                        
 
                         </Link>
                       </td>

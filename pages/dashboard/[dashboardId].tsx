@@ -334,7 +334,8 @@ const DashboardPage: NextPage = () => {
       //for (let i = 0; i < arrAddress.length; i++) {
       //for (let i = pageNumber*20+0; i < pageNumber*20+1; i++) {
 
-      let i = pageNumber*20;
+      /*
+        let i = pageNumber*20;
 
         const arr20Address = arrAddress.slice(i, i + 20);
 
@@ -355,22 +356,33 @@ const DashboardPage: NextPage = () => {
         const result = res.data.result;
 
         for (var j = 0; j < result.length; j++) {
+        */
+
+        //for (var j = 0; j < 100; j++) {
+
+        for (var j = pageNumber*100; j < pageNumber*100+100; j++) {
 
 
 
-
+          /*
 
           //console.log("result[j]", result[j]);
           const balance = result[j]?.balance ? result[j]?.balance : 0;
 
           let balanceInEth = Number(ethers.utils.formatEther(balance)).toFixed(2);
+          */
 
+
+          const balanceInEth = 0;
 
 
 
 
           // Get all NFTs
-          const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
+          ////const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
+          const response = await alchemy.nft.getNftsForOwner(String(arrAddress[j]), {
+
+
             omitMetadata: false, // // Flag to omit metadata
             contractAddresses: [nftDropContractAddressHorse],
           });
@@ -425,8 +437,11 @@ const DashboardPage: NextPage = () => {
           }
 
 
-          
-          const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts, attributes: attributes};
+
+          /////const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts, attributes: attributes};
+
+          const holderWallet = { address: String(arrAddress[j]), balance: Number(balanceInEth), nfts: response.ownedNfts, attributes: attributes};
+
 
           arrHolderWallet.push(holderWallet);
 
@@ -439,7 +454,8 @@ const DashboardPage: NextPage = () => {
 
 
 
-          arrHolderWalletforCSV.push( { address: String(arr20Address[j]), nfts: attributesString });
+          ////arrHolderWalletforCSV.push( { address: String(arr20Address[j]), nfts: attributesString });
+          arrHolderWalletforCSV.push( { address: String(arrAddress[j]), nfts: attributesString });
 
           
 
@@ -537,6 +553,8 @@ const DashboardPage: NextPage = () => {
 
 
         </div>
+
+        {/*
         <div className='flex flex-row gap-2'>
 
 
@@ -565,7 +583,7 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/27" passHref role="button">27</Link>
 
         </div>
-
+  */}
         
         <div className="text-lg">Page {pageNumber}</div>
 

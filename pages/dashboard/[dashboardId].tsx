@@ -63,6 +63,9 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 
+import { CSVLink, CSVDownload } from "react-csv";
+
+
 
 export type BlogPost = {
   title: string;
@@ -75,6 +78,14 @@ export type HolderWallet = {
   nfts: any;
   attributes: any;
 };
+
+
+
+export type HolderWalletforCSV = {
+  address: string;
+  nfts: string;
+};
+
 
 const dummyPosts: BlogPost[] = [
   {
@@ -177,6 +188,8 @@ const DashboardPage: NextPage = () => {
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
   const [walletListData, setWalletListData] = useState<HolderWallet[]>([]);
+
+  const [csvData, setCsvData] = useState<HolderWalletforCSV[]>([]);
 
   // Thirdweb Stuff
   //const sdk = new ThirdwebSDK('mumbai');
@@ -311,6 +324,10 @@ const DashboardPage: NextPage = () => {
       
       const arrHolderWallet : HolderWallet[] = [];
 
+      const arrHolderWalletforCSV : HolderWalletforCSV[] = [];
+
+      
+
 
       console.log("pageNumber", pageNumber);
 
@@ -399,7 +416,9 @@ const DashboardPage: NextPage = () => {
               const grade = responseJson.attributes[1].value;
               const image = responseJson.image;
 
-              attributes.push({ asset, grade, image });
+              const tokenid = response.ownedNfts[k].tokenId;
+
+              attributes.push({ tokenid,  asset, grade, image });
 
             }
 
@@ -410,6 +429,19 @@ const DashboardPage: NextPage = () => {
 
           arrHolderWallet.push(holderWallet);
 
+
+          let attributesString = "";
+
+          attributes.map((item) => (
+              attributesString += item.asset + " " + item.grade + " " + item.tokenid + "\n"
+          ))
+
+
+
+          arrHolderWalletforCSV.push( { address: String(arr20Address[j]), nfts: attributesString });
+
+          
+
         }
 
       //}
@@ -417,7 +449,53 @@ const DashboardPage: NextPage = () => {
       //console.log("arrHolderWallet", arrHolderWallet);
     
 
+      
       setWalletListData(arrHolderWallet);
+
+
+      setCsvData(arrHolderWalletforCSV);
+      
+
+      /*
+      arrHolderWallet.map((item) => (
+
+        item.nfts.map((nft: any, index: any) => (
+          tokenId: nft.tokenId,
+          asset: item.attributes[index].asset,
+
+        ))
+
+      ))
+
+      */
+
+
+      /*
+      setCsvData(
+        arrHolderWallet.map((item) => (
+
+
+
+          item.nfts.map((nft: any, index: any) => (
+            tokenId: nft.tokenId,
+            asset: item.attributes[index].asset,
+            grade: item.attributes[index].grade,
+          )),
+          
+          
+          {
+          address: item.address,
+          balance: item.balance,
+
+
+          //nfts: item.nfts,
+          //attributes: item.attributes,
+
+        }))
+      )
+      */
+
+
 
       setLoading(false);
 
@@ -482,11 +560,21 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/23" passHref role="button">23</Link>
           <Link href="/dashboard/24" passHref role="button">24</Link>
           <Link href="/dashboard/25" passHref role="button">25</Link>
+          <Link href="/dashboard/26" passHref role="button">26</Link>
+          <Link href="/dashboard/27" passHref role="button">27</Link>
 
         </div>
 
         
         <div className="text-lg">Page {pageNumber}</div>
+
+        <CSVLink
+          data={csvData}
+          filename={"wallet-list-page-" + pageNumber + ".csv"}
+        >
+          Download CSV file
+          
+        </CSVLink>
 
 
       {loading ? (

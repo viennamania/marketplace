@@ -425,6 +425,7 @@ const DashboardPage: NextPage = () => {
           }
 
 
+          
           const holderWallet = { address: String(arr20Address[j]), balance: Number(balanceInEth), nfts: response.ownedNfts, attributes: attributes};
 
           arrHolderWallet.push(holderWallet);

@@ -89,7 +89,16 @@ export type HolderWallet = {
 
 export type HolderWalletforCSV = {
   address: string;
-  nfts: string;
+  nft1: string;
+  nft2: string;
+  nft3: string;
+  nft4: string;
+  nft5: string;
+  nft6: string;
+  nft7: string;
+  nft8: string;
+  nft9: string;
+  nft10: string;
 };
 
 
@@ -472,7 +481,24 @@ const DashboardPage: NextPage = () => {
 
 
           ////arrHolderWalletforCSV.push( { address: String(arr20Address[j]), nfts: attributesString });
-          arrHolderWalletforCSV.push( { address: String(arrAddress[j]), nfts: attributesString });
+
+          //arrHolderWalletforCSV.push( { address: String(arrAddress[j]), nfts: attributesString });
+
+          arrHolderWalletforCSV.push({
+
+            address: String(arrAddress[j]),
+            nft1: attributes[0] ? attributes[0].asset + "," + attributes[0].grade + "," + attributes[0].tokenid : "",
+            nft2: attributes[1] ? attributes[1].asset + "," + attributes[1].grade + "," + attributes[1].tokenid : "",
+            nft3: attributes[2] ? attributes[2].asset + "," + attributes[2].grade + "," + attributes[2].tokenid : "",
+            nft4: attributes[3] ? attributes[3].asset + "," + attributes[3].grade + "," + attributes[3].tokenid : "",
+            nft5: attributes[4] ? attributes[4].asset + "," + attributes[4].grade + "," + attributes[4].tokenid : "",
+            nft6: attributes[5] ? attributes[5].asset + "," + attributes[5].grade + "," + attributes[5].tokenid : "",
+            nft7: attributes[6] ? attributes[6].asset + "," + attributes[6].grade + "," + attributes[6].tokenid : "",
+            nft8: attributes[7] ? attributes[7].asset + "," + attributes[7].grade + "," + attributes[7].tokenid : "",
+            nft9: attributes[8] ? attributes[8].asset + "," + attributes[8].grade + "," + attributes[8].tokenid : "",
+            nft10: attributes[9] ? attributes[9].asset + "," + attributes[9].grade + "," + attributes[9].tokenid : "",
+
+          });
 
           
 

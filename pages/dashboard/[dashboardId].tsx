@@ -661,7 +661,9 @@ const DashboardPage: NextPage = () => {
 
                 </td>
 
+{/*
                 <td className="border px-4 py-2 text-right">{item.balance}</td>
+*/}
 
                 <td className="border px-4 py-2 flex flex-col gap-0 justify-left items-left">
 
@@ -678,9 +680,9 @@ const DashboardPage: NextPage = () => {
 
                       <td className='w-[30px] text-right'>{nft.tokenId}</td>
 
-{/*
+
                       <td className='p-2'>{item.attributes[index].asset}</td>
-                  */}
+                  
 
                       <td className='p-2'>{item.attributes[index].grade}</td>
 

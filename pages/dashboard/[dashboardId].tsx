@@ -162,7 +162,7 @@ const DashboardPage: NextPage = () => {
   // If the user visits /listing/1 then the listingId will be 1.
   const { dashboardId } = router.query as { dashboardId: string };
 
-  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : 0);
+  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : null);
 
   const { layout } = useLayout();
 
@@ -269,7 +269,7 @@ const DashboardPage: NextPage = () => {
 
 
 
-    setPageNumber(dashboardId ? Number(dashboardId) : 0);
+    //////setPageNumber(dashboardId ? Number(dashboardId) : 0);
 
 
     const getBalance = async () => {
@@ -360,7 +360,10 @@ const DashboardPage: NextPage = () => {
 
         //for (var j = 0; j < 100; j++) {
 
+        if (pageNumber === null) return;
+
         for (var j = pageNumber*100; j < pageNumber*100+100; j++) {
+
 
 
 
@@ -376,6 +379,7 @@ const DashboardPage: NextPage = () => {
           const balanceInEth = 0;
 
 
+          console.log("arrAdd[j]", j + ": " + arrAddress[j]);
 
 
           // Get all NFTs
@@ -522,7 +526,7 @@ const DashboardPage: NextPage = () => {
     getBalance();
 
 
-  }, [dashboardId, pageNumber]);
+  }, [pageNumber]);
 
 
 
@@ -614,7 +618,7 @@ const DashboardPage: NextPage = () => {
           <tbody>
             {walletListData.map((item, index) => (
               <tr key={index}>
-                <td className="border px-4 py-2 text-right">{pageNumber*(20) + index + 1}</td>
+                <td className="border px-4 py-2 text-right">{pageNumber*(100) + index + 1}</td>
 
                 <td className="border px-4 py-2 text-xs">
 

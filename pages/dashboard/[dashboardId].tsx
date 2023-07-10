@@ -291,7 +291,7 @@ const DashboardPage: NextPage = () => {
 
 
 
-    setPageNumber(dashboardId ? Number(dashboardId) : null);
+    setPageNumber(dashboardId ? Number(dashboardId) : 0);
 
 
     const getBalance = async () => {

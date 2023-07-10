@@ -8,6 +8,10 @@ import { ThirdwebSDK } from '@thirdweb-dev/sdk';
 import { useEffect, useState } from 'react';
 import Image from '@/components/ui/image';
 import Button from '@/components/ui/button';
+
+import { Close } from '@/components/icons/close';
+
+
 import AnchorLink from '@/components/ui/links/anchor-link';
 
 import { useCopyToClipboard } from 'react-use';
@@ -64,6 +68,8 @@ import { useRouter } from "next/router";
 
 
 import { CSVLink, CSVDownload } from "react-csv";
+
+import Input from '@/components/ui/forms/input';
 
 
 
@@ -206,6 +212,9 @@ const DashboardPage: NextPage = () => {
   const shareableLink = process.env.NEXT_PUBLIC_SHAREABLE_LINK!;
   const minimumBalance = 1;
   const erc1155TokenId = 0;
+
+
+  const [toWalletAddress, setToWalletAddress] = useState<any>({});
 
   /*
   const { address, connector } = useAccount({
@@ -706,6 +715,35 @@ const DashboardPage: NextPage = () => {
                         
 
                         </Link>
+                      </td>
+
+                      <td>
+                        <div className="ml-5">
+                          <Input
+                            onChange={(event) => {
+                              console.log("test");
+                              setToWalletAddress({ ...toWalletAddress, [nft.tokenId]: event.target.value });
+                            }}
+                            className='text-xs text-black'
+                            value={toWalletAddress[nft.tokenId]}
+                            type="text"
+                            placeholder="Enter Wallet Address"
+                          />
+                        </div>
+                      </td>
+
+                      <td>
+                        <div className="ml-0">
+                          <Button
+                            shape="rounded"
+                            fullWidth={true}
+                            className="uppercase"
+                            color='primary'
+                            //onClick={() => goToCreateProposalPage()}
+                          >
+                            Send NFT
+                          </Button>
+                        </div>
                       </td>
 
                     </tr>

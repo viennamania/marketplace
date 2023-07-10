@@ -162,7 +162,11 @@ const DashboardPage: NextPage = () => {
   // If the user visits /listing/1 then the listingId will be 1.
   const { dashboardId } = router.query as { dashboardId: string };
 
+  console.log("dashboardId", dashboardId);
+
   const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : null);
+
+  console.log("pageNumber", pageNumber);
 
   const { layout } = useLayout();
 
@@ -269,7 +273,7 @@ const DashboardPage: NextPage = () => {
 
 
 
-    //////setPageNumber(dashboardId ? Number(dashboardId) : 0);
+    setPageNumber(dashboardId ? Number(dashboardId) : null);
 
 
     const getBalance = async () => {
@@ -526,7 +530,7 @@ const DashboardPage: NextPage = () => {
     getBalance();
 
 
-  }, [pageNumber]);
+  }, [dashboardId, pageNumber]);
 
 
 

@@ -179,7 +179,7 @@ const DashboardPage: NextPage = () => {
 
   console.log("dashboardId", dashboardId);
 
-  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : null);
+  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : 0);
 
   console.log("pageNumber", pageNumber);
 
@@ -384,7 +384,7 @@ const DashboardPage: NextPage = () => {
 
         if (pageNumber === null) return;
 
-        for (var j = pageNumber*10; j < (pageNumber === null ? 0 : pageNumber) *10+10; j++) {
+        for (var j = pageNumber*10; j < pageNumber *10+10; j++) {
 
 
 
@@ -707,7 +707,7 @@ const DashboardPage: NextPage = () => {
           <tbody>
             {walletListData.map((item, index) => (
               <tr key={index}>
-                <td className="border px-4 py-2 text-right">{pageNumber*(10) + index + 1}</td>
+                <td className="border px-4 py-2 text-right">{ pageNumber*(10) + index + 1}</td>
 
                 <td className="border px-4 py-2 text-xs">
 

@@ -384,7 +384,7 @@ const DashboardPage: NextPage = () => {
 
         if (pageNumber === null) return;
 
-        for (var j = pageNumber*10; j < pageNumber*10+10; j++) {
+        for (var j = pageNumber*10; j < (pageNumber === null ? 0 : pageNumber) *10+10; j++) {
 
 
 
@@ -624,9 +624,57 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/25" passHref role="button">25</Link>
           <Link href="/dashboard/26" passHref role="button">26</Link>
           <Link href="/dashboard/27" passHref role="button">27</Link>
+          <Link href="/dashboard/28" passHref role="button">28</Link>
+          <Link href="/dashboard/29" passHref role="button">29</Link>
+
+        </div>
+
+        <div className='flex flex-row gap-2'>
+
+          <Link href="/dashboard/30" passHref role="button">30</Link>
+          <Link href="/dashboard/31" passHref role="button">31</Link>
+          <Link href="/dashboard/32" passHref role="button">32</Link>
+          <Link href="/dashboard/33" passHref role="button">33</Link>
+          <Link href="/dashboard/34" passHref role="button">34</Link>
+          <Link href="/dashboard/35" passHref role="button">35</Link>
+          <Link href="/dashboard/36" passHref role="button">36</Link>
+          <Link href="/dashboard/37" passHref role="button">37</Link>
+          <Link href="/dashboard/38" passHref role="button">38</Link>
+          <Link href="/dashboard/39" passHref role="button">39</Link>
 
         </div>
   
+        <div className='flex flex-row gap-2'>
+
+          <Link href="/dashboard/40" passHref role="button">40</Link>
+          <Link href="/dashboard/41" passHref role="button">41</Link>
+          <Link href="/dashboard/42" passHref role="button">42</Link>
+          <Link href="/dashboard/43" passHref role="button">43</Link>
+          <Link href="/dashboard/44" passHref role="button">44</Link>
+          <Link href="/dashboard/45" passHref role="button">45</Link>
+          <Link href="/dashboard/46" passHref role="button">46</Link>
+          <Link href="/dashboard/47" passHref role="button">47</Link>
+          <Link href="/dashboard/48" passHref role="button">48</Link>
+          <Link href="/dashboard/49" passHref role="button">49</Link>
+
+        </div>  
+
+
+        <div className='flex flex-row gap-2'>
+
+          <Link href="/dashboard/50" passHref role="button">50</Link>
+          <Link href="/dashboard/51" passHref role="button">51</Link>
+          <Link href="/dashboard/52" passHref role="button">52</Link>
+          <Link href="/dashboard/53" passHref role="button">53</Link>
+          <Link href="/dashboard/54" passHref role="button">54</Link>
+          <Link href="/dashboard/55" passHref role="button">55</Link>
+          <Link href="/dashboard/56" passHref role="button">56</Link>
+          <Link href="/dashboard/57" passHref role="button">57</Link>
+          <Link href="/dashboard/58" passHref role="button">58</Link>
+          <Link href="/dashboard/59" passHref role="button">59</Link>
+
+        </div>
+
         
         <div className="text-lg">Page {pageNumber}</div>
 

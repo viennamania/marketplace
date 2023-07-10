@@ -366,7 +366,7 @@ const DashboardPage: NextPage = () => {
 
         if (pageNumber === null) return;
 
-        for (var j = pageNumber*100; j < pageNumber*100+100; j++) {
+        for (var j = pageNumber*10; j < pageNumber*10+10; j++) {
 
 
 
@@ -562,7 +562,7 @@ const DashboardPage: NextPage = () => {
 
         </div>
 
-        {/*
+        
         <div className='flex flex-row gap-2'>
 
 
@@ -591,7 +591,7 @@ const DashboardPage: NextPage = () => {
           <Link href="/dashboard/27" passHref role="button">27</Link>
 
         </div>
-  */}
+  
         
         <div className="text-lg">Page {pageNumber}</div>
 
@@ -615,14 +615,16 @@ const DashboardPage: NextPage = () => {
             <tr>
               <th className="px-4 py-2">Num</th>
               <th className="px-4 py-2">Wallet Address</th>
+              {/*
               <th className="px-4 py-2">MATIC</th>
+              */}
               <th className="px-4 py-2">Horses(TokenId)</th>
             </tr>
           </thead>
           <tbody>
             {walletListData.map((item, index) => (
               <tr key={index}>
-                <td className="border px-4 py-2 text-right">{pageNumber*(100) + index + 1}</td>
+                <td className="border px-4 py-2 text-right">{pageNumber*(10) + index + 1}</td>
 
                 <td className="border px-4 py-2 text-xs">
 
@@ -676,7 +678,9 @@ const DashboardPage: NextPage = () => {
 
                       <td className='w-[30px] text-right'>{nft.tokenId}</td>
 
+{/*
                       <td className='p-2'>{item.attributes[index].asset}</td>
+                  */}
 
                       <td className='p-2'>{item.attributes[index].grade}</td>
 

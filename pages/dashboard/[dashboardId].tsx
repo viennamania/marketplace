@@ -579,7 +579,9 @@ const DashboardPage: NextPage = () => {
 
         <div className="text-2xl font-bold">Wallet List</div>
 
+{/*
         <div className="text-lg">Wallets with 1 or more MATIC</div>
+  */}
 
         <div className='flex flex-row gap-2'>
           

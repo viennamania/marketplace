@@ -179,7 +179,7 @@ const DashboardPage: NextPage = () => {
 
   console.log("dashboardId", dashboardId);
 
-  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : 0);
+  const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : -1);
 
   console.log("pageNumber", pageNumber);
 
@@ -382,7 +382,7 @@ const DashboardPage: NextPage = () => {
 
         //for (var j = 0; j < 100; j++) {
 
-        if (pageNumber === null) return;
+        if (pageNumber === -1) return;
 
         for (var j = pageNumber*10; j < pageNumber *10+10; j++) {
 

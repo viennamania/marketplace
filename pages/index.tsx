@@ -47,7 +47,7 @@ import { TimerContainer } from '@/components/TimerContainer'
 import { TimerInput } from '@/components/TimerInput'
 
 
-
+import Search from '@/components/search/search-horse';
 
 
 const Home: NextPage = () => {
@@ -412,6 +412,9 @@ const Home: NextPage = () => {
         </div>
 
 
+        <div className=" w-full justify-center items-center pl-10 pr-10 ">
+          <Search />
+        </div>
 
       </div>
 

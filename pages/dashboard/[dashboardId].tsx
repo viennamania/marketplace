@@ -6,6 +6,7 @@ import type { NextPageWithLayout } from '@/types';
 import Link from 'next/link';
 import { ThirdwebSDK } from '@thirdweb-dev/sdk';
 import { useEffect, useState } from 'react';
+import { BaseSyntheticEvent } from 'react';
 import Image from '@/components/ui/image';
 import Button from '@/components/ui/button';
 
@@ -223,6 +224,8 @@ const DashboardPage: NextPage = () => {
   const erc1155TokenId = 0;
 
 
+
+
   const [toWalletAddress, setToWalletAddress] = useState<any>({});
 
   /*
@@ -401,7 +404,7 @@ const DashboardPage: NextPage = () => {
           const balanceInEth = 0;
 
 
-          console.log("arrAdd[j]", j + ": " + arrAddress[j]);
+          ////console.log("arrAdd[j]", j + ": " + arrAddress[j]);
 
 
           // Get all NFTs
@@ -567,6 +570,75 @@ const DashboardPage: NextPage = () => {
 
   }, [dashboardId, pageNumber]);
 
+  const sendMessage = async (e: BaseSyntheticEvent) => {
+    e.preventDefault();
+
+
+    /*
+    setLoading(true);
+    setError(false);
+    setSuccess(false);
+    const res = await fetch('/api/sendMessage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ phone: phone, message: message }),
+    });
+    const apiResponse = await res.json();
+
+    if (apiResponse.success) {
+      setSuccess(true);
+    } else {
+      setError(true);
+    }
+    setLoading(false);
+    */
+  };
+
+  const sendNft = async (address:any, tokenid:any, toaddress:any) => {
+
+    console.log("address", address);
+    console.log("tokenid", tokenid);
+    console.log("toaddress", toaddress);
+
+    const res = await fetch('/api/sendNft', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      //body: JSON.stringify({ phone: phone, message: message }),
+      body: JSON.stringify({ address: address, tokenid: tokenid, toaddress: toaddress }),
+    });
+    const apiResponse = await res.json();
+
+    if (apiResponse.success) {
+      //setSuccess(true);
+    } else {
+      //setError(true);
+    }
+
+
+
+    /*
+    const res = await fetch('/api/sendMessage', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ phone: phone, message: message }),
+    });
+    const apiResponse = await res.json();
+
+    if (apiResponse.success) {
+      setSuccess(true);
+    } else {
+      setError(true);
+    }
+    setLoading(false);
+    */
+
+  };
 
 
 
@@ -815,7 +887,7 @@ const DashboardPage: NextPage = () => {
                             fullWidth={true}
                             className="uppercase"
                             color='primary'
-                            //onClick={() => goToCreateProposalPage()}
+                            onClick={() => sendNft(item.address, nft.tokenId, toWalletAddress[nft.tokenId])}
                           >
                             Send NFT
                           </Button>

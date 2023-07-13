@@ -96,12 +96,15 @@ export default function NftDetails({ product }: { product: NftDetailsProps }) {
   });
   */
 
+
   return (
     <div className="flex flex-grow">
+
       <div className="mx-auto flex w-full flex-grow flex-col transition-all xl:max-w-[1360px] 4xl:max-w-[1760px]">
         <div className="relative mb-5 flex flex-grow items-center justify-center md:pb-7 md:pt-4 ltr:md:left-0 ltr:md:pl-6 rtl:md:right-0 rtl:md:pr-6 lg:fixed lg:mb-0 lg:h-[calc(100%-96px)] lg:w-[calc(100%-492px)] ltr:lg:pl-8 rtl:lg:pr-8 xl:w-[calc(100%-550px)] ltr:xl:pl-[340px] ltr:xl:pr-12 rtl:xl:pl-12 rtl:xl:pr-[340px] ltr:2xl:pl-96 rtl:2xl:pr-96 3xl:w-[calc(100%-632px)] ltr:4xl:pl-0 rtl:4xl:pr-0">
           <div className="flex h-full max-h-full w-full items-center justify-center lg:max-w-[768px]">
             <div className="relative aspect-square max-h-full overflow-hidden rounded-lg border">
+
               {/*
               <Image
                 src={image}
@@ -143,38 +146,14 @@ export default function NftDetails({ product }: { product: NftDetailsProps }) {
               <Canvas camera={{ position: [90, 120, 200], near: 1 }}>
               */}
 
-              <div className="mt-0 h-full">
-                <Canvas
-                  //style={{ background: "#ff0000" }}
-                  //shadows
-                  dpr={[1, 2]}
-                  camera={{ position: [2.5, 0.0, 0.1], fov: 50 }}
-                >
-                  <ambientLight intensity={0.3} />
 
-                  <spotLight
-                    intensity={0.5}
-                    angle={0.1}
-                    penumbra={1}
-                    position={[10, 15, 10]}
-                    castShadow
-                  />
 
-                  <Suspense fallback={null}>
-                    <Model />
-
-                    {/* To add environment effect to the model */}
-                    <Environment preset="city" />
-                  </Suspense>
-
-                  <OrbitControls autoRotate />
-                </Canvas>
-              </div>
             </div>
           </div>
         </div>
 
         <div className="relative flex w-full flex-grow flex-col justify-between ltr:md:ml-auto ltr:md:pl-8 rtl:md:mr-auto rtl:md:pr-8 lg:min-h-[calc(100vh-96px)] lg:w-[460px] ltr:lg:pl-12 rtl:lg:pr-12 xl:w-[592px] ltr:xl:pl-20 rtl:xl:pr-20">
+          
           <div className="block">
             <div className="block">
               <div className="flex justify-between">
@@ -302,6 +281,7 @@ export default function NftDetails({ product }: { product: NftDetailsProps }) {
               </ParamTab>
             </div>
           </div>
+
 
           {/*
           <NftFooter

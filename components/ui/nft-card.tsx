@@ -21,6 +21,7 @@ export default function NFTGrid({
   collection,
   price,
 }: NFTGridProps) {
+  
   return (
     <div className="relative overflow-hidden rounded-lg bg-white shadow-card transition-all duration-200 hover:shadow-large dark:bg-light-dark">
       <div className="p-4">
@@ -39,7 +40,9 @@ export default function NFTGrid({
       </div>
 
       <div className="pl-4 pr-4">
+        {/*
         <AnchorLink href="/nft-details" className="relative block w-full">
+  */}
           <Image
             className="rounded-lg"
             src={image}
@@ -48,16 +51,23 @@ export default function NFTGrid({
             height={450}
             alt=""
           />
+        {/*
         </AnchorLink>
+        */}
       </div>
 
       <div className="p-4 ">
+
+        {/*
         <AnchorLink
           href="/nft-details"
           className="text-sm font-medium text-black dark:text-white"
         >
+        */}
           {name}
+        {/*
         </AnchorLink>
+        */}
 
         <div className="mt-1.5 flex">
           <AnchorLink

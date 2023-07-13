@@ -7,11 +7,17 @@ import NFT3 from '@/assets/images/nft/nft-3.jpg';
 import NFT4 from '@/assets/images/nft/nft-4.jpg';
 */
 
-import NFT1 from '@/assets/images/nft/Hrs_00006000.png';
+import NFT1 from '@/assets/images/nft/nft_01.jpg';
+
+
 ///import NFT1 from '@/assets/images/nft/roan.glb';
-import NFT2 from '@/assets/images/nft/Hrs_00006000.png';
-import NFT3 from '@/assets/images/nft/Hrs_00006000.png';
-import NFT4 from '@/assets/images/nft/Hrs_00006000.png';
+import NFT2 from '@/assets/images/nft/nft_02.jpg';
+
+import NFT3 from '@/assets/images/nft/nft_03.jpg';
+
+import NFT4 from '@/assets/images/nft/nft_04.jpg';
+
+
 
 import { nftDropContractAddressHorse } from '../../config/contractAddresses';
 

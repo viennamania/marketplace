@@ -71,6 +71,7 @@ import { useRouter } from "next/router";
 import { CSVLink, CSVDownload } from "react-csv";
 
 import Input from '@/components/ui/forms/input';
+import { da } from 'date-fns/locale';
 
 
 
@@ -182,7 +183,9 @@ const DashboardPage: NextPage = () => {
 
   const [pageNumber, setPageNumber] = useState(dashboardId ? Number(dashboardId) : -1);
 
-  console.log("pageNumber", pageNumber);
+  
+  console.log("pageNumber=======", pageNumber);
+
 
   const { layout } = useLayout();
 
@@ -199,7 +202,7 @@ const DashboardPage: NextPage = () => {
   );
   const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
 
-  console.log('owenedNfts', ownedNfts);
+  /////console.log('owenedNfts', ownedNfts);
 
   const [loading, setLoading] = useState(true);
 
@@ -280,6 +283,7 @@ const DashboardPage: NextPage = () => {
 
   useEffect(() => {
 
+    if (dashboardId === undefined) return;
 
     
     const settings = {
@@ -404,14 +408,12 @@ const DashboardPage: NextPage = () => {
           const balanceInEth = 0;
 
 
-          ////console.log("arrAdd[j]", j + ": " + arrAddress[j]);
+          console.log("arrAdd[j]", j + ": " + arrAddress[j]);
 
 
           // Get all NFTs
           ////const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
           const response = await alchemy.nft.getNftsForOwner(String(arrAddress[j]), {
-
-
             omitMetadata: false, // // Flag to omit metadata
             contractAddresses: [nftDropContractAddressHorse],
           });

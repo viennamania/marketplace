@@ -291,6 +291,8 @@ const DashboardPage: NextPage = () => {
 
     if (dashboardId === undefined) return;
 
+    console.log("useEffect dashboardId", dashboardId);
+
     
     const settings = {
       apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key.
@@ -315,107 +317,33 @@ const DashboardPage: NextPage = () => {
 
       const arrAddress : String[] = [];
 
+      
       async function buildVocab() {
+        
         await fetch("/wallet.csv")
         .then((resp) => resp.text())
         .then((text) => {
 
           Papa.parse(text, { header: true }).data.forEach( (row :any) => {
-
-            //console.log("row", row);
-
-            //vocab[row.word] = row.definition;
-
-            
-
-            //if (row.wallet) {
-
-            //if (row) {
-              arrAddress.push(row.address);
-              
-            //}
-
+            arrAddress.push(row.address);
           });
 
-          //console.log("text", text);
-          ///arrAddress.push(text.trim());
-  
-          /*
-          const data = Papa.parse(text, { header: true }).data;
-
-          console.log("data", data);
-          */
-
         })
-        
-      }
-
-      await buildVocab();
 
 
-      
-      //console.log("arrAddress", arrAddress);
 
-      
-      const arrHolderWallet : HolderWallet[] = [];
+        const arrHolderWallet : HolderWallet[] = [];
 
-      const arrHolderWalletforCSV : HolderWalletforCSV[] = [];
-
-      
-
-
-      console.log("pageNumber", pageNumber);
-
-      //for (let i = 0; i < arrAddress.length; i++) {
-      //for (let i = pageNumber*20+0; i < pageNumber*20+1; i++) {
-
-      /*
-        let i = pageNumber*20;
-
-        const arr20Address = arrAddress.slice(i, i + 20);
-
-        //console.log("arr20Address", arr20Address);
-
-        const res = await axios({
-          method: 'post',
-          url: "https://api.polygonscan.com/api",
-          params:{
-            module: "account",
-            action: "balancemulti",
-            address: arr20Address.join(","),
-            tag: "latest",
-            apikey: "MSRJCSFB5MSNWRMM9NI53ET78RJ4VWU1FV",
-          }
-        });
-
-        const result = res.data.result;
-
-        for (var j = 0; j < result.length; j++) {
-        */
-
-        //for (var j = 0; j < 100; j++) {
-
+        const arrHolderWalletforCSV : HolderWalletforCSV[] = [];
+  
+        console.log("pageNumber", pageNumber);
+  
+  
         if (pageNumber === -1) return;
 
         for (var j = pageNumber*10; j < pageNumber *10+10; j++) {
 
-
-
-
-          /*
-
-          //console.log("result[j]", result[j]);
-          const balance = result[j]?.balance ? result[j]?.balance : 0;
-
-          let balanceInEth = Number(ethers.utils.formatEther(balance)).toFixed(2);
-          */
-
-
           const balanceInEth = 0;
-
-
-          console.log("arrAdd[j]", j + ": " + arrAddress[j]);
-
 
           // Get all NFTs
           ////const response = await alchemy.nft.getNftsForOwner(String(arr20Address[j]), {
@@ -425,34 +353,11 @@ const DashboardPage: NextPage = () => {
           });
 
 
-          ///console.log("response", response);
-
           const attributes = [];
 
           for (var k = 0; k < response.ownedNfts.length; k++) {
 
             if (response.ownedNfts[k].tokenUri?.gateway) {
-
-              /*
-              fetch(response.ownedNfts[k].tokenUri?.gateway!)
-              .then((response) => response.json())
-              .then((responseJson) => {
-                //return responseJson.movies;
-                console.log("responseJson", responseJson.attributes[0].value);
-                console.log("responseJson", responseJson.attributes[1].value);
-
-                const asset = responseJson.attributes[0].value;
-                const grade = responseJson.attributes[1].value;
-
-                //attributes = { asset, grade };
-
-                //attributes.push({ asset, grade });
-
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-              */
 
 
               const res = await fetch(response.ownedNfts[k].tokenUri?.gateway!);
@@ -511,64 +416,19 @@ const DashboardPage: NextPage = () => {
 
           });
 
-          
-
         }
+        
+        setWalletListData(arrHolderWallet);
+  
+        setCsvData(arrHolderWalletforCSV);
+        
+        setLoading(false);
 
-      //}
+        
+      }
 
-      //console.log("arrHolderWallet", arrHolderWallet);
-    
+      buildVocab();
 
-      
-      setWalletListData(arrHolderWallet);
-
-
-      setCsvData(arrHolderWalletforCSV);
-      
-
-      /*
-      arrHolderWallet.map((item) => (
-
-        item.nfts.map((nft: any, index: any) => (
-          tokenId: nft.tokenId,
-          asset: item.attributes[index].asset,
-
-        ))
-
-      ))
-
-      */
-
-
-      /*
-      setCsvData(
-        arrHolderWallet.map((item) => (
-
-
-
-          item.nfts.map((nft: any, index: any) => (
-            tokenId: nft.tokenId,
-            asset: item.attributes[index].asset,
-            grade: item.attributes[index].grade,
-          )),
-          
-          
-          {
-          address: item.address,
-          balance: item.balance,
-
-
-          //nfts: item.nfts,
-          //attributes: item.attributes,
-
-        }))
-      )
-      */
-
-
-
-      setLoading(false);
 
 
     };

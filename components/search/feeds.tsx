@@ -1,5 +1,7 @@
 import cn from 'classnames';
+
 import { NFTList } from '@/data/static/nft-list';
+
 import NFTGrid from '@/components/ui/nft-card';
 import { useGridSwitcher } from '@/lib/hooks/use-grid-switcher';
 

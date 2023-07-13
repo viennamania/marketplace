@@ -1,12 +1,13 @@
 import AuthorImage from '@/assets/images/author.jpg';
 
-/*
+
 import NFT1 from '@/assets/images/nft/nft-1.jpg';
 import NFT2 from '@/assets/images/nft/nft-2.jpg';
 import NFT3 from '@/assets/images/nft/nft-3.jpg';
 import NFT4 from '@/assets/images/nft/nft-4.jpg';
-*/
 
+
+/*
 import NFT1 from '@/assets/images/nft/nft_01.jpg';
 
 
@@ -17,11 +18,17 @@ import NFT3 from '@/assets/images/nft/nft_03.jpg';
 
 import NFT4 from '@/assets/images/nft/nft_04.jpg';
 
+*/
+
+
+
 
 
 import { nftDropContractAddressHorse } from '../../config/contractAddresses';
 
 import { Network, Alchemy } from 'alchemy-sdk';
+
+
 
 const settings = {
   apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key.
@@ -40,6 +47,7 @@ const main = async () => {
   ///setHorses(response.nfts)
 
   const NFTList = response.nfts.map((nft) => {
+    
     const { contract, title, tokenType, tokenId, description, media } = nft;
 
     return {
@@ -65,8 +73,13 @@ const main = async () => {
       description,
       format: media[0]?.format ? media[0]?.format : 'png',
     };
+    
   });
+
 };
+
+
+
 
 export const NFTList = [
   {
@@ -340,3 +353,5 @@ export const NFTList = [
     price: '0.40 ETH',
   },
 ];
+
+

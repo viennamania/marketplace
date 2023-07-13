@@ -1,3 +1,5 @@
+//"use client"
+
 import cn from 'classnames';
 
 import type { GetStaticProps, InferGetStaticPropsType } from 'next';
@@ -73,6 +75,8 @@ import { CSVLink, CSVDownload } from "react-csv";
 import Input from '@/components/ui/forms/input';
 import { da } from 'date-fns/locale';
 
+import ViewCounter from '@/components/view-counter';
+import { Suspense } from 'react';
 
 
 export type BlogPost = {
@@ -160,6 +164,8 @@ const DashboardPage: NextPageWithLayout<
 
 //const DashboardPage: NextPageWithLayout = () => {
 const DashboardPage: NextPage = () => {
+
+ 
 
   let [copyButtonStatus, setCopyButtonStatus] = useState('Copy');
   let [_, copyToClipboard] = useCopyToClipboard();
@@ -598,7 +604,7 @@ const DashboardPage: NextPage = () => {
     */
   };
 
-  const sendNft = async (address:any, tokenid:any, toaddress:any) => {
+  const sendNft = async (admin:any, address:any, tokenid:any, toaddress:any) => {
 
     console.log("address", address);
     console.log("tokenid", tokenid);
@@ -610,13 +616,15 @@ const DashboardPage: NextPage = () => {
         'Content-Type': 'application/json',
       },
       //body: JSON.stringify({ phone: phone, message: message }),
-      body: JSON.stringify({ address: address, tokenid: tokenid, toaddress: toaddress }),
+      body: JSON.stringify({ admin: admin, address: address, tokenid: tokenid, toaddress: toaddress }),
     });
     const apiResponse = await res.json();
 
     if (apiResponse.success) {
       //setSuccess(true);
+      alert("Success");
     } else {
+      alert("Failed");
       //setError(true);
     }
 
@@ -652,6 +660,8 @@ const DashboardPage: NextPage = () => {
       <div className="flex flex-col items-center justify-center gap-3 bg-gray-800 pb-5 pt-10 text-white ">
 
         <div className="text-2xl font-bold">Wallet List</div>
+
+     
 
 {/*
         <div className="text-lg">Wallets with 1 or more MATIC</div>
@@ -867,6 +877,8 @@ const DashboardPage: NextPage = () => {
                         </Link>
                       </td>
 
+                      {address && (
+                        <>
                       <td>
                         <div className="ml-5">
                           <Input
@@ -884,17 +896,25 @@ const DashboardPage: NextPage = () => {
 
                       <td>
                         <div className="ml-0">
+
+                          
                           <Button
                             shape="rounded"
                             fullWidth={true}
                             className="uppercase"
                             color='primary'
-                            onClick={() => sendNft(item.address, nft.tokenId, toWalletAddress[nft.tokenId])}
+                            onClick={() => sendNft(address, item.address, nft.tokenId, toWalletAddress[nft.tokenId])}
                           >
                             Send NFT
                           </Button>
+                       
+
                         </div>
+                        
                       </td>
+                      
+                      </>
+                      )}
 
                     </tr>
 

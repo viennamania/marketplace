@@ -29,6 +29,7 @@
     "dayjs": "^1.11.8",
     "ethers": "5",
     "framer-motion": "^10.12.16",
+    "fs": "^0.0.1-security",
     "jotai": "^2.1.1",
     "leva": "^0.9.34",
     "next": "^13",

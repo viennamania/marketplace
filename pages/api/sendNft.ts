@@ -2,20 +2,52 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import twilio from 'twilio';
 
 import { ThirdwebSDK } from '@thirdweb-dev/sdk';
+
+
+import {
+  ConnectWallet,
+  useDisconnect,
+  ThirdwebNftMedia,
+  useAddress,
+  useContract,
+  useContractRead,
+  useOwnedNFTs,
+  useTokenBalance,
+  Web3Button,
+} from '@thirdweb-dev/react';
+
 import {
   nftDropContractAddressHorse,
   tokenContractAddressGRD,
 } from '@/config/contractAddresses';
 
+
+
+
 import { get } from '@vercel/edge-config';
 
+import { kv } from '@vercel/kv';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
-  const { address, tokenid, toaddress } = req.body;
+  const { admin, address, tokenid, toaddress } = req.body;
+
 
 
   try {
+
+
+    ///const admin = useAddress();
+
+    console.log("admin", admin);
+
+    if (admin != "0x1EcA452d5714F5ebeA7202c5F213840a61083a38" // oh
+    && admin != "0x26597616ed4e44379ba0Eb1EB86C4cFd82606F3E") { // nevertry
+      throw new Error("No admin found");
+    }
+
+
+
 
     if (!address) {
       throw new Error("No address found");
@@ -35,9 +67,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     //const privatekey = process.env[address];
 
-    const privatekey = await get(address);
+    ///const privatekey = await get(address);
 
-    console.log("privatekey", privatekey);
+    const privatekey = await kv.get(address);
+
+
+    //////console.log("privatekey", privatekey);
 
 
     if (!privatekey) {
@@ -47,6 +82,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const sdk = ThirdwebSDK.fromPrivateKey(String(privatekey), "polygon");
 
+
+    
+
+
     const contract = await sdk.getContract(nftDropContractAddressHorse);
 
     //console.log("contract", contract);
@@ -54,8 +93,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     
     /////const listings = await contract.directListings.getAllValid();
 
-    ////const result = await contract.erc721.transfer(toaddress, tokenid);
-    ////console.log("result", result);
+    const result = await contract.erc721.transfer(toaddress, tokenid);
+    console.log("result", result);
 
     /*
     {

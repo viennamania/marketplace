@@ -20,9 +20,9 @@ export default function Search() {
 
         <div className="2xl:ltr:pl-8 2xl:rtl:pr-8 4xl:ltr:pl-10 4xl:rtl:pr-10">
 
-          {/*
-
+          
           <div className="relative z-10 mb-6 flex items-center justify-between">
+
 
             <span className="text-xs font-medium text-gray-900 dark:text-white sm:text-sm">
               10000 assets
@@ -47,12 +47,15 @@ export default function Search() {
                   <OptionIcon className="relative h-auto w-[18px]" />
                 </Button>
               </div>
+
             </div>
+
+
           </div>
-*/}
 
           <Feeds />
         </div>
+
 
 {/*
         <div className="fixed bottom-6 left-1/2 z-10 w-full -translate-x-1/2 px-9 sm:hidden">

@@ -1,10 +1,16 @@
 import AuthorImage from '@/assets/images/author.jpg';
 
-
+/*
 import NFT1 from '@/assets/images/nft/nft-1.jpg';
 import NFT2 from '@/assets/images/nft/nft-2.jpg';
 import NFT3 from '@/assets/images/nft/nft-3.jpg';
 import NFT4 from '@/assets/images/nft/nft-4.jpg';
+*/
+
+import NFT1 from '@/assets/images/0_asset.png';
+import NFT2 from '@/assets/images/0_asset.png';
+import NFT3 from '@/assets/images/0_asset.png';
+import NFT4 from '@/assets/images/0_asset.png';
 
 
 /*

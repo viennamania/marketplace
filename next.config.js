@@ -12,7 +12,7 @@ const nextConfig = {
       'ipfs-2.thirdwebcdn.com',
       'res.cloudinary.com',
       'granderby-hosted-content.s3.ap-southeast-1.amazonaws.com',
-      'gcdn.ntruss.com',
+      'dshujxhbbpmz18304035.gcdn.ntruss.com',
     ],
   },
 }

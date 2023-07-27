@@ -142,10 +142,12 @@ export default function NftSinglePrice({
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
-                  <Image
-                    //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
 
-                    src={nft?.image}
+
+                  <Image
+                    src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
+
+                    ///src={nft?.image}
                     alt="nft"
                     width={50}
                     height={50}
@@ -277,8 +279,8 @@ export default function NftSinglePrice({
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
                   <Image
-                    //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
-                    src={nft?.image}
+                    src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
+                    //src={nft?.image}
                     alt="nft"
                     width={100}
                     height={100}
@@ -286,10 +288,12 @@ export default function NftSinglePrice({
                   />
                 </span>
                 <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
-                  <span>#{nft?.id}</span>
+                  <span>
+                    #{/*nft?.id*/}
+                  </span>
                 </span>
 
-                <span className="text-sm text-gray-400">({nft?.name})</span>
+                <span className="text-sm text-gray-400">({/*nft?.name*/})</span>
               </span>
               <span className="flex flex-wrap items-center gap-[5px]">
                 <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">

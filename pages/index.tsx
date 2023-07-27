@@ -340,6 +340,7 @@ const Home: NextPage = () => {
               */}
 
            
+           {/*
                 <div className={styles.listingGrid}>
 
                   {directListings?.map((listing) => (
@@ -349,7 +350,7 @@ const Home: NextPage = () => {
                       onClick={() => router.push(`/listing/${listing.id}`)}
                     >
 
-<span className="text-xs mt-2 mb-2">Listing: {listing.id}</span>   
+                      <span className="text-xs mt-2 mb-2">Listing: {listing.id}</span>   
 
                       <h2 className={styles.nameContainer}>
                         
@@ -361,18 +362,7 @@ const Home: NextPage = () => {
                           
                       </h2>
 
-{/*
-                      <MediaRenderer
-                        src={listing.asset.image}
-                        style={{
-                          borderRadius: 16,
-                          // Fit the image to the container
-                          width: "100%",
-                          height: "100%",
-                          padding: "10px",
-                        }}
-                      />
-                      */}
+
 
                       <div className=" w-full justify-center items-center p-5  ">
                       <Image
@@ -398,7 +388,7 @@ const Home: NextPage = () => {
                   ))}
 
                 </div>
-
+                */}
 
               </>
       
@@ -409,9 +399,11 @@ const Home: NextPage = () => {
         </div>
 
 
+{/*
         <div className=" w-full justify-center items-center pl-10 pr-10 ">
           <Search />
         </div>
+        */}
 
       </div>
 

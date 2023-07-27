@@ -19,6 +19,10 @@ export const nftDropContractAddressJockey =
 export const nftDropContractAddressTrack =
   '0x8A57D0CB88E5dEA66383B64669aa98c1ab48f03E';
 
+// Coupon (1155)
+export const nftDropContractAddressCoupon =
+  '0xBFd722e4aAd285baAb88cb11Ca7155981841b04d';
+
 // TRVC
 export const nftDropContractAddressTRVC =
   '0x8A57D0CB88E5dEA66383B64669aa98c1ab48f03E';
@@ -35,10 +39,18 @@ export const nftDropContractAddressReddit =
 export const nftDropContractAddressTrump =
   '0x24A11e702CD90f034Ea44FaF1e180C0C654AC5d9';
 
-///export const stakingContractAddressHorse = '0xE0DC3d4cB15614f4be1C469AF494c9261a0495a5';
+///export const stakingContractAddressHorseAAA = '0xE0DC3d4cB15614f4be1C469AF494c9261a0495a5';
 
 // Happy Valley Racecourse for Horse
-export const stakingContractAddressHorse =
+export const stakingContractAddressHorseAAA =
+  '0xF8b219c425B7Ef110917Bd61AD65D68a6db6A407';
+
+//Kyoto Racecourse for Horse
+export const stakingContractAddressHorseBBB =
+  '0x215c4c0F7cbDE5a2e3d12a312B643B54Ca2fDb7b';
+
+// Churchill Downs Racecourse for Horse
+export const stakingContractAddressHorseAAACCC =
   '0xF8b219c425B7Ef110917Bd61AD65D68a6db6A407';
 
 // Happy Valley Racecourse for Jockey
@@ -58,7 +70,11 @@ export const stakingContractAddressTRVC =
 
 export const marketplaceContractAddress =
   //'0x6c24530AB7A4dca2ec38335B04A64Fb531d380B7';
+  //'0x642D35ea500dA2497c8E703Ca38062A184006266'; // early bird
   '0xbf71A426649Cd2e96C9a29a09f140f20EF831296'; // official
+
+export const marketplaceContractAddressChaoscube =
+  '0xcc68084a1976195168D6874915FD8932094a46a9'; // chaoscube
 
 // Songpa Token (SONGPA)
 //export const tokenContractAddress = '0xe5Ae1a10c1af58eC2Fe11413029057892cC5fAae';
@@ -73,3 +89,10 @@ export const tokenContractAddressGRD =
 // USDC Token (USDC)
 export const tokenContractAddressUSDC =
   '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174';
+
+// USDT Token (USDT)
+export const tokenContractAddressUSDT =
+  '0xc2132D05D31c914a87C6611C10748AEb04B58e8F';
+
+// Race Ticket ERC-1155
+export const contractAddressRace = '0x5e52c17869F8fF63Eeb5f832Bfbf98465bc213bf';

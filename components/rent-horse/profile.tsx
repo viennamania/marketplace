@@ -7,11 +7,11 @@ import { Copy } from '@/components/icons/copy';
 import Button from '@/components/ui/button';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import Avatar from '@/components/ui/avatar';
-import ProfileTab from '@/components/rent-horse/profile-tab';
+import ProfileTab from './profile-tab';
 
 import {
   nftDropContractAddressHorse,
-  stakingContractAddressHorse,
+  stakingContractAddressHorseAAA,
   tokenContractAddressGRD,
 } from '../../config/contractAddresses';
 
@@ -22,8 +22,9 @@ import {
   useAddress,
   useContract,
   useContractRead,
-  useOwnedNFTs,
+  //useOwnedNFTs,
   useTokenBalance,
+  useNFTBalance,
   Web3Button,
 } from '@thirdweb-dev/react';
 
@@ -47,7 +48,11 @@ export default function Profile() {
     nftDropContractAddressHorse,
     'nft-drop'
   );
-  const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+
+  //const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+  const { data: nftBalance } = useNFTBalance(nftDropContract, address);
+
+  ////console.log("nftBalance", nftBalance);
 
   const { contract: tokenContract } = useContract(
     tokenContractAddressGRD,
@@ -55,10 +60,11 @@ export default function Profile() {
   );
   const { data: tokenBalance } = useTokenBalance(tokenContract, address);
 
+  const [stakedNftBalanceAAA, setStakedNftBalanceAAA] = useState<BigNumber>();
   const [claimableRewards, setClaimableRewards] = useState<BigNumber>();
 
   const { contract: stakingContract, isLoading } = useContract(
-    stakingContractAddressHorse
+    stakingContractAddressHorseAAA
   );
 
   useEffect(() => {
@@ -66,7 +72,11 @@ export default function Profile() {
 
     async function loadClaimableRewards() {
       const stakeInfo = await stakingContract?.call('getStakeInfo', [address]);
-      ////const stakeInfo = await contract?.call("getStakeInfo", );
+
+      ////console.log("staeInfo", stakeInfo[0].length);
+
+      setStakedNftBalanceAAA(stakeInfo[0].length);
+
       setClaimableRewards(stakeInfo[1]);
     }
 
@@ -74,17 +84,19 @@ export default function Profile() {
   }, [address, stakingContract]);
 
   return (
-    <div className="flex w-full flex-col pt-4 md:flex-row md:pt-10 lg:flex-row 3xl:pt-12">
+    <div className="  flex w-full flex-col pt-4 md:flex-row md:pt-10 lg:flex-row 3xl:pt-12">
       <>
-        <div className="shrink-0 border-dashed border-gray-200 dark:border-gray-700 md:w-72 ltr:md:border-r md:ltr:pr-7 rtl:md:border-l md:rtl:pl-7 lg:ltr:pr-10 lg:rtl:pl-10 2xl:w-80 3xl:w-96 3xl:ltr:pr-14 3xl:rtl:pl-14">
+        <div className=" hidden shrink-0 border-dashed border-gray-200 dark:border-gray-700 md:w-72 ltr:md:border-r md:ltr:pr-7 rtl:md:border-l md:rtl:pl-7 lg:ltr:pr-10 lg:rtl:pl-10 2xl:w-80 3xl:w-96 3xl:ltr:pr-14 3xl:rtl:pl-14">
+          {/*
           <div className="flex justify-center">
             <ConnectWallet theme="dark" />
           </div>
+  */}
 
           {!address ? (
             <></>
           ) : (
-            <div className="text-center ltr:md:text-left rtl:md:text-right">
+            <div className="  text-center ltr:md:text-left rtl:md:text-right">
               {/*
 
               <h2 className="text-xl font-medium tracking-tighter text-gray-900 dark:text-white xl:text-2xl">
@@ -116,29 +128,33 @@ export default function Profile() {
               </div>
                   */}
 
-              <div className="mt-3 text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
+              <div className=" mt-3 pr-10 text-right text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
                 <span>Current Balance</span>
                 <h3>
-                  <b>{tokenBalance?.displayValue}</b> {tokenBalance?.symbol}
+                  <b>{Number(tokenBalance?.displayValue).toFixed(2)}</b>{' '}
+                  {tokenBalance?.symbol}
                 </h3>
               </div>
 
-              <div className="mt-3 text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
-                <span>Claimable Rewards for Horse</span>
+              <div className="mt-3 pr-10 text-right text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
+                <span>Claimable Rewards from Happy Valley</span>
                 <h3>
                   <b>
                     {!claimableRewards
                       ? 'Loading...'
-                      : ethers.utils.formatUnits(claimableRewards, 18)}
+                      : Number(
+                          ethers.utils.formatUnits(claimableRewards, 18)
+                        ).toFixed(2)}
                   </b>{' '}
                   {tokenBalance?.symbol}
                 </h3>
 
+                {/*
                 <Web3Button
                   theme="light"
                   //colorMode="dark"
                   //accentColor="#5204BF"
-                  contractAddress={stakingContractAddressHorse}
+                  contractAddress={stakingContractAddressHorseAAA}
                   action={async (contract) => {
                     try {
                       const tx = await contract.call('claimRewards');
@@ -158,6 +174,35 @@ export default function Profile() {
                 >
                   Claim Rewards
                 </Web3Button>
+*/}
+              </div>
+
+              <div className="mt-3 pr-10 text-right text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
+                <span>Registered Horses to Happy Valley</span>
+                <h3>
+                  <b>
+                    {!stakedNftBalanceAAA
+                      ? 'Loading...'
+                      : Number(
+                          ethers.utils.formatUnits(stakedNftBalanceAAA, 0)
+                        ).toFixed(0)}
+                  </b>{' '}
+                  Horses
+                </h3>
+              </div>
+
+              <div className="mt-3 pr-10 text-right text-sm font-medium tracking-tighter text-gray-600 dark:text-gray-400 xl:mt-3">
+                <span>Owned Horses</span>
+                <h3>
+                  <b>
+                    {!nftBalance
+                      ? 'Loading...'
+                      : Number(ethers.utils.formatUnits(nftBalance, 0)).toFixed(
+                          0
+                        )}
+                  </b>{' '}
+                  Horses
+                </h3>
               </div>
             </div>
           )}

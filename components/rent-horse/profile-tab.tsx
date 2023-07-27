@@ -7,6 +7,10 @@ import CollectionCard from '@/components/ui/collection-card';
 import { useLayout } from '@/lib/hooks/use-layout';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 
+import AnchorLink from '@/components/ui/links/anchor-link';
+import routes from '@/config/routes';
+import { ExternalLink } from '@/components/icons/external-link';
+
 // static data
 import { collections } from '@/data/static/collections';
 import {
@@ -17,9 +21,10 @@ import {
 
 import {
   nftDropContractAddressHorse,
-  stakingContractAddressHorse,
+  stakingContractAddressHorseAAA,
   tokenContractAddressGRD,
   marketplaceContractAddress,
+  marketplaceContractAddressChaoscube,
 } from '../../config/contractAddresses';
 
 import { useEffect, useState } from 'react';
@@ -34,6 +39,7 @@ import {
   useOwnedNFTs,
   useTokenBalance,
   Web3Button,
+  useCreateDirectListing,
 } from '@thirdweb-dev/react';
 
 import { NATIVE_TOKEN_ADDRESS } from '@thirdweb-dev/sdk';
@@ -46,16 +52,33 @@ import { Stack, Snackbar, Alert } from '@mui/material';
 
 import dynamic from 'next/dynamic';
 
+import Image from 'next/image';
+
+import Button from '@/components/ui/button';
+import { Close } from '@/components/icons/close';
+import { Router } from 'next/router';
+
+import { useRouter } from 'next/router';
+
+import NftSinglePrice from '@/components/nft-pricing-table/nft-single-price';
+import { LongArrowRight } from '@/components/icons/long-arrow-right';
+import { LongArrowLeft } from '@/components/icons/long-arrow-left';
+
+///import { useModal } from '@/components/modal-views/context';
+
 const tabMenu = [
   {
-    title: 'Collection',
+    title: 'collection',
     path: 'collection',
   },
+
   /*
   {
-    title: 'Portfolio',
-    path: 'portfolio',
+    title: 'Unregistered',
+    path: 'unregistered',
   },
+  */
+  /*
   {
     title: 'History',
     path: 'history',
@@ -69,6 +92,11 @@ const MessageSnackbar = dynamic(
 );
 
 export default function ProfileTab() {
+  const router = useRouter();
+
+  const [tokenid, setTokenid] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+
   const [errMsgSnackbar, setErrMsgSnackbar] = useState<String>('');
   const [successMsgSnackbar, setSuccessMsgSnackbar] = useState<String>('');
   const [succ, setSucc] = useState(false);
@@ -120,38 +148,55 @@ export default function ProfileTab() {
   );
 
   const { contract: stakingContract, isLoading } = useContract(
-    stakingContractAddressHorse
+    stakingContractAddressHorseAAA
   );
 
   const { data: tokenBalance } = useTokenBalance(tokenContract, address);
 
   // Connect to our marketplace contract via the useContract hook
+
   const { contract: contractMarketplace } = useContract(
     marketplaceContractAddress,
-    //'marketplace',
     'marketplace-v3'
   );
+
+  const {
+    mutateAsync: createDirectListing,
+    isLoading: isLoadingSell,
+    error,
+  } = useCreateDirectListing(contractMarketplace);
+
+  const { contract: contractMarketplaceChaoscube } = useContract(
+    marketplaceContractAddressChaoscube,
+    'marketplace-v3'
+  );
+
+  const {
+    mutateAsync: createDirectListingChaoscube,
+    isLoading: isLoadingSellChaoscube,
+    error: errorChaoscube,
+  } = useCreateDirectListing(contractMarketplaceChaoscube);
 
   async function stakeNft(id: string) {
     if (!address) return;
 
     const isApproved = await nftDropContract?.isApproved(
       address,
-      stakingContractAddressHorse
+      stakingContractAddressHorseAAA
     );
 
     //onsole.log('isApproved', isApproved);
 
     if (!isApproved) {
       await nftDropContract?.setApprovalForAll(
-        stakingContractAddressHorse,
+        stakingContractAddressHorseAAA,
         true
       );
     }
 
     const data = await stakingContract?.call('stake', [[id]]);
 
-    console.log('staking data', data);
+    //console.log('staking data', data);
 
     if (data) {
       setSuccessMsgSnackbar('Your request has been sent successfully');
@@ -178,11 +223,11 @@ export default function ProfileTab() {
     /*
     const isApproved = await nftDropContract?.isApproved(
       address,
-      stakingContractAddressHorse
+      stakingContractAddressHorseAAA
     );
 
     if (!isApproved) {
-      await nftDropContract?.setApprovalForAll(stakingContractAddressHorse, true);
+      await nftDropContract?.setApprovalForAll(stakingContractAddressHorseAAA, true);
     }
 
     const data = await stakingContract?.call('stake', [id]);
@@ -218,99 +263,228 @@ export default function ProfileTab() {
     <>
       <ParamTab tabMenu={tabMenu}>
         <TabPanel className="focus:outline-none  ">
-          <h2 className="flex justify-center ">Your Staked Horses</h2>
+          <h3 className="mt-10 flex justify-center">Owned Horses</h3>
 
-          <div
-            className={cn(
-              'grid gap-4 xs:grid-cols-2 lg:grid-cols-2 lg:gap-5 xl:gap-6 3xl:grid-cols-3 4xl:grid-cols-4 ',
-              layout === LAYOUT_OPTIONS.RETRO
-                ? 'md:grid-cols-2'
-                : 'md:grid-cols-1'
-            )}
-          >
-            {stakedTokens &&
-              stakedTokens[0]?.map((stakedToken: BigNumber) => (
-                <NFTCard
-                  tokenId={stakedToken.toNumber()}
-                  key={stakedToken.toString()}
+          <div className="justify-right mb-5 flex h-16 items-center gap-6 border border-b border-dashed border-gray-200 px-6 dark:border-gray-700">
+            <Button
+              className="w-full"
+              title="Go"
+              color="white"
+              shape="rounded"
+              variant="transparent"
+              size="large"
+              onClick={() => {
+                router.push('https://granderby.market/');
+              }}
+            >
+              <div className="flex flex-row items-center gap-2">
+                <Image
+                  src="/images/market.png"
+                  alt="market"
+                  width={34}
+                  height={34}
                 />
-              ))}
+                Granderby Market
+              </div>
+            </Button>
           </div>
 
-          <h2 className="mt-10 flex justify-center">Your Unstaked Horses</h2>
+          {address && !ownedNfts ? (
+            <>
+              <div className="w-full text-center text-xl">{'Loading...'}</div>
+            </>
+          ) : (
+            <div
+              className={cn(
+                'grid grid-cols-3 gap-4 xs:grid-cols-3  lg:grid-cols-4 lg:gap-5 xl:gap-6 3xl:grid-cols-5 4xl:grid-cols-5 ',
+                layout === LAYOUT_OPTIONS.RETRO
+                  ? 'md:grid-cols-2'
+                  : 'md:grid-cols-4'
+              )}
+            >
+              {/*collections?.map((collection) => (
 
-          <div
-            className={cn(
-              'grid grid-cols-1 gap-4 xs:grid-cols-2 lg:grid-cols-2 lg:gap-5 xl:gap-6 3xl:grid-cols-3 4xl:grid-cols-4 ',
-              layout === LAYOUT_OPTIONS.RETRO
-                ? 'md:grid-cols-2'
-                : 'md:grid-cols-1'
-            )}
-          >
-            {/*collections?.map((collection) => (
+          <CollectionCard
+            item={collection}
+            key={`collection-key-${collection?.id}`}
+          />
 
-            <CollectionCard
-              item={collection}
-              key={`collection-key-${collection?.id}`}
+        ))*/}
+
+              {/*
+        {stakedTokens[0]?.map((nft) => (
+
+          <div className="" key={nft.metadata.id.toString()}>
+            <ThirdwebNftMedia
+              metadata={nft.metadata}
+              className="rounded-lg"
             />
+            <h4>
+              {nft.metadata.name} #{nft.metadata.id.toString()}
+            </h4>
 
-          ))*/}
+            <Web3Button
+              contractAddress={stakingContractAddressHorseAAA}
+              action={() => stakeNft(nft.metadata.id)}
+            >
+              Unregister from Racetrack
+            </Web3Button>
 
-            {/*
-          {stakedTokens[0]?.map((nft) => (
+          </div>
 
-            <div className="" key={nft.metadata.id.toString()}>
+        ))}
+        */}
+
+              {ownedNfts?.map((nft) => (
+                <div
+                  className="mb-5 flex flex-col  items-center justify-center gap-3"
+                  key={nft.metadata.id.toString()}
+                >
+                  <div className="justifiy-center flex flex-row items-center gap-2">
+                    <h5>{nft.metadata.name}</h5>
+
+                    <button
+                      type="button"
+                      className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-800"
+                      onClick={() =>
+                        //setTokenid(nft.metadata.id.toString()),
+                        //setIsOpen(true)
+                        router.push(
+                          '/horse-details/' + nft.metadata.id.toString()
+                        )
+                      }
+                    >
+                      NFT #{nft.metadata.id.toString()}
+                    </button>
+                    {/*
+                <AnchorLink
+                  href={{
+                    pathname: routes.horseDetails,
+                    ...(layout !== LAYOUT_OPTIONS.MODERN && {
+                      query: {
+                        layout,
+                      },
+                    }),
+                  }}
+                  className="cursor-pointer rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand dark:!bg-gray-700 dark:text-white"
+                >
+                  <ExternalLink className="dark:text-white" />
+                </AnchorLink>
+                */}
+                  </div>
+
+                  {/*
               <ThirdwebNftMedia
                 metadata={nft.metadata}
-                className="rounded-lg"
+                className="rounded-lg "
               />
-              <h4>
-                {nft.metadata.name} #{nft.metadata.id.toString()}
-              </h4>
+                */}
 
-              <Web3Button
-                contractAddress={stakingContractAddressHorse}
-                action={() => stakeNft(nft.metadata.id)}
-              >
-                Withdraw from Racetrack
-              </Web3Button>
+                  <Image
+                    //src={nft.media[0].thumbnail}
+                    src={nft.metadata.image ? nft.metadata.image : ''}
+                    alt={'alt'}
+                    width={500}
+                    height={500}
+                    className="rounded-lg"
+                  />
 
-            </div>
+                  <div className="flex flex-col gap-2">
+                    {/*
+                <Web3Button
+                  theme="light"
+                  contractAddress={stakingContractAddressHorseAAA}
+                  action={() => stakeNft(nft.metadata.id)}
+                >
+                  Register to Field
+                </Web3Button>
+                */}
 
-          ))}
+                    {/*
+                <Web3Button
+                  theme="light"
+                  contractAddress={marketplaceContractAddress}
+                  action={() =>
+                    createDirectListing({
+                      assetContractAddress: nftDropContractAddressHorse,
+                      tokenId: nft.metadata.id,
+                      pricePerToken: '3',
+                      currencyContractAddress: NATIVE_TOKEN_ADDRESS,
+                      isReservedListing: false,
+                      quantity: '1',
+                      startTimestamp: new Date(),
+                      endTimestamp: new Date(
+                        new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                      ),
+                    })
+                  }
+                >
+                  Sell to Market AAA
+                </Web3Button>
+
+                <Web3Button
+                  theme="light"
+                  contractAddress={marketplaceContractAddressChaoscube}
+                  action={() =>
+                    createDirectListingChaoscube({
+                      assetContractAddress: nftDropContractAddressHorse,
+                      tokenId: nft.metadata.id,
+                      pricePerToken: '99',
+                      currencyContractAddress: NATIVE_TOKEN_ADDRESS,
+                      isReservedListing: false,
+                      quantity: '1',
+                      startTimestamp: new Date(),
+                      endTimestamp: new Date(
+                        new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+                      ),
+                    })
+                  }
+                >
+                  Sell to Market BBB
+                </Web3Button>
+                */}
+
+                    {/*
+                <Web3Button
+                  theme="light"
+                  contractAddress={marketplaceContractAddress}
+                  action={() => sellNft(nft.metadata.id)}
+                >
+                  Sell
+                </Web3Button>
           */}
-
-            {ownedNfts?.map((nft) => (
-              <div
-                className="mb-5 flex flex-col items-center justify-center"
-                key={nft.metadata.id.toString()}
-              >
-                <ThirdwebNftMedia
-                  metadata={nft.metadata}
-                  className="rounded-lg "
-                />
-                <h4>{nft.metadata.name}</h4>
-
-                <div className="flex flex-row gap-2">
-                  <Web3Button
-                    theme="light"
-                    contractAddress={stakingContractAddressHorse}
-                    action={() => stakeNft(nft.metadata.id)}
-                  >
-                    Rent to Racetrack
-                  </Web3Button>
-
-                  <Web3Button
-                    theme="light"
-                    contractAddress={marketplaceContractAddress}
-                    action={() => sellNft(nft.metadata.id)}
-                  >
-                    Sell
-                  </Web3Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          <h3 className="flex justify-center ">
+            Registered Horses to Happy Valley
+          </h3>
+
+          {address && !stakedTokens ? (
+            <>
+              <div className="w-full text-center text-xl">{'Loading...'}</div>
+            </>
+          ) : (
+            <div
+              className={cn(
+                'grid grid-cols-3 gap-4 xs:grid-cols-3  lg:grid-cols-4 lg:gap-5 xl:gap-6 3xl:grid-cols-5 4xl:grid-cols-5 ',
+                layout === LAYOUT_OPTIONS.RETRO
+                  ? 'md:grid-cols-2'
+                  : 'md:grid-cols-4'
+              )}
+            >
+              {stakedTokens &&
+                stakedTokens[0]?.map((stakedToken: BigNumber) => (
+                  <NFTCard
+                    tokenId={stakedToken.toNumber()}
+                    key={stakedToken.toString()}
+                  />
+                ))}
+            </div>
+          )}
         </TabPanel>
 
         <TabPanel className="focus:outline-none">
@@ -421,6 +595,10 @@ export default function ProfileTab() {
       {/*
     </Stack>
   */}
+
+      {/*
+      <NftSinglePrice tokenid={tokenid} isOpen={isOpen} setIsOpen={setIsOpen} />
+      */}
     </>
   );
 }

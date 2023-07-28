@@ -73,7 +73,6 @@ const Home: NextPage = () => {
       //tokenId: "{{token_id}}", // Only show NFTs with this token ID
     },
   );
-
   
 
   const [inventories, setInventories] = useState<any[]>([]);

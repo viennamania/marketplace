@@ -59,12 +59,24 @@ const Home: NextPage = () => {
 
   ////const { data: listings, isLoading: loadingListings } = useValidDirectListings(marketplace);
 
+  
   const {
     data: directListings,
     isLoading: loadingListings,
     error,
-  } = useValidDirectListings(marketplace);
+  } = useValidDirectListings(marketplace, {
+      count: 300, // Number of listings to fetch
+      //offeror: "{{offeror_address}}", // Has offers from this address
+      //seller: "{{seller_address}}", // Being sold by this address
+      //start: 0, // Start from this index (pagination)
+      //tokenContract: "{{token_contract_address}}", // Only show NFTs from this collection
+      //tokenId: "{{token_id}}", // Only show NFTs with this token ID
+    },
+  );
 
+  
+
+  const [inventories, setInventories] = useState<any[]>([]);
 
   
   const address = useAddress();
@@ -153,6 +165,44 @@ const Home: NextPage = () => {
     setNewTime(inputTime);
 
   };
+
+
+
+  useEffect(() => {
+
+
+    /*
+    const timer = setTimeout(() => {
+      ///setMessage("The Launch Has Started");
+    }, 1000 * 60 * 60 * 24 * 1000);
+
+    return () => clearTimeout(timer);
+    */
+
+
+
+    const getInventory = async () => {
+      
+
+      const url = "https://granderby-market-bot-6639a95048b6.herokuapp.com/inventories";
+      const res = await fetch(url);
+
+      const data = await res.json();
+
+      console.log(data);
+
+      setInventories(data);
+
+    }
+
+
+    getInventory();
+
+
+
+  }, []);
+
+
 
   return (
     <>
@@ -309,11 +359,11 @@ const Home: NextPage = () => {
         <div className="m-10">
           {
             // If the listings are loading, show a loading message
-            loadingListings ? (
+            ////loadingListings ? (
+
+            !inventories ? (
               <>
-              
                 <div>Loading listings...</div>
-                
 
               </>
             ) : (
@@ -345,6 +395,9 @@ const Home: NextPage = () => {
                 <div className={styles.listingGrid}>
 
                   {directListings?.map((listing) => (
+
+                
+                    
                     <div
                       key={listing.id}
                       className={styles.listingShortView}
@@ -370,8 +423,8 @@ const Home: NextPage = () => {
                         //fill
                         src={listing.asset.image ? listing.asset.image : "/default-nft.png"}
                         alt="nft"
-                        width={1024}
-                        height={1024}
+                        width={500}
+                        height={500}
                         className="object-contain rounded-lg"
                       />
                       </div>

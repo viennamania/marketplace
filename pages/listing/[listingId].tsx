@@ -34,6 +34,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 
 
+import Image from '@/components/ui/image';
 
 import styles from "../../styles/Home.module.css";
 
@@ -217,12 +218,30 @@ const ListingPage: NextPage = () => {
 
         <h3>{directListing.asset.name}</h3>
 
+
+        {/*
         <div className={styles.leftListing}>
+          
           <MediaRenderer
             src={directListing.asset.image}
             className={styles.mainNftImage}
           />
+
         </div>
+        */}
+
+
+        <div className=" w-full justify-center items-center p-5  ">
+          <Image
+            //fill
+            src={directListing.asset.image ? directListing.asset.image : "/default-nft.png"}
+            alt="nft"
+            width={1024}
+            height={1024}
+            className="object-contain rounded-lg"
+          />
+          </div>
+
 
         <div className={styles.rightListing}>
           

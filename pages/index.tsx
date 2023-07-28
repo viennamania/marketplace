@@ -179,7 +179,7 @@ const Home: NextPage = () => {
   */}
 
 
-
+          {/*
           <div className=" w-full justify-center items-center pl-10 pr-10 ">
             <Image
               //fill
@@ -196,6 +196,7 @@ const Home: NextPage = () => {
             minutes={minutes}
             seconds={seconds}
           />
+          */}
 
 
 {/*

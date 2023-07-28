@@ -65,7 +65,7 @@ const Home: NextPage = () => {
     isLoading: loadingListings,
     error,
   } = useValidDirectListings(marketplace, {
-      count: 300, // Number of listings to fetch
+      count: 100, // Number of listings to fetch
       //offeror: "{{offeror_address}}", // Has offers from this address
       //seller: "{{seller_address}}", // Being sold by this address
       //start: 0, // Start from this index (pagination)

@@ -310,9 +310,9 @@ const Home: NextPage = () => {
             // If the listings are loading, show a loading message
             loadingListings ? (
               <>
-              {/*
+              
                 <div>Loading listings...</div>
-                */}
+                
 
               </>
             ) : (
@@ -340,7 +340,7 @@ const Home: NextPage = () => {
               */}
 
            
-           {/*
+           
                 <div className={styles.listingGrid}>
 
                   {directListings?.map((listing) => (
@@ -388,7 +388,7 @@ const Home: NextPage = () => {
                   ))}
 
                 </div>
-                */}
+                
 
               </>
       

@@ -299,15 +299,15 @@ export default function Feeds({ className }: { className?: string }) {
                           loading='lazy'
                           
                         />
-                        <div className='w-full m-2'>
+                        <div className='w-full m-2  '>
                           <p className='text-md font-bold'>{listing.asset?.name}</p>
                         </div>
 
-                        <div className='w-full m-2'>
-                          <p>
-                            <b>{listing.currencyValuePerToken.displayValue}</b>{" "}
+                        <div className='w-full m-2 flex items-center justify-end pr-5'>
+                          
+                            <b>{listing.currencyValuePerToken.displayValue}</b>&nbsp;
                             {listing.currencyValuePerToken.symbol}
-                          </p>
+                          
                         </div>
 
                       </div>

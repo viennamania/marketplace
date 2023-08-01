@@ -40,7 +40,18 @@ import PopoverContent from '@/components/cryptocurrency-pricing-table/popover-co
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
-import { nftDropContractAddressHorse } from '@/config/contractAddresses';
+
+
+import {
+  nftDropContractAddressHorse
+} from '@/config/contractAddresses';
+
+import {
+  ThirdwebNftMedia,
+  useContract,
+  useNFT,
+  Web3Button,
+} from '@thirdweb-dev/react';
 
 interface RadioOptionProps {
   value: string;
@@ -90,6 +101,7 @@ export default function NftSinglePrice({
   setIsOpen,
 }: NftDrawerProps) {
 
+
   const [price, setPrice] = useState(6.2);
   const [date, setDate] = useState(1624147200);
   const [status, setStatus] = useState('Month');
@@ -101,48 +113,11 @@ export default function NftSinglePrice({
   const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy hh:mma');
   const { layout } = useLayout();
 
-  const [nftMetadata, setNftMetadata] = useState<any>({});
-
-
-  const settings = {
-    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
-
-    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
-    network: Network.MATIC_MAINNET, // Replace with your network.
-  };
-
-  const alchemy = new Alchemy(settings);
-
-  useEffect(() => {
-
-
-    async function getNFTMetadata() {
-
-      ///let response = await alchemy.nft.getNftMetadata(contractAddress, tokenId)
-
-
-      const metadata = await alchemy.nft.getNftMetadata(
-        nftDropContractAddressHorse,
-        tokenid,
-      )
-
-
-      /*
-      const metadata = await alchemy.nft.getNftMetadata(
-        nftDropContractAddressHorse,
-        tokenid,
-      )
-      */
-
-      setNftMetadata(metadata);
-
-    }
-
-    ///getNFTMetadata();
-
-
-  }, [alchemy.nft, tokenid]);
-
+  const { contract } = useContract(
+    nftDropContractAddressHorse,
+    'nft-drop'
+  );
+  const { data: nft } = useNFT(contract, tokenid);
 
   const handleOnChange = (value: string) => {
     setStatus(value);
@@ -169,16 +144,21 @@ export default function NftSinglePrice({
           <div className="flex justify-between gap-4 sm:gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
               <span className="flex items-center gap-2.5">
+
                 <span className="flex flex-row items-center gap-2.5">
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
 
 
-                  <Image
-                    //src={nftMetadata?.image}
+                  <div className='text-xl font-medium capitalize text-brand dark:text-white'>
+                    {nft?.metadata?.name}
+                  </div>
 
-                    src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
+                  <Image
+                    src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png'}
+
+                    //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
 
                     ///src={nft?.image}
                     alt="nft"
@@ -189,7 +169,7 @@ export default function NftSinglePrice({
                 </span>
                 
                 <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
-                  {nftMetadata?.name}
+                  {nft?.metadata?.name}
                 </span>
                 {/*
                 <span className="text-sm text-gray-400">(BTC/USD)</span>
@@ -315,13 +295,16 @@ export default function NftSinglePrice({
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
               <span className="flex items-center gap-2.5">
 
-                <span className="flex flex-row items-center gap-2.5 ">
+                <span className="flex flex-col items-center gap-2.5 ">
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
+                  <div className='text-xl font-medium capitalize text-brand dark:text-white'>
+                    {nft?.metadata?.name}
+                  </div>
                   <Image
-                    src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
-                    //src={nft?.image}
+                    //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
+                    src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png'}
                     alt="nft"
                     width={500}
                     height={500}

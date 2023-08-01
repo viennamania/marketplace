@@ -179,8 +179,8 @@ const ListingPage: NextPage = () => {
 
   return (
 
-    <div className={styles.container} style={{}}>
-      <div className={styles.listingContainer}>
+    <div className="mt-28 flex flex-wrap gap-6 lg:flex-nowrap">
+      
 
 
         {address &&
@@ -216,7 +216,9 @@ const ListingPage: NextPage = () => {
         }
 
 
-        <h3>{directListing.asset.name}</h3>
+        <h3 className="w-full flex items-center justify-center text-xl font-bold">
+          {directListing.asset.name}
+        </h3>
 
 
         {/*
@@ -296,17 +298,19 @@ const ListingPage: NextPage = () => {
             </div>
           :
 
-          <Web3Button
-            theme="dark"
-            action={(contract) =>
-              ////contract?.call('withdraw', [[nft.metadata.id]])
-              buyNft()
+            <div className="m-10">
+              <Web3Button
+                theme="light"
+                action={(contract) =>
+                  ////contract?.call('withdraw', [[nft.metadata.id]])
+                  buyNft()
 
-            }
-            contractAddress={marketplaceContractAddress}
-          >
-            Buy
-          </Web3Button>
+                }
+                contractAddress={marketplaceContractAddress}
+              >
+                Buy
+              </Web3Button>
+            </div>
 
           }
 
@@ -353,7 +357,7 @@ const ListingPage: NextPage = () => {
 
 
 
-      </div>
+ 
 
 
 

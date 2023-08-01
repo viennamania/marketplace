@@ -33,10 +33,21 @@ import { useRouter } from 'next/router';
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
-import { nftDropContractAddressHorse } from '@/config/contractAddresses';
+import {
+  nftDropContractAddressHorse
+} from '@/config/contractAddresses';
+
+import {
+  ThirdwebNftMedia,
+  useContract,
+  useNFT,
+  Web3Button,
+} from '@thirdweb-dev/react';
 
 import { get } from 'http';
 import { set } from 'date-fns';
+
+
 
 
 function SinglePrice(tokenid: any) {
@@ -45,7 +56,16 @@ function SinglePrice(tokenid: any) {
   const isMounted = useIsMounted();
   const breakpoint = useBreakpoint();
 
-  const [nftMetadata, setNftMetadata] = useState<any>({});
+ 
+
+  const { contract } = useContract(
+    nftDropContractAddressHorse,
+    'nft-drop'
+  );
+  const { data: nftMetadata } = useNFT(contract, tokenid.tokenid);
+
+
+
 
   const settings = {
     ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
@@ -63,17 +83,19 @@ function SinglePrice(tokenid: any) {
 
       const metadata = await alchemy.nft.getNftMetadata(
         nftDropContractAddressHorse,
-        tokenid,
+        tokenid.tokenid,
       )
 
-      setNftMetadata(metadata);
+      ///setNftMetadata(metadata);
+
+      console.log('metadata======', metadata);
 
     }
 
     ///getNFTMetadata();
 
 
-  }, [alchemy.nft, tokenid]);
+  }, [alchemy.nft, tokenid.tokenid]);
 
 
   return (
@@ -89,7 +111,7 @@ function SinglePrice(tokenid: any) {
 
           
           <NftSinglePrice
-            tokenid={tokenid}
+            tokenid={tokenid.tokenid}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
@@ -139,6 +161,10 @@ function SinglePrice(tokenid: any) {
     </>
   );
 }
+
+
+
+
 
 const AssetSinglePrice: NextPageWithLayout = () => {
   const router = useRouter();

@@ -36,7 +36,7 @@ import {
   useAddress,
   useContract,
   useContractRead,
-  //useOwnedNFTs,
+  useOwnedNFTs,
   useTokenBalance,
   useNFTBalance,
   Web3Button,
@@ -52,8 +52,18 @@ export default function Feeds({ className }: { className?: string }) {
 
   const address = useAddress();
 
-  //console.log("address======>", address);
+  console.log("address======>", address);
 
+  const { contract: nftDropContract } = useContract(
+    nftDropContractAddressHorse,
+    'nft-drop'
+  );
+  const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+
+
+  console.log("ownedNfts======>", ownedNfts);
+
+  /*
   const settings = {
     ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
 
@@ -84,30 +94,9 @@ export default function Feeds({ className }: { className?: string }) {
 
   const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery (
     "infiniteCharacters",
-    async (
-      {
-        ///pageParam = 1,
 
-        pageParam = '',
-
-      }
-      ) =>
-
-    /*
-      await fetch(
-        `https://rickandmortyapi.com/api/character/?page=${pageParam}`
-      ).then((result) => result.json()),
-      */
-      ///////await alchemy.nft.getNftsForContract(
-
-      /*
-      const response = await alchemy.nft.getNftsForOwner(String(address), {
-        omitMetadata: false, // // Flag to omit metadata
-        contractAddresses: [nftDropContractAddressHorse],
-      });
-      */
-
-
+    
+    async ( { pageParam = '', } ) => 
       
       await alchemy.nft.getNftsForOwner(
         String(address),
@@ -118,11 +107,11 @@ export default function Feeds({ className }: { className?: string }) {
           pageSize: 40,
         }
       ).then((result) => { //result
-          ///console.log("result======>", result)
+          console.log("result======>", result)
           return result
         }),
 
-
+    
 
     {
       getNextPageParam: (lastPage, pages   ) => {
@@ -140,6 +129,7 @@ export default function Feeds({ className }: { className?: string }) {
     }
 
   );
+  */
 
   ///console.log(data);
 
@@ -226,6 +216,7 @@ export default function Feeds({ className }: { className?: string }) {
       ) : (
         <>
 
+{/*
         {status === "success" && (
 
           <InfiniteScroll
@@ -234,10 +225,8 @@ export default function Feeds({ className }: { className?: string }) {
             hasMore={hasNextPage ?? false}
             loader={<h4>Loading...</h4>}
           >
+        */}
 
-            {/*
-            <div className='grid-container'>
-            */}
 
             <div
               className={cn(
@@ -249,82 +238,80 @@ export default function Feeds({ className }: { className?: string }) {
               )}
             >
 
-            
 
+           
+            {/*
               {data?.pages.map((page) => (
+              */}
+
+           
+
+
                 <>
 
+                {/*
                   {page.ownedNfts?.map((nft) => (
+                  */}
+
+
+                  {ownedNfts?.map((nft) => (
+
+
                     <>
 
-                      <div key={nft?.tokenId}
+                      <div key={nft?.metadata?.tokenId}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
                           //setTokenid(nft.metadata.id.toString()),
                           //setIsOpen(true)
                           router.push(
-                            '/horse-details/' + nft?.tokenId
+                            '/horse-details/' + nft?.metadata?.tokenId
                           )
                         }
                       >
 
                         <Image
-                          src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : '/logo.png' }
-                          alt={nft?.title}
+                          src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png' }
+                          alt={nft?.metadata?.name}
                           height={500}
                           width={500}
                           loading='lazy'
                           
                         />
                         <div className='w-full m-2'>
-                          <p className='text-md font-bold'>{nft?.title}</p>
+                          <p className='text-md font-bold'>{nft?.metadata?.name}</p>
                         </div>
 
                       </div>
                     
                   
 
-                    {/*
-                  {page.results.map((character) => (
-                    */}
-
-                  {/*
-                    <article key={nft?.id}>
-                      <img
-                        src={nft?.image}
-                        alt={nft?.name}
-                        height={250}
-                        loading='lazy'
-                        width={"100%"}
-                      />
-                      <div className='text'>
-                        <p>Name: {nft?.name}</p>
-
-                      </div>
-                    </article>
-                    */}
 
                     </>
 
                   ))}
                   
                 </>
+
+
+              {/*
+
               ))}
+              */}
 
             </div>
             
-
+{/*
           </InfiniteScroll>
 
         )}
+
+*/}
 
 
       </>
       )}
 
-                  {/*
-                  </div>
-                  */}
     </>
 
   );

@@ -2,7 +2,7 @@ import NftSinglePrice from '@/components/nft-pricing-table/nft-single-price';
 
 import RootLayout from '@/layouts/_root-layout';
 import { NextPageWithLayout } from '@/types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import NftInfo from '@/components/nft-pricing-table/nft-info';
 
@@ -31,16 +31,56 @@ import AnchorLink from '@/components/ui/links/anchor-link';
 
 import { useRouter } from 'next/router';
 
+import { Network, Alchemy } from 'alchemy-sdk';
+
+import { nftDropContractAddressHorse } from '@/config/contractAddresses';
+
+import { get } from 'http';
+import { set } from 'date-fns';
+
+
 function SinglePrice(tokenid: any) {
   const [isOpen, setIsOpen] = useState(false);
   const { layout } = useLayout();
   const isMounted = useIsMounted();
   const breakpoint = useBreakpoint();
 
+  const [nftMetadata, setNftMetadata] = useState<any>({});
+
+  const settings = {
+    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
+
+    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
+    network: Network.MATIC_MAINNET, // Replace with your network.
+  };
+
+  const alchemy = new Alchemy(settings);
+
+  useEffect(() => {
+
+
+    async function getNFTMetadata() {
+
+      const metadata = await alchemy.nft.getNftMetadata(
+        nftDropContractAddressHorse,
+        tokenid,
+      )
+
+      setNftMetadata(metadata);
+
+    }
+
+    ///getNFTMetadata();
+
+
+  }, [alchemy.nft, tokenid]);
+
+
   return (
     <>
       <div className="mt-20 flex flex-wrap gap-6 lg:flex-nowrap">
 
+        
         
         <div
           className={`w-full 2xl:w-full 
@@ -55,6 +95,7 @@ function SinglePrice(tokenid: any) {
           />
         </div>
         
+        
 
         {layout === LAYOUT_OPTIONS.RETRO ? (
           <InfoDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -64,7 +105,7 @@ function SinglePrice(tokenid: any) {
               NFT Info
             </h2>
 
-            <NftInfo />
+            <NftInfo nftMetadata={nftMetadata}/>
 
             {/*
             <div>

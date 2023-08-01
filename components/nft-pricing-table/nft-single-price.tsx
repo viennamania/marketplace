@@ -38,11 +38,17 @@ import 'tippy.js/dist/backdrop.css';
 import 'tippy.js/animations/shift-away.css';
 import PopoverContent from '@/components/cryptocurrency-pricing-table/popover-content';
 
+import { Network, Alchemy } from 'alchemy-sdk';
+
+import { nftDropContractAddressHorse } from '@/config/contractAddresses';
+
 interface RadioOptionProps {
   value: string;
 }
 
 function RadioGroupOption({ value }: RadioOptionProps) {
+  
+
   return (
     <RadioGroup.Option value={value}>
       {({ checked }) => (
@@ -83,6 +89,7 @@ export default function NftSinglePrice({
   isOpen,
   setIsOpen,
 }: NftDrawerProps) {
+
   const [price, setPrice] = useState(6.2);
   const [date, setDate] = useState(1624147200);
   const [status, setStatus] = useState('Month');
@@ -94,24 +101,48 @@ export default function NftSinglePrice({
   const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy hh:mma');
   const { layout } = useLayout();
 
-  const [nft, setNft] = useState();
+  const [nftMetadata, setNftMetadata] = useState<any>({});
+
+
+  const settings = {
+    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
+
+    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
+    network: Network.MATIC_MAINNET, // Replace with your network.
+  };
+
+  const alchemy = new Alchemy(settings);
 
   useEffect(() => {
-    const fetchNft = async () => {
-      const res = await fetch(
-        `https://granderby.io/api/nft/horse/${tokenid.tokenid}`
-      );
-      const data = await res.json();
 
-      console.log('data image', data.image);
 
-      setNft(data);
-    };
+    async function getNFTMetadata() {
 
-    console.log('tokenid', tokenid.tokenid);
+      ///let response = await alchemy.nft.getNftMetadata(contractAddress, tokenId)
 
-    fetchNft();
-  }, [tokenid]);
+
+      const metadata = await alchemy.nft.getNftMetadata(
+        nftDropContractAddressHorse,
+        tokenid,
+      )
+
+
+      /*
+      const metadata = await alchemy.nft.getNftMetadata(
+        nftDropContractAddressHorse,
+        tokenid,
+      )
+      */
+
+      setNftMetadata(metadata);
+
+    }
+
+    ///getNFTMetadata();
+
+
+  }, [alchemy.nft, tokenid]);
+
 
   const handleOnChange = (value: string) => {
     setStatus(value);
@@ -145,6 +176,8 @@ export default function NftSinglePrice({
 
 
                   <Image
+                    //src={nftMetadata?.image}
+
                     src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
 
                     ///src={nft?.image}
@@ -154,10 +187,11 @@ export default function NftSinglePrice({
                     ///className="h-auto w-100 lg:w-200"
                   />
                 </span>
-                {/*
+                
                 <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
-                  Bitcoin
+                  {nftMetadata?.name}
                 </span>
+                {/*
                 <span className="text-sm text-gray-400">(BTC/USD)</span>
                 */}
               </span>

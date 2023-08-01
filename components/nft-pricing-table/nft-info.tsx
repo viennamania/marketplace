@@ -11,7 +11,8 @@ import { SearchIcon } from '@/components/icons/search';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import Explorers from '@/components/cryptocurrency-pricing-table/explorers';
 
-function NftInfo() {
+function NftInfo(nftMetadata: any) {
+  
   const [copyButtonStatus, setCopyButtonStatus] = useState(false);
   const [_, copyToClipboard] = useCopyToClipboard();
   function handleCopyToClipboard() {

@@ -13,7 +13,7 @@ import { Network, Alchemy } from 'alchemy-sdk';
 
 import { useEffect, useState } from 'react';
 
-import { nftDropContractAddressHorse } from '../../config/contractAddresses';
+import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
 import useSWR from 'swr';
 import { fetcher } from '../../lib/utils';
@@ -38,12 +38,6 @@ export default function Feeds({ className }: { className?: string }) {
 
 
 
-  const settings = {
-    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
-
-    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
-    network: Network.MATIC_MAINNET, // Replace with your network.
-  };
 
   type NFT = {
     id: string;
@@ -61,6 +55,13 @@ export default function Feeds({ className }: { className?: string }) {
 
   //const [cursor, setCursor] = useState<string | undefined>(undefined);
 
+
+  const settings = {
+    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
+
+    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
+    network: Network.MATIC_MAINNET, // Replace with your network.
+  };
 
   const alchemy = new Alchemy(settings);
 

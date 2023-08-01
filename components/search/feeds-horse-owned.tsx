@@ -29,6 +29,20 @@ import Image from "next/image";
 import { useRouter } from 'next/router';
 
 
+import {
+  ConnectWallet,
+  useDisconnect,
+  ThirdwebNftMedia,
+  useAddress,
+  useContract,
+  useContractRead,
+  //useOwnedNFTs,
+  useTokenBalance,
+  useNFTBalance,
+  Web3Button,
+} from '@thirdweb-dev/react';
+
+
 
 
 export default function Feeds({ className }: { className?: string }) {
@@ -36,7 +50,9 @@ export default function Feeds({ className }: { className?: string }) {
 
   const router = useRouter();
 
+  const address = useAddress();
 
+  //console.log("address======>", address);
 
   const settings = {
     ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
@@ -82,9 +98,22 @@ export default function Feeds({ className }: { className?: string }) {
         `https://rickandmortyapi.com/api/character/?page=${pageParam}`
       ).then((result) => result.json()),
       */
-      await alchemy.nft.getNftsForContract(
-        nftDropContractAddressHorse,
+      ///////await alchemy.nft.getNftsForContract(
+
+      /*
+      const response = await alchemy.nft.getNftsForOwner(String(address), {
+        omitMetadata: false, // // Flag to omit metadata
+        contractAddresses: [nftDropContractAddressHorse],
+      });
+      */
+
+
+      
+      await alchemy.nft.getNftsForOwner(
+        String(address),
         {
+          omitMetadata: false, // // Flag to omit metadata
+          contractAddresses: [nftDropContractAddressHorse],
           pageKey: pageParam,
           pageSize: 40,
         }
@@ -92,12 +121,7 @@ export default function Feeds({ className }: { className?: string }) {
           ///console.log("result======>", result)
           return result
         }),
-      
-      /*
-      .finally((result:any) => {
-        pageParam = result.pageKey;
-      }),
-      */
+
 
 
     {
@@ -190,127 +214,117 @@ export default function Feeds({ className }: { className?: string }) {
   return (
 
     <>
-    {/*
-    <div
-      className={cn(
-        'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
-        isGridCompact
-          ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
-          : '3xl:!grid-cols-3 4xl:!grid-cols-4',
-        className
-      )}
-    >
-    */}
+ 
+      {!address ? (
+        <>
+          <div className='flex flex-col items-center justify-center w-full h-full'>
+            <ConnectWallet
+              theme='light'
+            />
+          </div>
+        </>
+      ) : (
+        <>
 
-      {/*
-      {horses.map((nft) => (
-        <NFTGrid
-          key={nft.id}
-          name={nft.name}
-          image={nft.image}
-          author={nft.author}
-          authorImage={nft.authorImage}
-          price={nft.price}
-          collection={nft.collection}
-        />
-      ))}
-      */}
+        {status === "success" && (
 
-      {status === "success" && (
-
-        <InfiniteScroll
-          dataLength={data?.pages.length * 20}
-          next={fetchNextPage}
-          hasMore={hasNextPage ?? false}
-          loader={<h4>Loading...</h4>}
-        >
-
-{/*
-          <div className='grid-container'>
-*/}
-
-          <div
-            className={cn(
-              'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
-              isGridCompact
-                ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
-                : '3xl:!grid-cols-3 4xl:!grid-cols-4',
-              className
-            )}
+          <InfiniteScroll
+            dataLength={data?.pages.length * 20}
+            next={fetchNextPage}
+            hasMore={hasNextPage ?? false}
+            loader={<h4>Loading...</h4>}
           >
 
-          
+            {/*
+            <div className='grid-container'>
+            */}
 
-            {data?.pages.map((page) => (
-              <>
+            <div
+              className={cn(
+                'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
+                isGridCompact
+                  ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
+                  : '3xl:!grid-cols-3 4xl:!grid-cols-4',
+                className
+              )}
+            >
 
-                {page.nfts?.map((nft) => (
-                  <>
+            
 
-                    <div key={nft?.tokenId}
-                      className='relative overflow-hidden bg-white rounded-lg shadow-lg'
-                      onClick={() =>
-                        //setTokenid(nft.metadata.id.toString()),
-                        //setIsOpen(true)
-                        router.push(
-                          '/horse-details/' + nft?.tokenId
-                        )
-                      }
-                    >
+              {data?.pages.map((page) => (
+                <>
 
-                      <Image
-                        src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : 'https://via.placeholder.com/500' }
-                        alt={nft?.title}
-                        height={500}
-                        width={500}
-                        loading='lazy'
-                        
-                      />
-                      <div className='w-full m-2'>
-                        <p className='text-md font-bold'>{nft?.title}</p>
+                  {page.ownedNfts?.map((nft) => (
+                    <>
+
+                      <div key={nft?.tokenId}
+                        className='relative overflow-hidden bg-white rounded-lg shadow-lg'
+                        onClick={() =>
+                          //setTokenid(nft.metadata.id.toString()),
+                          //setIsOpen(true)
+                          router.push(
+                            '/horse-details/' + nft?.tokenId
+                          )
+                        }
+                      >
+
+                        <Image
+                          src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : 'https://via.placeholder.com/500' }
+                          alt={nft?.title}
+                          height={500}
+                          width={500}
+                          loading='lazy'
+                          
+                        />
+                        <div className='w-full m-2'>
+                          <p className='text-md font-bold'>{nft?.title}</p>
+                        </div>
+
                       </div>
-
-                    </div>
+                    
                   
-                
+
+                    {/*
+                  {page.results.map((character) => (
+                    */}
 
                   {/*
-                {page.results.map((character) => (
-                  */}
+                    <article key={nft?.id}>
+                      <img
+                        src={nft?.image}
+                        alt={nft?.name}
+                        height={250}
+                        loading='lazy'
+                        width={"100%"}
+                      />
+                      <div className='text'>
+                        <p>Name: {nft?.name}</p>
 
-{/*
-                  <article key={nft?.id}>
-                    <img
-                      src={nft?.image}
-                      alt={nft?.name}
-                      height={250}
-                      loading='lazy'
-                      width={"100%"}
-                    />
-                    <div className='text'>
-                      <p>Name: {nft?.name}</p>
+                      </div>
+                    </article>
+                    */}
 
-                    </div>
-                  </article>
-                  */}
+                    </>
 
-                  </>
+                  ))}
+                  
+                </>
+              ))}
 
-                ))}
-                
-              </>
-            ))}
+            </div>
+            
 
-          </div>
-          
+          </InfiniteScroll>
 
-        </InfiniteScroll>
+        )}
 
+
+      </>
       )}
 
                   {/*
-    </div>
-    */}
+                  </div>
+                  */}
     </>
 
   );

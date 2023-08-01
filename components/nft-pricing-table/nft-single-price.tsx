@@ -156,7 +156,7 @@ export default function NftSinglePrice({
                   </div>
 
                   <Image
-                    src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png'}
+                    src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
 
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
 
@@ -304,7 +304,7 @@ export default function NftSinglePrice({
                   </div>
                   <Image
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
-                    src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png'}
+                    src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
                     alt="nft"
                     width={500}
                     height={500}

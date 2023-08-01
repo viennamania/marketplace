@@ -272,7 +272,7 @@ export default function Feeds({ className }: { className?: string }) {
                       >
 
                         <Image
-                          src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png' }
+                          src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png' }
                           alt='nft'
                           height={500}
                           width={500}

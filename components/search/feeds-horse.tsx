@@ -259,7 +259,7 @@ export default function Feeds({ className }: { className?: string }) {
                     >
 
                       <Image
-                        src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : 'https://via.placeholder.com/500' }
+                        src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : '/logo.png' }
                         alt={nft?.title}
                         height={500}
                         width={500}

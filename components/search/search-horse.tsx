@@ -18,7 +18,7 @@ export default function Search() {
         </div>
   */}
 
-          <span className="m-3 text-xl font-medium text-gray-900 dark:text-white sm:text-xl">
+          <span className="m-3 text-2xl font-bold text-gray-900 dark:text-white sm:text-2xl">
             Granderby Horse NFT
           </span>
 

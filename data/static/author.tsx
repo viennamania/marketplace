@@ -1,4 +1,4 @@
-import CoverImage from '@/assets/images/profile-cover.png';
+import CoverImage from '@/assets/images/profile-cover-horse.jpg';
 //import CoverImage from '@/assets/images/arena.png';
 
 //import AuthorImage from '@/assets/images/author.jpg';

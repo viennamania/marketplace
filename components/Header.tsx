@@ -30,6 +30,7 @@ export default function Header() {
       <div className={styles.left}>
         <div>
           <Link href="/" passHref role="button">
+            <div className="flex flex-row items-center justify-start gap-2">
             <Image
               src={`/logo.png`}
               alt="Logo"
@@ -37,6 +38,8 @@ export default function Header() {
               height={45}
               style={{ cursor: "pointer" }}
             />
+            <div className="text-xl font-bold text-black dark:text-white">Granderby Market</div>
+            </div>
           </Link>
         </div>
       </div>

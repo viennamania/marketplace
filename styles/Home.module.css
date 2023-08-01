@@ -78,7 +78,8 @@
 }
 
 .header {
-  background-color: #262936;
+  ///background-color: #262936;
+  background-color: var(--white);
   position: fixed;
   top: 0;
   left: 0;

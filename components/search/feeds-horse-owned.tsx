@@ -217,7 +217,7 @@ export default function Feeds({ className }: { className?: string }) {
  
       {!address ? (
         <>
-          <div className='flex flex-col items-center justify-center w-full h-full'>
+          <div className='flex flex-col items-center justify-center w-full h-40'>
             <ConnectWallet
               theme='light'
             />

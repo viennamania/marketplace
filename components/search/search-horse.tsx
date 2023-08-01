@@ -33,8 +33,9 @@ export default function Search() {
 
 
           
-          <div className="relative z-10 mb-6 flex items-center justify-between">
+          <div className="relative z-10 mb-6 flex items-center justify-between ">
 
+            <div className='w-full flex items-right justify-end'>
 
             <div className="flex gap-6 3xl:gap-8 ">
 
@@ -56,6 +57,8 @@ export default function Search() {
                   <OptionIcon className="relative h-auto w-[18px]" />
                 </Button>
               </div>
+
+            </div>
 
             </div>
 

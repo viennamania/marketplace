@@ -27,8 +27,12 @@ import Image from "next/image";
 
 import { useRouter } from 'next/router';
 
-import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
+
+import {
+  nftDropContractAddressHorse,
+  marketplaceContractAddress
+} from '@/config/contractAddresses';
 
 import {
   ConnectWallet,
@@ -41,6 +45,7 @@ import {
   useTokenBalance,
   useNFTBalance,
   Web3Button,
+  useValidDirectListings,
 } from '@thirdweb-dev/react';
 
 
@@ -61,8 +66,16 @@ export default function Feeds({ className }: { className?: string }) {
   );
   const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
 
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace-v3"
+  );
 
-  console.log("ownedNfts======>", ownedNfts);
+  const {
+    data: directListings,
+    isLoading: loadingListings,
+    error,
+  } = useValidDirectListings(marketplace);
 
   /*
   const settings = {
@@ -205,16 +218,19 @@ export default function Feeds({ className }: { className?: string }) {
   return (
 
     <>
- 
-      {!address ? (
-        <>
-          <div className='flex flex-col items-center justify-center w-full h-40'>
-            <ConnectWallet
-              theme='light'
-            />
-          </div>
-        </>
-      ) : (
+
+
+      {
+        // If the listings are loading, show a loading message
+        loadingListings ? (
+          <>
+          
+            <div>Loading listings...</div>
+            
+
+          </>
+        ) : (
+
         <>
 
 {/*
@@ -255,32 +271,43 @@ export default function Feeds({ className }: { className?: string }) {
                   */}
 
 
-                  {ownedNfts?.map((nft) => (
+         
+                  {directListings?.map((listing) => (
+
+
 
 
                     <>
 
-                      <div key={nft?.metadata?.tokenId}
+                      <div key={listing.id}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
                           //setTokenid(nft.metadata.id.toString()),
                           //setIsOpen(true)
                           router.push(
-                            '/horse-details/' + nft?.metadata?.tokenId
+                            `/listing/${listing.id}`
                           )
                         }
                       >
 
                         <Image
-                          src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png' }
-                          alt={nft?.metadata?.name}
+                          //src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png' }
+                          src={listing.asset?.image ? listing.asset?.image : "/default-nft.png"}
+                          alt="nft"
                           height={500}
                           width={500}
                           loading='lazy'
                           
                         />
                         <div className='w-full m-2'>
-                          <p className='text-md font-bold'>{nft?.metadata?.name}</p>
+                          <p className='text-md font-bold'>{listing.asset?.name}</p>
+                        </div>
+
+                        <div className='w-full m-2'>
+                          <p>
+                            <b>{listing.currencyValuePerToken.displayValue}</b>{" "}
+                            {listing.currencyValuePerToken.symbol}
+                          </p>
                         </div>
 
                       </div>

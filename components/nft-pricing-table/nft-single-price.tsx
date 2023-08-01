@@ -149,16 +149,20 @@ export default function NftSinglePrice({
 
                     ///src={nft?.image}
                     alt="nft"
-                    width={50}
-                    height={50}
-                    className="h-auto w-7 lg:w-9"
+                    width={500}
+                    height={500}
+                    ///className="h-auto w-100 lg:w-200"
                   />
                 </span>
+                {/*
                 <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
                   Bitcoin
                 </span>
                 <span className="text-sm text-gray-400">(BTC/USD)</span>
+                */}
               </span>
+
+                {/*
               <span className="flex flex-wrap items-center gap-[5px]">
                 <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">
                   RANK #5
@@ -213,6 +217,8 @@ export default function NftSinglePrice({
                   </Listbox>
                 </span>
               </span>
+              */}
+
             </div>
 
             <div
@@ -274,7 +280,8 @@ export default function NftSinglePrice({
           <div>
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
               <span className="flex items-center gap-2.5">
-                <span className="flex flex-row items-center gap-2.5">
+
+                <span className="flex flex-row items-center gap-2.5 ">
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
@@ -282,18 +289,14 @@ export default function NftSinglePrice({
                     src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
                     //src={nft?.image}
                     alt="nft"
-                    width={100}
-                    height={100}
-                    className="lg:w-110 h-auto w-80 rounded-lg"
+                    width={500}
+                    height={500}
+                    className=" rounded-lg"
                   />
                 </span>
-                <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
-                  <span>
-                    #{/*nft?.id*/}
-                  </span>
-                </span>
 
-                <span className="text-sm text-gray-400">({/*nft?.name*/})</span>
+
+
               </span>
               <span className="flex flex-wrap items-center gap-[5px]">
                 <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">
@@ -361,6 +364,7 @@ export default function NftSinglePrice({
               </span>
             </div>
 
+
             <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
               <span className="text-2xl font-semibold xl:text-3xl">
                 {price}
@@ -372,9 +376,7 @@ export default function NftSinglePrice({
                   toggleCoin ? 'flex-row-reverse' : 'flex-row'
                 )}
               >
-                {/*
-                <span>BTCB</span>/<span>ETH</span>
-                */}
+
               </span>
 
               <span
@@ -398,6 +400,8 @@ export default function NftSinglePrice({
               <Refresh /> {formattedDate}
             </div>
           </div>
+
+          {/*
           <RadioGroup
             value={status}
             onChange={handleOnChange}
@@ -407,37 +411,13 @@ export default function NftSinglePrice({
             <RadioGroupOption value="Month" />
             <RadioGroupOption value="Year" />
           </RadioGroup>
+          */}
+
         </div>
+
       )}
 
-      <div
-        className={`mt-5 h-56 sm:mt-8 md:h-96 lg:h-[380px] xl:h-[402px] ${
-          layout === LAYOUT_OPTIONS.MODERN
-            ? '2xl:h-[23.75rem] min-[1536px]:h-[24rem] 3xl:h-[465px]'
-            : '2xl:h-[29rem] 3xl:h-[508px]'
-        }`}
-      >
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-            width={500}
-            height={300}
-            data={chartData}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="7 7" vertical={false} />
-            <XAxis dataKey="name" tickLine={false} tickMargin={10} />
-            {/* <YAxis /> */}
-            {/* <Tooltip /> */}
-            <Bar dataKey="eth" fill="#F87171" />
-            <Bar dataKey="btc" fill="#10B981" />
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
+      
 
       {/*
       <div className="py-4">

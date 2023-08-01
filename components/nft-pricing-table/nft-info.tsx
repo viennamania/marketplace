@@ -33,6 +33,7 @@ function NftInfo() {
         </div>
       </div>
 
+
       <div className="mt-[10px] flex items-center gap-4">
         <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
           Explorers

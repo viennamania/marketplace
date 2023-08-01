@@ -26,9 +26,13 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery } from "react-query";
 import Image from "next/image";
 
+import { useRouter } from 'next/router';
+
 
 export default function Feeds({ className }: { className?: string }) {
   const { isGridCompact } = useGridSwitcher();
+
+  const router = useRouter();
 
   const settings = {
     ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
@@ -240,7 +244,14 @@ export default function Feeds({ className }: { className?: string }) {
                   <>
 
                     <div key={nft?.tokenId}
-                      className='relative overflow-hidden bg-white rounded-lg shadow-lg'  
+                      className='relative overflow-hidden bg-white rounded-lg shadow-lg'
+                      onClick={() =>
+                        //setTokenid(nft.metadata.id.toString()),
+                        //setIsOpen(true)
+                        router.push(
+                          '/horse-details/' + nft?.tokenId
+                        )
+                      }
                     >
 
                       <Image

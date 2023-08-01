@@ -12,6 +12,10 @@ import RootLayout from '@/layouts/_root-layout';
 import { authorData } from '@/data/static/author';
 import Image from "next/image";
 
+import ParamTab, { TabPanel } from '@/components/ui/param-tab';
+
+
+
 export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {},
@@ -23,6 +27,28 @@ const SearchPage: NextPageWithLayout<
 > = () => {
 
   const { layout } = useLayout();
+
+  const tabMenu = [
+    {
+      title: 'Items',
+      path: 'items',
+    },
+    {
+      title: 'Owned',
+      path: 'owned',
+    },
+    /*
+    {
+      title: 'Portfolio',
+      path: 'portfolio',
+    },
+    {
+      title: 'History',
+      path: 'history',
+    },
+    */
+  ];
+
 
   // render retro layout
   if (layout === LAYOUT_OPTIONS.RETRO) {
@@ -51,7 +77,17 @@ const SearchPage: NextPageWithLayout<
 
       <div className=" text-sm leading-loose p-5 mt-0 text-justify">
 
-        <Search />
+
+        <ParamTab tabMenu={tabMenu}>
+          <TabPanel className="focus:outline-none  ">
+
+            <Search />
+          </TabPanel>
+          <TabPanel className="focus:outline-none  ">
+
+            <Search />
+          </TabPanel>
+        </ParamTab>
         
       </div>
       

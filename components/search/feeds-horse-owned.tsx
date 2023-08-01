@@ -260,20 +260,20 @@ export default function Feeds({ className }: { className?: string }) {
 
                     <>
 
-                      <div key={nft?.metadata?.tokenId}
+                      <div key={nft?.metadata?.id}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
                           //setTokenid(nft.metadata.id.toString()),
                           //setIsOpen(true)
                           router.push(
-                            '/horse-details/' + nft?.metadata?.tokenId
+                            '/horse-details/' + nft?.metadata?.id
                           )
                         }
                       >
 
                         <Image
                           src={nft?.metadata?.image ? nft?.metadata?.image : '/logo.png' }
-                          alt={nft?.metadata?.name}
+                          alt='nft'
                           height={500}
                           width={500}
                           loading='lazy'

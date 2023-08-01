@@ -18,7 +18,15 @@ import { Polygon } from '@thirdweb-dev/chains';
 
 import { Analytics } from '@vercel/analytics/react';
 
+import { useState } from 'react';
+
+import {Hydrate, QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from "react-query/devtools";
+
+
 function MyApp({ Component, pageProps }: AppProps) {
+
+  const [queryClient] = useState(() => new QueryClient());
 
   return (
 
@@ -53,6 +61,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       </Head>
 
+      <QueryClientProvider client={queryClient}>
+      <Hydrate state={pageProps.dehydratedState}>
       <ThirdwebProvider
             activeChain={Polygon}
             supportedWallets={[
@@ -78,6 +88,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <Header />
 
       <Component {...pageProps} />
+      {/*
+      <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
+      */}
+      
       <Analytics />
 
 
@@ -90,6 +104,8 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 
     </ThirdwebProvider>
+    </Hydrate>
+    </QueryClientProvider>
 
     </>
 

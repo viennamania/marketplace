@@ -18,17 +18,26 @@ export default function Search() {
         </div>
   */}
 
+          <span className="m-3 text-xl font-medium text-gray-900 dark:text-white sm:text-xl">
+            Granderby Horse NFT
+          </span>
+
+          <span className="m-3 text-xm font-medium text-gray-900 dark:text-white sm:text-sm">
+            Items 3,645 · Created Jun 2023 · Creator earnings 0% · Chain Polygon · Category Gaming
+          </span>
+
+
+
         <div className="2xl:ltr:pl-8 2xl:rtl:pr-8 4xl:ltr:pl-10 4xl:rtl:pr-10">
+
+
 
           
           <div className="relative z-10 mb-6 flex items-center justify-between">
 
 
-            <span className="text-xs font-medium text-gray-900 dark:text-white sm:text-sm">
-              10000 assets
-            </span>
+            <div className="flex gap-6 3xl:gap-8 ">
 
-            <div className="flex gap-6 3xl:gap-8">
               <SortList />
 
               <div className="hidden 3xl:block">
@@ -54,6 +63,7 @@ export default function Search() {
           </div>
 
           <Feeds />
+
         </div>
 
 

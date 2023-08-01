@@ -38,7 +38,7 @@ export default function Header() {
               height={45}
               style={{ cursor: "pointer" }}
             />
-            <div className="text-xl font-bold text-black dark:text-white">Granderby Market</div>
+            <div className="text-sm font-bold text-black dark:text-white">Granderby Market</div>
             </div>
           </Link>
         </div>

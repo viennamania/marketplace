@@ -209,6 +209,7 @@ const ListingPage: NextPage = () => {
 
 
   async function buyNft() {
+
     try {
       // Ensure user is on the correct network
       if (networkMismatch) {
@@ -235,6 +236,7 @@ const ListingPage: NextPage = () => {
       console.error(error);
       alert(error);
     }
+    
   }
 
 
@@ -365,7 +367,7 @@ const ListingPage: NextPage = () => {
 
             <div className="m-10">
 
-              {/*
+              
               <Web3Button
                 theme="light"
                 action={(contract) =>
@@ -377,7 +379,7 @@ const ListingPage: NextPage = () => {
               >
                 Buy
               </Web3Button>
-              */}
+              
 
 
               <div className="flex flex-row justify-center">

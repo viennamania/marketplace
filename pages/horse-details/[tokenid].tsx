@@ -91,7 +91,7 @@ function SinglePrice(tokenid: any) {
           <InfoDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
         ) : (
 
-          <div className="w-full rounded-lg bg-white py-8 shadow-card dark:bg-light-dark xl:max-w-[358px] ">
+          <div className="w-full rounded-lg bg-white py-8 shadow-card dark:bg-light-dark ">
 
             {/*
             <h2 className="px-8 text-base font-medium uppercase text-gray-700 dark:text-gray-200">
@@ -122,7 +122,7 @@ function SinglePrice(tokenid: any) {
         )}
       </div>
 
-      <div className="mt-10">
+      <div className="mt-0">
 
         <TransactionTable />
 

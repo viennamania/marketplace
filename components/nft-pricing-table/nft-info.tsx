@@ -30,23 +30,26 @@ function NftInfo({nftMetadata} : any) {
   }
 
   return (
-    <div className="mt-16 px-5 pb-10">
+    <div className="lg:mt-16 px-5 pb-10">
 
-      <Link className='flex text-left text-md capitalize text-blue-500 dark:text-white lg:visible invisible'
-        href={`/`}
-      >
-        Granderby Horse NFT
-      </Link>
-      <div className='text-left text-3xl capitalize font-bold text-black dark:text-white lg:visible invisible'>
-        {nftMetadata?.metadata?.name}
-      </div>
 
-      <div className="flex items-center gap-4 mt-5 ">
-        <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
-          Owned by
+      <div className='flex flex-col justify-between items-left lg:visible invisible'>
+        <Link className='flex text-left text-md capitalize text-blue-500 dark:text-white '
+          href={`/`}
+        >
+          Granderby Horse NFT
+        </Link>
+        <div className='text-left text-3xl capitalize font-bold text-black dark:text-white'>
+          {nftMetadata?.metadata?.name}
         </div>
-        <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
-          {nftMetadata?.owner.substring(0, 6)}...
+
+        <div className="flex items-center gap-4 mt-5 ">
+          <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
+            Owned by
+          </div>
+          <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
+            {nftMetadata?.owner.substring(0, 6)}...
+          </div>
         </div>
       </div>
 

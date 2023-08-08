@@ -301,17 +301,30 @@ export default function NftSinglePrice({
               <span className="flex items-center gap-2.5">
 
                 <span className="flex flex-col items-left gap-2.5 ">
-                  {/*
-                  <Bitcoin className="h-auto w-7 lg:w-9" />
-                  */}
-                  <Link className='text-left text-md capitalize text-blue-500 dark:text-white lg:invisible'
-                    href={`/`}
-                  >
-                    Granderby Horse NFT
-                  </Link>
-                  <div className='text-left text-3xl capitalize font-bold text-black dark:text-white lg:invisible'>
-                    {nft?.metadata?.name}
+
+                  <div className='flex flex-col items-left justify-center lg:invisible'>
+                    {/*
+                    <Bitcoin className="h-auto w-7 lg:w-9" />
+                    */}
+                    <Link className=' text-left text-md capitalize text-blue-500 dark:text-white '
+                      href={`/`}
+                    > 
+                      Granderby Horse NFT
+                    </Link>
+                    <div className='text-left text-3xl capitalize font-bold text-black dark:text-white'>
+                      {nft?.metadata?.name}
+                    </div>
+
+                    <div className="flex items-center gap-4 mt-5 ">
+                      <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
+                        Owned by
+                      </div>
+                      <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
+                        {nft?.owner.substring(0, 6)}...
+                      </div>
+                    </div>
                   </div>
+
                   <Image
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
                     src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
@@ -321,6 +334,7 @@ export default function NftSinglePrice({
                     className=" rounded-lg "
                   />
                 </span>
+
 
               </span>
               

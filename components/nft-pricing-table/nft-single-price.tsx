@@ -40,6 +40,7 @@ import PopoverContent from '@/components/cryptocurrency-pricing-table/popover-co
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
+import Link from "next/link";
 
 
 import {
@@ -139,6 +140,7 @@ export default function NftSinglePrice({
 
   return (
     <div className="h-full rounded-lg  bg-white p-4 shadow-card dark:bg-light-dark sm:p-6 md:p-8">
+
       {layout === LAYOUT_OPTIONS.RETRO ? (
         <div>
           <div className="flex justify-between gap-4 sm:gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
@@ -290,95 +292,40 @@ export default function NftSinglePrice({
           </div>
         </div>
       ) : (
+
+
         <div className="flex flex-col justify-between gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
           <div>
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
+              
               <span className="flex items-center gap-2.5">
 
-                <span className="flex flex-col items-center gap-2.5 ">
+                <span className="flex flex-col items-left gap-2.5 ">
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
-                  <div className='text-xl font-medium capitalize text-brand dark:text-white'>
+                  <Link className='text-left text-md capitalize text-blue-500 dark:text-white lg:invisible'
+                    href={`/`}
+                  >
+                    Granderby Horse NFT
+                  </Link>
+                  <div className='text-left text-3xl capitalize font-bold text-black dark:text-white lg:invisible'>
                     {nft?.metadata?.name}
                   </div>
                   <Image
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
                     src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
                     alt="nft"
-                    width={500}
-                    height={500}
-                    className=" rounded-lg"
+                    width={1024}
+                    height={1024}
+                    className=" rounded-lg "
                   />
                 </span>
 
-
-
               </span>
-              <span className="flex flex-wrap items-center gap-[5px]">
-                <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">
-                  RANK #5
-                </span>
+              
+    
 
-                <span className="w-[65px]">
-                  {/*
-                  <Listbox value={selected} onChange={setSelected}>
-                    <div className="relative rounded-lg bg-gray-100 px-3 py-1.5 text-sm font-medium text-brand rtl:text-left dark:bg-gray-700 dark:text-white">
-                      
-                      
-                      <Listbox.Button className="rounded-lg bg-gray-100 text-sm font-medium text-brand dark:bg-gray-700 dark:text-white">
-                        <span className="block truncate">{selected.name}</span>
-                        <span className="absolute inset-y-0 right-0 flex items-center pr-2">
-                          <ChevronDown
-                            className="h-[10px] w-[12px] text-gray-400"
-                            aria-hidden="true"
-                          />
-                        </span>
-                      </Listbox.Button>
-                      
-
-                      
-                      <Transition
-                        as={Fragment}
-                        leave="transition ease-in duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                      >
-                        <Listbox.Options className="absolute left-0 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-large focus:outline-none dark:!bg-gray-700 sm:text-sm">
-                          {currency.map((item) => (
-                            <Listbox.Option
-                              key={item.id}
-                              className={({ active }) =>
-                                `relative cursor-pointer select-none px-4 py-2 ${
-                                  active
-                                    ? 'bg-gray-100 text-brand hover:bg-gray-200 dark:bg-gray-700 dark:text-white hover:dark:bg-slate-600'
-                                    : 'text-gray-900 dark:text-white'
-                                }`
-                              }
-                              value={item}
-                            >
-                              {({ selected }) => (
-                                <>
-                                  <span
-                                    className={`block truncate ${
-                                      selected ? 'font-medium' : 'font-normal'
-                                    }`}
-                                  >
-                                    {item.name}
-                                  </span>
-                                </>
-                              )}
-                            </Listbox.Option>
-                          ))}
-                        </Listbox.Options>
-                      </Transition>
-                      
-
-                    </div>
-                  </Listbox>
-                  */}
-                </span>
-              </span>
             </div>
 
 

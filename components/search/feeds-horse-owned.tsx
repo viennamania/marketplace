@@ -47,6 +47,7 @@ import {
 
 
 export default function Feeds({ className }: { className?: string }) {
+  
   const { isGridCompact } = useGridSwitcher();
 
   const router = useRouter();
@@ -257,9 +258,6 @@ export default function Feeds({ className }: { className?: string }) {
 
                   {ownedNfts?.map((nft) => (
 
-
-                    <>
-
                       <div key={nft?.metadata?.id}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
@@ -284,11 +282,7 @@ export default function Feeds({ className }: { className?: string }) {
                         </div>
 
                       </div>
-                    
-                  
-
-
-                    </>
+  
 
                   ))}
                   

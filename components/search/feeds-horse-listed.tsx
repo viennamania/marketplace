@@ -275,10 +275,6 @@ export default function Feeds({ className }: { className?: string }) {
                   {directListings?.map((listing) => (
 
 
-
-
-                    <>
-
                       <div key={listing.id}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
@@ -310,11 +306,7 @@ export default function Feeds({ className }: { className?: string }) {
                         </div>
 
                       </div>
-                    
-                  
 
-
-                    </>
 
                   ))}
                   

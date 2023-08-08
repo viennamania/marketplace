@@ -232,9 +232,6 @@ const DashboardPage: NextPage = () => {
   const minimumBalance = 1;
   const erc1155TokenId = 0;
 
-
-
-
   const [toWalletAddress, setToWalletAddress] = useState<any>({});
 
   /*

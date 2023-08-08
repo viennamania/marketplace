@@ -246,7 +246,7 @@ export default function Feeds({ className }: { className?: string }) {
               <>
 
                 {page.nfts?.map((nft) => (
-                  <>
+               
 
                     <div key={nft?.tokenId}
                       className='relative overflow-hidden bg-white rounded-lg shadow-lg'
@@ -272,34 +272,13 @@ export default function Feeds({ className }: { className?: string }) {
                       </div>
 
                     </div>
-                  
-                
-
-                  {/*
-                {page.results.map((character) => (
-                  */}
-
-{/*
-                  <article key={nft?.id}>
-                    <img
-                      src={nft?.image}
-                      alt={nft?.name}
-                      height={250}
-                      loading='lazy'
-                      width={"100%"}
-                    />
-                    <div className='text'>
-                      <p>Name: {nft?.name}</p>
-
-                    </div>
-                  </article>
-                  */}
-
-                  </>
+             
 
                 ))}
                 
               </>
+
+
             ))}
 
           </div>

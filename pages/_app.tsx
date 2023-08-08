@@ -63,14 +63,17 @@ function MyApp({ Component, pageProps }: AppProps) {
 
       <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-      <ThirdwebProvider
+
+          <ThirdwebProvider
+            clientId={process.env.THIRDWEB_CLIENT_ID || ''}
             activeChain={Polygon}
             supportedWallets={[
               walletConnect(),
               metamaskWallet(),
 
               paperWallet({
-                clientId: 'efa05253-e8b1-4adb-b978-996f8f2f409c',
+
+                paperClientId: 'efa05253-e8b1-4adb-b978-996f8f2f409c',
               }),
             ]}
             

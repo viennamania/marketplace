@@ -13,6 +13,7 @@ const nextConfig = {
       'res.cloudinary.com',
       'granderby-hosted-content.s3.ap-southeast-1.amazonaws.com',
       'dshujxhbbpmz18304035.gcdn.ntruss.com',
+      'res.cloudinary.com',
     ],
   },
 }

@@ -17,7 +17,10 @@ import { useBreakpoint } from '@/lib/hooks/use-breakpoint';
 
 import HistoryTable from '@/components/race-history/history-table';
 
+import TransactionTable from '@/components/nft-transaction/transaction-table';
+
 import Image from '@/components/ui/image';
+import Link from "next/link";
 
 
 
@@ -30,8 +33,6 @@ import { SearchIcon } from '@/components/icons/search';
 import AnchorLink from '@/components/ui/links/anchor-link';
 
 import { useRouter } from 'next/router';
-
-import { Network, Alchemy } from 'alchemy-sdk';
 
 import {
   nftDropContractAddressHorse
@@ -65,42 +66,9 @@ function SinglePrice(tokenid: any) {
   const { data: nftMetadata } = useNFT(contract, tokenid.tokenid);
 
 
-
-
-  const settings = {
-    ///apiKey: 'XBY-aoD3cF_vjy6le186jtpbWDIqSvrH', // Replace with your Alchemy API Key. creath.park@gmail.com
-
-    apiKey: '8YyZWFtcbLkYveYaB9sjOC3KPWInNu07', // Replace with your Alchemy API Key. songpalabs@gmail.com
-    network: Network.MATIC_MAINNET, // Replace with your network.
-  };
-
-  const alchemy = new Alchemy(settings);
-
-  useEffect(() => {
-
-
-    async function getNFTMetadata() {
-
-      const metadata = await alchemy.nft.getNftMetadata(
-        nftDropContractAddressHorse,
-        tokenid.tokenid,
-      )
-
-      ///setNftMetadata(metadata);
-
-      console.log('metadata======', metadata);
-
-    }
-
-    ///getNFTMetadata();
-
-
-  }, [alchemy.nft, tokenid.tokenid]);
-
-
   return (
     <>
-      <div className="mt-20 flex flex-wrap gap-6 lg:flex-nowrap">
+      <div className="mt-20 flex flex-wrap gap-6 lg:flex-nowrap ">
 
         
         
@@ -122,10 +90,16 @@ function SinglePrice(tokenid: any) {
         {layout === LAYOUT_OPTIONS.RETRO ? (
           <InfoDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
         ) : (
-          <div className="w-full rounded-lg bg-white py-8 shadow-card dark:bg-light-dark xl:max-w-[358px]">
+
+          <div className="w-full rounded-lg bg-white py-8 shadow-card dark:bg-light-dark xl:max-w-[358px] ">
+
+            {/*
             <h2 className="px-8 text-base font-medium uppercase text-gray-700 dark:text-gray-200">
               NFT Info
             </h2>
+            */}
+
+
 
             <NftInfo nftMetadata={nftMetadata}/>
 
@@ -149,7 +123,13 @@ function SinglePrice(tokenid: any) {
       </div>
 
       <div className="mt-10">
+
+        <TransactionTable />
+
+            {/*
         <HistoryTable />
+        */}
+
       </div>
 
       {/*

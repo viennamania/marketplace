@@ -11,7 +11,11 @@ import { SearchIcon } from '@/components/icons/search';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import Explorers from '@/components/cryptocurrency-pricing-table/explorers';
 
-function NftInfo(nftMetadata: any) {
+import Link from "next/link";
+
+function NftInfo({nftMetadata} : any) {
+
+  console.log('nftMetadata', nftMetadata);
   
   const [copyButtonStatus, setCopyButtonStatus] = useState(false);
   const [_, copyToClipboard] = useCopyToClipboard();
@@ -24,10 +28,20 @@ function NftInfo(nftMetadata: any) {
   }
 
   return (
-    <div className="mt-5 px-8 pb-10">
-      <div className="flex items-center gap-4">
+    <div className="mt-16 px-5 pb-10">
+
+      <Link className='flex text-left text-md capitalize text-blue-500 dark:text-white lg:visible invisible'
+        href={`/`}
+      >
+        Granderby Horse NFT
+      </Link>
+      <div className='text-left text-3xl capitalize font-bold text-black dark:text-white lg:visible invisible'>
+        {nftMetadata?.metadata?.name}
+      </div>
+
+      <div className="flex items-center gap-4 mt-5">
         <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
-          Creator
+          Owned by
         </div>
         <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
           0x00000
@@ -35,12 +49,14 @@ function NftInfo(nftMetadata: any) {
       </div>
 
 
+      {/*
       <div className="mt-[10px] flex items-center gap-4">
         <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
           Explorers
         </div>
         <Explorers menu={CoinExplore} />
       </div>
+      */}
 
       {/*
       <div className="mt-[10px] flex items-start gap-4">

@@ -31,12 +31,16 @@ import {
 
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 import Image from '@/components/ui/image';
 
 import styles from "../../styles/Home.module.css";
+
+import { CheckoutWithCard } from '@paperxyz/react-client-sdk';
+
+
 
 const ListingPage: NextPage = () => {
   // Next JS Router hook to redirect to other pages and to grab the query from the URL (listingId)
@@ -50,6 +54,57 @@ const ListingPage: NextPage = () => {
   const address = useAddress();
 
   const { data: balance, isLoading: isLoadingBalance } = useBalance(NATIVE_TOKEN_ADDRESS);
+
+
+  const [sdkClientSecret, setSdkClientSecret] = useState();
+
+  useEffect(() => {
+    
+    const checkSdkClientSecret = async () => {
+      if (address) {
+        const res = await fetch('/api/checkout?address=' + address);
+
+        console.log('checkSdkClientSecret res', res);
+
+        const { sdkClientSecret } = await res.json();
+
+        //console.log("sdkClientSecret", sdkClientSecret);
+
+        setSdkClientSecret(sdkClientSecret);
+
+        /*
+        const options = {
+          colorBackground: '#fefae0',
+          colorPrimary: '#606c38',
+          colorText: '#283618',
+          borderRadius: 6,
+          inputBackgroundColor: '#faedcd',
+          inputBorderColor: '#d4a373',
+        };
+        
+        createCheckoutWithCardElement({
+          sdkClientSecret: sdkClientSecret,
+          elementOrId: "paper-checkout-container",
+          appName: "My Web3 App",
+          
+          options,
+      
+          onError(error) {
+            console.error("Payment error:", error);
+          },
+          onPaymentSuccess({ id }) {
+            console.log("Payment successful.");
+          },
+        });
+        */
+      }
+    };
+
+    checkSdkClientSecret();
+  }, [address]);
+
+
+
 
   const { contract: tokenContractGRD } = useContract(
     tokenContractAddressGRD,
@@ -85,6 +140,11 @@ const ListingPage: NextPage = () => {
     isLoading: loadingListing,
     error,
   } = useDirectListing(marketplace, listingId);
+
+
+
+
+  
 
 
   // Store the bid amount the user entered into the bidding textbox
@@ -176,6 +236,11 @@ const ListingPage: NextPage = () => {
       alert(error);
     }
   }
+
+
+
+
+
 
   return (
 
@@ -299,6 +364,8 @@ const ListingPage: NextPage = () => {
           :
 
             <div className="m-10">
+
+              {/*
               <Web3Button
                 theme="light"
                 action={(contract) =>
@@ -310,6 +377,32 @@ const ListingPage: NextPage = () => {
               >
                 Buy
               </Web3Button>
+              */}
+
+
+              <div className="flex flex-row justify-center">
+                {address && sdkClientSecret && (
+                  <div className="w-[380px] rounded-lg border bg-white p-5">
+                    <CheckoutWithCard
+                      sdkClientSecret={sdkClientSecret}
+                      //onPriceUpdate={ (quantity, unitPrice, networkFees, serviceFees, total) => {
+                      onPriceUpdate={(priceSummary) => {
+                        console.log(
+                          'Payment successful priceSummary',
+                          priceSummary
+                        );
+                      }}
+                      onPaymentSuccess={(result) => {
+                        console.log('Payment successful result', result);
+
+                        ////mintNFT();
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+
+
             </div>
 
           }
@@ -355,9 +448,6 @@ const ListingPage: NextPage = () => {
 
         </div>
 
-
-
- 
 
 
 

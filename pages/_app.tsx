@@ -1,10 +1,16 @@
 import type { AppProps } from "next/app";
+import type { NextPageWithLayout } from '@/types';
+
 import Head from "next/head";
 import Header from "@/components/Header";
-import OpenseaGuideFooter from "../components/OpenseaGuideFooter";
-import Footer from "../components/Footer";
+import OpenseaGuideFooter from "@/components/OpenseaGuideFooter";
+import Footer from "@/components/Footer";
 import "../styles/globals.css";
 
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
 
 import {
   ThirdwebProvider,
@@ -23,10 +29,18 @@ import { useState } from 'react';
 import {Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from "react-query/devtools";
 
-
+/*
 function MyApp({ Component, pageProps }: AppProps) {
+*/
 
-  const [queryClient] = useState(() => new QueryClient());
+function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
+  // inject the next app with the latest version of `@google/model-viewer`
+
+  //could remove this if you don't need to page level layout
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  ////const [queryClient] = useState(() => new QueryClient());
+  const queryClient = new QueryClient();
 
   return (
 
@@ -90,7 +104,12 @@ function MyApp({ Component, pageProps }: AppProps) {
       
       <Header />
 
+            {/*
       <Component {...pageProps} />
+      */}
+
+      {getLayout(<Component {...pageProps} />)}
+
       {/*
       <ReactQueryDevtools initialIsOpen={false}></ReactQueryDevtools>
       */}
@@ -117,4 +136,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
 }
 
-export default MyApp;
+///export default MyApp;
+
+export default CustomApp;

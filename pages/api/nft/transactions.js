@@ -89,7 +89,7 @@ export default async function handler(req, res) {
       sort: 'desc',
     });
 
-    console.log(getTransfers);
+    //console.log(getTransfers);
 
     const getSends = await alchemy.core.getAssetTransfers({
       fromBlock: '0x0',
@@ -100,7 +100,7 @@ export default async function handler(req, res) {
       category: [AssetTransfersCategory.ERC721],
     });
 
-    console.log(getSends);
+    //console.log(getSends);
 
     const transactions = [...getTransfers.transfers, ...getSends.transfers];
 

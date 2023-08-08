@@ -13,6 +13,8 @@ import Explorers from '@/components/cryptocurrency-pricing-table/explorers';
 
 import Link from "next/link";
 
+import PriceHistoryTable from '@/components/nft-transaction/price-history-table';
+
 function NftInfo({nftMetadata} : any) {
 
   console.log('nftMetadata', nftMetadata);
@@ -39,15 +41,16 @@ function NftInfo({nftMetadata} : any) {
         {nftMetadata?.metadata?.name}
       </div>
 
-      <div className="flex items-center gap-4 mt-5">
+      <div className="flex items-center gap-4 mt-5 ">
         <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
           Owned by
         </div>
         <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
-          0x00000
+          {nftMetadata?.owner.substring(0, 6)}...
         </div>
       </div>
 
+      <PriceHistoryTable />
 
       {/*
       <div className="mt-[10px] flex items-center gap-4">

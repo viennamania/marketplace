@@ -329,6 +329,7 @@ export default function NftSinglePrice({
             </div>
 
 
+                    {/*
             <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
               <span className="text-2xl font-semibold xl:text-3xl">
                 {price}
@@ -363,6 +364,8 @@ export default function NftSinglePrice({
             <div className="mt-6 flex items-center gap-1.5 text-xs font-medium text-gray-600 dark:text-gray-400 sm:text-sm">
               <Refresh /> {formattedDate}
             </div>
+
+            */}
           </div>
 
           {/*

@@ -38,12 +38,12 @@ export default function Search() {
       path: 'items',
     },
     {
-      title: 'Owned',
-      path: 'owned',
-    },
-    {
       title: 'Listed',
       path: 'listed',
+    },
+    {
+      title: 'Owned',
+      path: 'owned',
     },
     /*
     {
@@ -146,9 +146,10 @@ export default function Search() {
                   </div>
                 </div>
 
-                <OwnedFeeds />
+                <ListedFeeds />
               </div>
             </TabPanel>
+
 
             <TabPanel className="focus:outline-none  ">
               <div className="2xl:ltr:pl-8 2xl:rtl:pr-8 4xl:ltr:pl-10 4xl:rtl:pr-10">
@@ -177,9 +178,11 @@ export default function Search() {
                   </div>
                 </div>
 
-                <ListedFeeds />
+                <OwnedFeeds />
               </div>
             </TabPanel>
+
+
           </ParamTab>
         </div>
 

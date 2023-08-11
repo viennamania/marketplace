@@ -46,7 +46,21 @@ export default function Header() {
 
       <div className={styles.right}>
 
-      <ConnectWallet theme="light" />
+        {address ? (
+          
+          <ConnectWallet theme="light" />
+
+        ) : (
+          <>
+            <Image
+              src={`/horseRace/logo.png`}
+              alt="Logo"
+              width={45}
+              height={45}
+              style={{ cursor: "pointer" }}
+            />
+          </>
+        )}
 
 {/*
         {address ? (

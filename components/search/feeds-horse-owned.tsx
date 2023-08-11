@@ -60,10 +60,13 @@ export default function Feeds({ className }: { className?: string }) {
     nftDropContractAddressHorse,
     'nft-drop'
   );
-  const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+  const {
+    data: ownedNfts,
+    isLoading: isLoadingOwnedNfts,
+  } = useOwnedNFTs(nftDropContract, address);
 
 
-  console.log("ownedNfts======>", ownedNfts);
+  ////console.log("ownedNfts======>", ownedNfts);
 
   /*
   const settings = {
@@ -213,21 +216,28 @@ export default function Feeds({ className }: { className?: string }) {
             <ConnectWallet
               theme='light'
             />
+            for your own horses
           </div>
         </>
-      ) : (
+      )
+      :
+      (
         <>
 
-{/*
-        {status === "success" && (
+          {
+          // If the listings are loading, show a loading message
+          isLoadingOwnedNfts ? (
+            <>
+              <div className="flex flex-col items-center justify-center ">
+                <div className='text-xl'>Loading your own horses...</div>
 
-          <InfiniteScroll
-            dataLength={data?.pages.length * 20}
-            next={fetchNextPage}
-            hasMore={hasNextPage ?? false}
-            loader={<h4>Loading...</h4>}
-          >
-        */}
+                <span className="mt-10 h-screen w-full flex justify-center items-top">
+                  <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
+                </span>
+
+              </div>
+            </>
+          ) : (
 
 
             <div
@@ -239,21 +249,6 @@ export default function Feeds({ className }: { className?: string }) {
                 className
               )}
             >
-
-
-           
-            {/*
-              {data?.pages.map((page) => (
-              */}
-
-           
-
-
-                <>
-
-                {/*
-                  {page.ownedNfts?.map((nft) => (
-                  */}
 
 
                   {ownedNfts?.map((nft) => (
@@ -285,26 +280,13 @@ export default function Feeds({ className }: { className?: string }) {
   
 
                   ))}
-                  
-                </>
-
-
-              {/*
-
-              ))}
-              */}
 
             </div>
-            
-{/*
-          </InfiniteScroll>
 
-        )}
+          )}
 
-*/}
+        </>
 
-
-      </>
       )}
 
     </>

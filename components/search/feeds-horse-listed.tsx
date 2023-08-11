@@ -220,14 +220,22 @@ export default function Feeds({ className }: { className?: string }) {
     <>
 
 
+
+
+
+
       {
         // If the listings are loading, show a loading message
         loadingListings ? (
           <>
-          
-            <div>Loading listings...</div>
-            
+            <div className="flex flex-col items-center justify-center ">
+              <div className='text-xl'>Loading listings...</div>
 
+              <span className="h-screen w-full flex justify-center items-center">
+                <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
+              </span>
+
+            </div>
           </>
         ) : (
 
@@ -256,22 +264,6 @@ export default function Feeds({ className }: { className?: string }) {
             >
 
 
-           
-            {/*
-              {data?.pages.map((page) => (
-              */}
-
-           
-
-
-                <>
-
-                {/*
-                  {page.ownedNfts?.map((nft) => (
-                  */}
-
-
-         
                   {directListings?.map((listing) => (
 
 
@@ -310,13 +302,7 @@ export default function Feeds({ className }: { className?: string }) {
 
                   ))}
                   
-                </>
 
-
-              {/*
-
-              ))}
-              */}
 
             </div>
             

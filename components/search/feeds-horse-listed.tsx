@@ -231,7 +231,10 @@ export default function Feeds({ className }: { className?: string }) {
             <div className="flex flex-col items-center justify-center ">
               <div className='text-xl'>Loading listings...</div>
 
+              {/*
               <span className="h-screen w-full flex justify-center items-center">
+        */}
+              <span className="mt-10 h-screen w-full flex justify-center items-top">
                 <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
               </span>
 

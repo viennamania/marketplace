@@ -353,11 +353,31 @@ const DashboardPage: NextPage = () => {
             contractAddresses: [nftDropContractAddressHorse],
           });
 
+          ///console.log("response", response);
 
-          const attributes = [];
+
+
+
+          const attributes = [] as any;
 
           for (var k = 0; k < response.ownedNfts.length; k++) {
 
+            response.ownedNfts[k].rawMetadata?.attributes?.forEach((attribute) => {
+              if (attribute.trait_type === 'Grade') {
+                console.log("attribute.value", attribute.value);
+
+                const tokenid = response.ownedNfts[k].tokenId;
+                const asset = response.ownedNfts[k].rawMetadata?.name;
+                const grade = attribute.value;
+                const image = response.ownedNfts[k].media[0].raw;
+
+                attributes.push({ tokenid,  asset, grade, image });
+
+              }
+            });
+
+
+            /*
             if (response.ownedNfts[k].tokenUri?.gateway) {
 
 
@@ -376,6 +396,7 @@ const DashboardPage: NextPage = () => {
               attributes.push({ tokenid,  asset, grade, image });
 
             }
+            */
 
           }
 

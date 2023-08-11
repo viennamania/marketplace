@@ -15,9 +15,49 @@ import Link from "next/link";
 
 import PriceHistoryTable from '@/components/nft-transaction/price-history-table';
 
+import {
+  MediaRenderer,
+  useNetwork,
+  useNetworkMismatch,
+  useListing,
+  useContract,
+  useDirectListing,
+  Web3Button,
+  useAddress,
+  useBalance,
+  useTokenBalance,
+} from "@thirdweb-dev/react";
+
+import {
+  nftDropContractAddressHorse,
+  tokenContractAddressGRD,
+  tokenContractAddressUSDC,
+  marketplaceContractAddress,
+} from '@/config/contractAddresses';
+
+
+import {
+  ChainId,
+  ListingType,
+  Marketplace,
+  NATIVE_TOKENS,
+  NATIVE_TOKEN_ADDRESS,
+} from "@thirdweb-dev/sdk";
+
+import { BigNumber, ethers } from 'ethers';
+
+
+
+
+
 function NftInfo({nftMetadata} : any) {
 
   console.log('nftMetadata', nftMetadata);
+
+  const listingId = nftMetadata?.metadata?.listingId;
+
+
+  
   
   const [copyButtonStatus, setCopyButtonStatus] = useState(false);
   const [_, copyToClipboard] = useCopyToClipboard();
@@ -28,6 +68,61 @@ function NftInfo({nftMetadata} : any) {
       setCopyButtonStatus(copyButtonStatus);
     }, 2500);
   }
+
+  const address = useAddress();
+
+  
+
+  // Hooks to detect user is on the right network and switch them if they are not
+  const networkMismatch = useNetworkMismatch();
+  const [, switchNetwork] = useNetwork();
+
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace-v3"
+  );
+
+
+  const {
+    //mutateAsync: createDirectListing,
+    data: directListing,
+    isLoading: loadingListing,
+    error,
+  } = useDirectListing(marketplace, listingId);
+
+
+
+  async function buyNft() {
+
+    try {
+      // Ensure user is on the correct network
+      if (networkMismatch) {
+        switchNetwork && switchNetwork(ChainId.Polygon);
+        return;
+      }
+
+      // Simple one-liner for buying the NFT
+      /*
+      await marketplace?.buyFromListing(listingId, 1);
+      */
+
+      // The ID of the listing you want to buy from
+      //const listingId = 0;
+      // Quantity of the asset you want to buy
+      const quantityDesired = 1;
+
+      await marketplace?.directListings.buyFromListing(listingId, quantityDesired, address);
+
+
+      alert("NFT bought successfully!");
+
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    
+  }
+
 
   return (
     <div className="lg:mt-16 px-5 pb-10">
@@ -44,13 +139,92 @@ function NftInfo({nftMetadata} : any) {
         </div>
 
         <div className="flex items-center gap-4 mt-5 ">
+          {/*
           <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
             Owned by
           </div>
           <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
             {nftMetadata?.owner.substring(0, 6)}...
           </div>
+          */}
+          <p>
+            Owned by{" "}
+            <b>
+              {/*
+              {directListing.sellerAddress?.slice(0, 6) +
+                "..." +
+                directListing.sellerAddress?.slice(36, 40)}
+              */}
+                {nftMetadata?.owner?.slice(0, 6) +
+                "..." +
+                nftMetadata?.owner?.slice(36, 40)}
+            </b>
+          </p>
+
+
         </div>
+
+        <h2>
+          {/*
+          <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
+          {directListing.buyoutCurrencyValuePerToken.symbol}
+              */}
+          <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
+          {directListing?.currencyValuePerToken.symbol}
+        </h2>
+
+
+
+        <div className='flex flex-col w-full mt-3'>
+          {!address ? (
+            <div className='flex flex-col w-full '>
+
+              <div>
+                <Web3Button
+                  theme="light"
+                  action={(contract) =>
+                    ////contract?.call('withdraw', [[nft.metadata.id]])
+                    buyNft()
+
+                  }
+                  contractAddress={marketplaceContractAddress}
+                >
+                  Buy
+                </Web3Button>
+              </div>
+
+              <p className="text-xl font-bold">
+                to buy this NFT.
+              </p>
+
+            </div>
+          )
+          :
+          (
+            <div className='flex flex-col w-full '>
+              
+              <div>
+                <Web3Button
+                  
+                  
+                  theme="light"
+                  action={(contract) =>
+                    ////contract?.call('withdraw', [[nft.metadata.id]])
+                    buyNft()
+                  
+                  
+                  }
+                  contractAddress={marketplaceContractAddress}
+                >
+                  Buy
+                </Web3Button>
+              </div>
+
+            </div>
+
+          )}
+        </div>
+
       </div>
 
       <PriceHistoryTable />
@@ -145,6 +319,8 @@ function NftInfo({nftMetadata} : any) {
         </div>
       </div>
       */}
+
+
     </div>
   );
 }

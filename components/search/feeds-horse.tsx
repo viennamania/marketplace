@@ -118,7 +118,9 @@ export default function Feeds({ className }: { className?: string }) {
 
   );
 
-  ///console.log(data);
+
+
+  /////console.log("status======>", status);
 
 /*
   useEffect(() => {
@@ -191,31 +193,22 @@ export default function Feeds({ className }: { className?: string }) {
   return (
 
     <>
-    {/*
-    <div
-      className={cn(
-        'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
-        isGridCompact
-          ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
-          : '3xl:!grid-cols-3 4xl:!grid-cols-4',
-        className
-      )}
-    >
-    */}
 
-      {/*
-      {horses.map((nft) => (
-        <NFTGrid
-          key={nft.id}
-          name={nft.name}
-          image={nft.image}
-          author={nft.author}
-          authorImage={nft.authorImage}
-          price={nft.price}
-          collection={nft.collection}
-        />
-      ))}
-      */}
+      
+      {status === 'loading' && (
+        <>
+          <div className="flex flex-col items-center justify-center ">
+            <div className='text-xl'>Loading horses...</div>
+
+            <span className="mt-10 h-screen w-full flex justify-center items-top">
+              <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
+            </span>
+
+          </div>
+        </>
+      )} 
+      
+
 
       {status === "success" && (
 
@@ -223,30 +216,36 @@ export default function Feeds({ className }: { className?: string }) {
           dataLength={data?.pages.length * 20}
           next={fetchNextPage}
           hasMore={hasNextPage ?? false}
-          loader={<h4>Loading...</h4>}
+          loader={
+            
+            <div className="mt-10 flex flex-col items-center justify-center ">
+              <div className='text-xl'>Loading horses...</div>
+
+              <span className="mt-10 h-screen w-full flex justify-center items-top">
+                <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
+              </span>
+
+            </div>
+
+          }
         >
 
-{/*
-          <div className='grid-container'>
-*/}
-
-          <div
-            className={cn(
-              'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
-              isGridCompact
-                ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
-                : '3xl:!grid-cols-3 4xl:!grid-cols-4',
-              className
-            )}
-          >
-
-          
-
             {data?.pages.map((page) => (
-              <>
+
+              <div
+                key={page.pageKey}
+                className={cn(
+                  'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
+                  isGridCompact
+                    ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
+                    : '3xl:!grid-cols-3 4xl:!grid-cols-4',
+                  className
+                )}
+>
+
 
                 {page.nfts?.map((nft) => (
-               
+              
 
                     <div key={nft?.tokenId}
                       className='relative overflow-hidden bg-white rounded-lg shadow-lg'
@@ -272,25 +271,19 @@ export default function Feeds({ className }: { className?: string }) {
                       </div>
 
                     </div>
-             
+            
 
                 ))}
                 
-              </>
-
+              </div>
 
             ))}
-
-          </div>
-          
 
         </InfiniteScroll>
 
       )}
 
-                  {/*
-    </div>
-    */}
+
     </>
 
   );

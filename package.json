@@ -54,6 +54,8 @@
     "recharts": "^2.6.2",
     "swiper": "^9.3.2",
     "swr": "^2.1.5",
+    "@tailwindcss/forms": "^0.5.3",
+    "@tailwindcss/typography": "^0.5.9",
     "twilio": "^4.13.0",
     "vercel": "^31.0.2",
     "web3modal": "^1.9.12",

@@ -412,7 +412,7 @@ const DashboardPage: NextPage = () => {
 
           let attributesString = "";
 
-          attributes.map((item) => (
+          attributes.map((item:any) => (
               attributesString += item.asset + " " + item.grade + " " + item.tokenid + "\n"
           ))
 

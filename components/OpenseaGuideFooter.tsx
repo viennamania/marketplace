@@ -1,5 +1,6 @@
 import styles from "../../styles/Thirdweb.module.css";
 import React from "react";
+import Image from "next/image";
 
 export default function OpenseaGuideFooter() {
 
@@ -30,7 +31,7 @@ export default function OpenseaGuideFooter() {
           right: 18,
         }}
       >
-        <img
+        <Image
           src={"/logo-opensea.png"}
           alt="opensea url"
           width={40}

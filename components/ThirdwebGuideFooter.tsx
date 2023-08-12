@@ -1,6 +1,8 @@
 import styles from "../../styles/Thirdweb.module.css";
 import React from "react";
 
+import Image from "next/image";
+
 export default function ThirdwebGuideFooter() {
   const url = "https://github.com/thirdweb-example/marketplace-next-ts";
   return (
@@ -28,7 +30,7 @@ export default function ThirdwebGuideFooter() {
           right: 18,
         }}
       >
-        <img
+        <Image
           src={"/github.png"}
           alt="github url"
           width={40}

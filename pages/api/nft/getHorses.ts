@@ -19,7 +19,7 @@ export default async function handler(
 
   const data = await getAllHorses ( Number(pageNumber), Number(pageSize) );
 
-  console.log('data', data);
+  ////console.log('data', data);
 
 
   

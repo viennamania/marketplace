@@ -11,7 +11,7 @@ import { useGridSwitcher } from '@/lib/hooks/use-grid-switcher';
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 
 import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
@@ -51,6 +51,7 @@ export default function Feeds({ className }: { className?: string }) {
 
   //const [employees, setEmployees] = useState<Employee[]>([]);
 
+  /*
   const [horses, setHorses] = useState<NFT[]>([]);
 
   //const [cursor, setCursor] = useState<string | undefined>(undefined);
@@ -64,25 +65,55 @@ export default function Feeds({ className }: { className?: string }) {
   };
 
   const alchemy = new Alchemy(settings);
+  */
 
 
+  const {
+    data,
+    status,
+    fetchNextPage,
+    hasNextPage
+  } = useInfiniteQuery (
 
-  const { data, status, fetchNextPage, hasNextPage } = useInfiniteQuery (
     "infiniteCharacters",
+
     async (
       {
-        ///pageParam = 1,
+        pageParam = 1,
 
-        pageParam = '',
+        //pageParam = '',
 
       }
       ) =>
+
+      /*
+      await fetcher(
+        `/api/getNftsForContract?pageKey=${pageParam}&pageSize=30`
+      ).then((result) => {
+        //console.log("result======>", result);
+
+        return result;
+      }),
+      */
+
+      await fetcher(
+
+        '/api/nft/getHorses?pageNumber=' + pageParam + '&pageSize=20'
+
+        ).then((result) => {
+        //console.log("result======>", result);
+
+        return result;
+      
+        }),
 
     /*
       await fetch(
         `https://rickandmortyapi.com/api/character/?page=${pageParam}`
       ).then((result) => result.json()),
       */
+
+      /*
       await alchemy.nft.getNftsForContract(
         nftDropContractAddressHorse,
         {
@@ -93,6 +124,7 @@ export default function Feeds({ className }: { className?: string }) {
           ///console.log("result======>", result)
           return result
         }),
+      */
       
       /*
       .finally((result:any) => {
@@ -117,6 +149,24 @@ export default function Feeds({ className }: { className?: string }) {
     }
 
   );
+
+
+  /*
+  useEffect(() => {
+
+    const main = async () => {
+
+      await fetcher('/api/nft/getHorses').then((result) => {
+        console.log("result======>", result);
+      
+      });
+
+    };
+
+    main();
+
+  }, []);
+  */
 
 
 
@@ -244,7 +294,7 @@ export default function Feeds({ className }: { className?: string }) {
 >
 
 
-                {page.nfts?.map((nft) => (
+                {page.nfts?.map((nft:any) => (
               
 
                     <div key={nft?.tokenId}
@@ -260,7 +310,7 @@ export default function Feeds({ className }: { className?: string }) {
 
 
                       <Image
-                        src={nft?.media[0]?.gateway ? nft?.media[0]?.gateway : '/default-nft.png' }
+                        src={nft?.media ? nft?.media : '/default-nft.png' }
                         alt={nft?.title}
                         height={500}
                         width={500}

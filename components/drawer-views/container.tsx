@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { Dialog } from '@/components/ui/dialog';
 import { Transition } from '@/components/ui/transition';
 import { DRAWER_VIEW, useDrawer } from '@/components/drawer-views/context';
+
 // dynamic imports
 const Sidebar = dynamic(() => import('@/layouts/sidebar/_default'));
 
@@ -17,7 +18,10 @@ const DrawerHorseInfo = dynamic(
   () => import('@/components/search/filters-horse-info')
 );
 
-const DrawerMenu = dynamic(() => import('@/layouts/sidebar/_layout-menu'));
+const DrawerMenu = dynamic(
+  () => import('@/layouts/sidebar/_layout-menu')
+);
+
 const PreviewContent = dynamic(
   () => import('@/components/create-nft/nft-preview-content')
 );

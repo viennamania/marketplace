@@ -27,6 +27,7 @@ const PreviewContent = dynamic(
 );
 
 function renderDrawerContent(view: DRAWER_VIEW | string) {
+
   switch (view) {
     case 'DASHBOARD_SIDEBAR':
       return <Sidebar />;
@@ -42,6 +43,9 @@ function renderDrawerContent(view: DRAWER_VIEW | string) {
 }
 
 export default function DrawersContainer() {
+
+  console.log('DrawersContainer');
+
   const router = useRouter();
   const { view, isOpen, closeDrawer } = useDrawer();
 
@@ -53,6 +57,7 @@ export default function DrawersContainer() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   return (
     <Transition appear show={isOpen} as={Fragment}>

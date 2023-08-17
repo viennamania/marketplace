@@ -11,14 +11,23 @@ export type DRAWER_VIEW =
 const drawerAtom = atom({ isOpen: false, view: 'DASHBOARD_SIDEBAR' });
 
 export function useDrawer() {
+
   const [state, setState] = useAtom(drawerAtom);
+
   const openDrawer = (view: DRAWER_VIEW) => {
+
+    console.log('openDrawer: ' + view);
+    
     setState({ ...state, isOpen: true, view });
+
   };
+
   const closeDrawer = () => setState({ ...state, isOpen: false });
+
   return {
     ...state,
     openDrawer,
     closeDrawer,
   };
+
 }

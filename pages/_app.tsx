@@ -29,6 +29,9 @@ import { useState } from 'react';
 import {Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from "react-query/devtools";
 
+import ModalsContainer from '@/components/modal-views/container';
+import DrawersContainer from '@/components/drawer-views/container';
+
 /*
 function MyApp({ Component, pageProps }: AppProps) {
 */
@@ -102,7 +105,7 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
                 openzeppelin: {
                   ///relayerUrl: process.env.NEXT_PUBLIC_OPENZEPPELIN_URL,
                   relayerUrl: 'https://api.defender.openzeppelin.com/autotasks/3067ee45-9e49-4a66-ad9f-21855aa5ceac/runs/webhook/32a6dbb5-b039-403b-bd1c-ff44e65cf6ab/R2wNZuXcnMwPyhxGBfwdEh',
-                  
+
                 },
               },
             }}
@@ -125,6 +128,8 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       <Analytics />
 
 
+      <ModalsContainer />
+      <DrawersContainer />
       
       <OpenseaGuideFooter />
   

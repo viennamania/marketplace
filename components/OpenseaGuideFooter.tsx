@@ -10,6 +10,7 @@ export default function OpenseaGuideFooter() {
     <>
       <div
         style={{
+          zIndex: 1000,
           position: "fixed",
           bottom: -120,
           right: -80,
@@ -26,6 +27,7 @@ export default function OpenseaGuideFooter() {
 
       <div
         style={{
+          zIndex: 1001,
           position: "fixed",
           bottom: 18,
           right: 18,

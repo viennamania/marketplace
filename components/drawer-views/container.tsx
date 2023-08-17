@@ -44,8 +44,6 @@ function renderDrawerContent(view: DRAWER_VIEW | string) {
 
 export default function DrawersContainer() {
 
-  console.log('DrawersContainer');
-
   const router = useRouter();
   const { view, isOpen, closeDrawer } = useDrawer();
 

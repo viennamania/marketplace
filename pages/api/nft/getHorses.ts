@@ -32,7 +32,8 @@ export default async function handler(
 
 
 
-  const formattedNfts = nfts.map((nft : any) => {
+  const formattedNfts = nfts?.map((nft : any) => {
+    
     const { contract, title, tokenType, tokenId, description, media, rawMetadata } = nft.nft;
 
     //console.log('rawMetadata', rawMetadata);

@@ -8,12 +8,8 @@ module.exports = {
     // Or if using `src` directory:
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-
-
   darkMode: 'class',
-
   theme: {
-
     screens: {
       xs: '500px',
       sm: '640px',
@@ -24,7 +20,6 @@ module.exports = {
       '3xl': '1780px',
       '4xl': '2160px', // only need to control product grid mode in ultra 4k device
     },
-
     extend: {
       colors: {
         brand: 'rgb(var(--color-brand) / <alpha-value>)',
@@ -33,7 +28,6 @@ module.exports = {
         'light-dark': '#171e2e',
         'sidebar-body': '#F8FAFC',
       },
-
       spacing: {
         13: '3.375rem',
       },
@@ -132,26 +126,8 @@ module.exports = {
           '100%': { transform: 'scale(1)' },
         },
       },
-
-
-      /*
-      animation: {
-        flip:'flip 1s cubic-bezier(0, 0, 0.2, 1) infinite'
-      },
-
-
-
-      keyframes:{
-        flip: {
-          'from': { transform:  'rotateX(0deg)', transformOrigin: '50% bottom ', },
-          'to':{transform:  'rotateX(180deg)', transformOrigin: '50% bottom ',}
-        }
-      }
-      */
-
     },
   },
-  ////plugins: [],
   plugins: [require('@tailwindcss/typography'), require('@tailwindcss/forms')],
 }
 

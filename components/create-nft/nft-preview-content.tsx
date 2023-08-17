@@ -2,8 +2,15 @@ import React from 'react';
 import Image from '@/components/ui/image';
 import AuthorImage from '@/assets/images/author.jpg';
 
-///import NFT1 from '@/assets/images/nft/nft-1.jpg';
+//import NFT1 from '@/assets/images/nft/nft-1.jpg';
+
+
+//import NFT1 from '@/assets/images/nft/Hrs_00006000.png';
+
 import NFT1 from '@/assets/images/nft/Hrs_00006000.png';
+
+
+
 
 import Avatar from '@/components/ui/avatar';
 

@@ -2,7 +2,7 @@ import React from 'react';
 import Image from '@/components/ui/image';
 import AuthorImage from '@/assets/images/author.jpg';
 
-import NFT1 from '@/assets/images/nft/nft-1.jpg';
+///import NFT1 from '@/assets/images/nft/nft-1.jpg';
 
 
 //import NFT1 from '@/assets/images/nft/Hrs_00006000.png';
@@ -30,7 +30,7 @@ export default function PreviewContent() {
         </div>
         <div className="relative block w-full">
           <Image
-            src={NFT1}
+            src="/horserace/Hrs_00006000.png"
             placeholder="blur"
             width={467}
             alt="Pulses of Imagination #214"

@@ -194,7 +194,7 @@ export default function Search() {
           {/* dark mode off */}
 
           <Button
-            className="bg-black text-white hover:bg-gray-900"
+            color="info"
             onClick={() => openDrawer('DRAWER_SEARCH')}
             fullWidth
           >

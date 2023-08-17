@@ -156,7 +156,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             x={dripX}
             y={dripY}
             color={
-              ['white', 'gray'].indexOf(color) !== -1
+              ['white', 'gray',].indexOf(color) !== -1
                 ? 'rgba(0, 0, 0, 0.1)'
                 : buttonDripColor
             }

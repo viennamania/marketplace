@@ -13,6 +13,7 @@ import { authorData } from '@/data/static/author';
 import Image from "next/image";
 
 
+import { useThemeColor } from '@/lib/hooks/use-theme-color';
 
 
 
@@ -28,7 +29,7 @@ const SearchPage: NextPageWithLayout<
 
   const { layout } = useLayout();
 
-
+  useThemeColor('#14161a');
 
 
   // render retro layout

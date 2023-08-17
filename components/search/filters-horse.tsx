@@ -413,6 +413,10 @@ export function Filters() {
         <CollectionSelect onSelect={(value) => console.log(value)} />
       </Collapse>
       */}
+
+
+
+
     </>
   );
 }

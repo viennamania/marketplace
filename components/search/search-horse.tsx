@@ -194,7 +194,7 @@ export default function Search() {
           {/* dark mode off */}
 
           <Button
-            color="info"
+            //color="info"
             onClick={() => openDrawer('DRAWER_SEARCH')}
             fullWidth
           >

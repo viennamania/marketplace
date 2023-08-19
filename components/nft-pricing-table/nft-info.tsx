@@ -11,54 +11,33 @@ import { SearchIcon } from '@/components/icons/search';
 import AnchorLink from '@/components/ui/links/anchor-link';
 import Explorers from '@/components/cryptocurrency-pricing-table/explorers';
 
-import Link from "next/link";
+import Link from 'next/link';
 
 import PriceHistoryTable from '@/components/nft-transaction/price-history-table';
 
 import {
-  MediaRenderer,
-  useNetwork,
-  useNetworkMismatch,
-  useListing,
-  useContract,
-  useDirectListing,
-  Web3Button,
-  useAddress,
-  useBalance,
-  useTokenBalance,
-} from "@thirdweb-dev/react";
-
-import {
   nftDropContractAddressHorse,
-  tokenContractAddressGRD,
-  tokenContractAddressUSDC,
+  stakingContractAddressHorseAAA,
   marketplaceContractAddress,
 } from '@/config/contractAddresses';
 
-
 import {
-  ChainId,
-  ListingType,
-  Marketplace,
-  NATIVE_TOKENS,
-  NATIVE_TOKEN_ADDRESS,
-} from "@thirdweb-dev/sdk";
+  ConnectWallet,
+  useDisconnect,
+  ThirdwebNftMedia,
+  useAddress,
+  useContract,
+  useContractRead,
+  useOwnedNFTs,
+  useTokenBalance,
+  Web3Button,
+} from '@thirdweb-dev/react';
 
-import { BigNumber, ethers } from 'ethers';
+import { RaceIcon } from '@/components/icons/race-icon';
 
+function NftInfo({ nftMetadata }: any) {
+  ///console.log('nftMetadata', nftMetadata);
 
-
-
-
-function NftInfo({nftMetadata} : any) {
-
-  console.log('nftMetadata', nftMetadata);
-
-  const listingId = nftMetadata?.metadata?.listingId;
-
-
-  
-  
   const [copyButtonStatus, setCopyButtonStatus] = useState(false);
   const [_, copyToClipboard] = useCopyToClipboard();
   function handleCopyToClipboard() {
@@ -71,161 +50,219 @@ function NftInfo({nftMetadata} : any) {
 
   const address = useAddress();
 
-  
-
-  // Hooks to detect user is on the right network and switch them if they are not
-  const networkMismatch = useNetworkMismatch();
-  const [, switchNetwork] = useNetwork();
-
-  const { contract: marketplace } = useContract(
-    marketplaceContractAddress,
-    "marketplace-v3"
+  const { contract: nftDropContract } = useContract(
+    nftDropContractAddressHorse,
+    'nft-drop'
   );
 
+  const { contract: contractStaking, isLoading } = useContract(
+    stakingContractAddressHorseAAA
+  );
 
-  const {
-    //mutateAsync: createDirectListing,
-    data: directListing,
-    isLoading: loadingListing,
-    error,
-  } = useDirectListing(marketplace, listingId);
+  // Connect to our marketplace contract via the useContract hook
+  const { contract: contractMarketplace } = useContract(
+    marketplaceContractAddress,
+    //'marketplace',
+    'marketplace-v3'
+  );
 
+  async function stakeNft(id: string) {
+    if (!address) return;
 
+    const isApproved = await nftDropContract?.isApproved(
+      address,
+      stakingContractAddressHorseAAA
+    );
 
-  async function buyNft() {
+    //onsole.log('isApproved', isApproved);
 
-    try {
-      // Ensure user is on the correct network
-      if (networkMismatch) {
-        switchNetwork && switchNetwork(ChainId.Polygon);
-        return;
-      }
+    if (!isApproved) {
+      const data = await nftDropContract?.setApprovalForAll(
+        stakingContractAddressHorseAAA,
+        true
+      );
 
-      // Simple one-liner for buying the NFT
-      /*
-      await marketplace?.buyFromListing(listingId, 1);
-      */
-
-      // The ID of the listing you want to buy from
-      //const listingId = 0;
-      // Quantity of the asset you want to buy
-      const quantityDesired = 1;
-
-      await marketplace?.directListings.buyFromListing(listingId, quantityDesired, address);
-
-
-      alert("NFT bought successfully!");
-
-    } catch (error) {
-      console.error(error);
-      alert(error);
+      alert(data);
     }
-    
+
+    const data = await contractStaking?.call('stake', [[id]]);
+
+    //console.log('staking data', data);
+
+    if (data) {
+      alert('Your request has been sent successfully');
+      /*
+      setSuccessMsgSnackbar('Your request has been sent successfully');
+      handleClickSucc();
+      */
+    } else {
+      alert(data);
+      /*
+      setErrMsgSnackbar(data);
+      handleClickErr();
+      */
+    }
   }
 
+  const [toAddress, setToAddress] = useState('');
+  const [isSending, setIsSending] = useState(false);
+
+  async function transferNft(id: string, toAddress: string) {
+    if (id === undefined) {
+      alert(`🌊 Please enter a valid tokenId`);
+      return;
+    }
+
+    if (toAddress === '') {
+      alert(`🌊 Please enter a valid address`);
+      return;
+    }
+
+    setIsSending(true);
+
+    try {
+      const transaction = await nftDropContract?.erc721.transfer(toAddress, id);
+
+      console.log(`🌊 Sent transaction with hash: ${transaction?.receipt}`);
+
+      //alert (`🌊 Sent transaction with hash: ${transaction?.receipt}`);
+
+      alert(`🌊 Successfully transfered!`);
+
+      setIsSending(false);
+
+      setToAddress('');
+
+      return transaction;
+    } catch (error) {
+      console.error(error);
+
+      alert(`🌊 Failed to send transaction with hash: ${error}`);
+
+      setIsSending(false);
+    }
+  }
 
   return (
-    <div className="lg:mt-16 px-5 pb-10">
-
-
-      <div className='flex flex-col justify-between items-left lg:visible invisible'>
-        <Link className='flex text-left text-md capitalize text-blue-500 dark:text-white '
-          href={`/`}
+    <div className="px-5 pb-0 lg:mt-0">
+      <div className="items-left invisible flex flex-col justify-between lg:visible">
+        <Link
+          className="text-md flex text-left capitalize text-blue-500 dark:text-white "
+          href={`/horse`}
         >
           Granderby Horse NFT
         </Link>
-        <div className='text-left text-3xl capitalize font-bold text-black dark:text-white'>
+        <div className="text-left text-3xl font-bold capitalize text-black dark:text-white">
           {nftMetadata?.metadata?.name}
         </div>
 
-        <div className="flex items-center gap-4 mt-5 ">
-          {/*
+        <div className="mt-5 flex items-center gap-4 ">
           <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
             Owned by
           </div>
           <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
-            {nftMetadata?.owner.substring(0, 6)}...
+            {nftMetadata?.owner === address ? (
+              <div className="text-xl font-bold text-blue-600">Me</div>
+            ) : (
+              <span>{nftMetadata?.owner.substring(0, 6)}...</span>
+            )}
           </div>
-          */}
-          <p>
-            Owned by{" "}
-            <b>
-              {/*
-              {directListing.sellerAddress?.slice(0, 6) +
-                "..." +
-                directListing.sellerAddress?.slice(36, 40)}
-              */}
-                {nftMetadata?.owner?.slice(0, 6) +
-                "..." +
-                nftMetadata?.owner?.slice(36, 40)}
-            </b>
-          </p>
-
-
         </div>
-
-        <h2>
-          {/*
-          <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
-          {directListing.buyoutCurrencyValuePerToken.symbol}
-              */}
-          <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
-          {directListing?.currencyValuePerToken.symbol}
-        </h2>
-
-
-
-        <div className='flex flex-col w-full mt-3'>
-          {!address ? (
-            <div className='flex flex-col w-full '>
-
-              <div>
-                <Web3Button
-                  theme="light"
-                  action={(contract) =>
-                    ////contract?.call('withdraw', [[nft.metadata.id]])
-                    buyNft()
-
-                  }
-                  contractAddress={marketplaceContractAddress}
-                >
-                  Buy
-                </Web3Button>
-              </div>
-
-              <p className="text-xl font-bold">
-                to buy this NFT.
-              </p>
-
-            </div>
-          )
-          :
-          (
-            <div className='flex flex-col w-full '>
-              
-              <div>
-                <Web3Button
-                  
-                  
-                  theme="light"
-                  action={(contract) =>
-                    ////contract?.call('withdraw', [[nft.metadata.id]])
-                    buyNft()
-                  
-                  
-                  }
-                  contractAddress={marketplaceContractAddress}
-                >
-                  Buy
-                </Web3Button>
-              </div>
-
-            </div>
-
-          )}
-        </div>
-
       </div>
+
+      {nftMetadata?.owner === address && (
+        <>
+          <div className="mt-5 flex flex-row items-center justify-start gap-2">
+            <Web3Button
+              theme="light"
+              contractAddress={stakingContractAddressHorseAAA}
+              action={() => stakeNft(nftMetadata?.metadata?.id)}
+            >
+              Register
+            </Web3Button>
+            <span>for horse recording</span>
+            {/*
+            <Web3Button
+              theme="light"
+              contractAddress={marketplaceContractAddress}
+              action={() => sellNft(nft.metadata.id)}
+            >
+              Sell
+            </Web3Button>
+            */}
+          </div>
+
+          <div className="mt-2 flex flex-row items-center justify-center gap-2">
+            <div className=" flex flex-row justify-center">
+              {/*{isTransferTokensLoading ? (*/}
+
+              {isSending ? (
+                <div className="flex flex-row items-center justify-center gap-2">
+                  <div className="animate-spin">
+                    <RaceIcon className="h-35 w-35" />
+                  </div>
+                  <div className="flex flex-col items-center justify-center text-2xl font-bold text-orange-600">
+                    <span>Sending #{nftMetadata?.metadata?.id} to</span>
+                    <span>Please wait...</span>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <Web3Button
+                    theme="light"
+                    contractAddress={nftDropContractAddressHorse}
+                    action={() => {
+                      //contract?.call('withdraw', [[nft.metadata.id]])
+                      //contract?.call('withdraw', [[nft.metadata.id]])
+                      //contract.erc1155.claim(0, 1);
+
+                      ///contract.erc20.transfer(toAddress, amount);
+
+                      transferNft(nftMetadata?.metadata?.id, toAddress);
+
+                      /*
+                        transferTokens({
+                          to: toAddress, // Address to transfer to
+                          amount: amount, // Amount to transfer
+                        })
+                        */
+                    }}
+                    onSuccess={() => {
+                      //setAmount(0);
+                      //setToAddress('');
+
+                      console.log(`🌊 Successfully transfered!`);
+                      //alert('Successfully transfered!');
+
+                      //setSuccessMsgSnackbar('Your request has been sent successfully' );
+                      //handleClickSucc();
+                    }}
+                    onError={(error) => {
+                      console.error('Failed to transfer', error);
+                      alert('Failed to transfer');
+                      //setErrMsgSnackbar('Failed to transfer');
+                      //handleClickErr();
+                    }}
+                  >
+                    Transfer
+                  </Web3Button>
+                </>
+              )}
+            </div>
+
+            <input
+              className=" w-full text-black"
+              type="text"
+              name="toAddress"
+              placeholder="To Address"
+              value={toAddress}
+              onChange={(e) => {
+                setToAddress(e.target.value);
+              }}
+            />
+          </div>
+        </>
+      )}
 
       <PriceHistoryTable />
 
@@ -319,8 +356,6 @@ function NftInfo({nftMetadata} : any) {
         </div>
       </div>
       */}
-
-
     </div>
   );
 }

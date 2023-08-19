@@ -40,14 +40,12 @@ import PopoverContent from '@/components/cryptocurrency-pricing-table/popover-co
 
 import { Network, Alchemy } from 'alchemy-sdk';
 
-import Link from "next/link";
+import Link from 'next/link';
 
-
-import {
-  nftDropContractAddressHorse
-} from '@/config/contractAddresses';
+import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
 import {
+  useAddress,
   ThirdwebNftMedia,
   useContract,
   useNFT,
@@ -59,8 +57,6 @@ interface RadioOptionProps {
 }
 
 function RadioGroupOption({ value }: RadioOptionProps) {
-  
-
   return (
     <RadioGroup.Option value={value}>
       {({ checked }) => (
@@ -101,8 +97,6 @@ export default function NftSinglePrice({
   isOpen,
   setIsOpen,
 }: NftDrawerProps) {
-
-
   const [price, setPrice] = useState(6.2);
   const [date, setDate] = useState(1624147200);
   const [status, setStatus] = useState('Month');
@@ -114,11 +108,13 @@ export default function NftSinglePrice({
   const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy hh:mma');
   const { layout } = useLayout();
 
-  const { contract } = useContract(
-    nftDropContractAddressHorse,
-    'nft-drop'
-  );
+  const { contract } = useContract(nftDropContractAddressHorse, 'nft-drop');
+
   const { data: nft } = useNFT(contract, tokenid);
+
+  const address = useAddress();
+
+  //console.log('nft', nft);
 
   const handleOnChange = (value: string) => {
     setStatus(value);
@@ -140,26 +136,26 @@ export default function NftSinglePrice({
 
   return (
     <div className="h-full rounded-lg  bg-white p-4 shadow-card dark:bg-light-dark sm:p-6 md:p-8">
-
       {layout === LAYOUT_OPTIONS.RETRO ? (
         <div>
           <div className="flex justify-between gap-4 sm:gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
               <span className="flex items-center gap-2.5">
-
                 <span className="flex flex-row items-center gap-2.5">
                   {/*
                   <Bitcoin className="h-auto w-7 lg:w-9" />
                   */}
 
-
-                  <div className='text-xl font-medium capitalize text-brand dark:text-white'>
+                  <div className="text-xl font-medium capitalize text-brand dark:text-white">
                     {nft?.metadata?.name}
                   </div>
 
                   <Image
-                    src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
-
+                    src={
+                      nft?.metadata?.image
+                        ? nft?.metadata?.image
+                        : '/default-nft.png'
+                    }
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
 
                     ///src={nft?.image}
@@ -169,7 +165,7 @@ export default function NftSinglePrice({
                     ///className="h-auto w-100 lg:w-200"
                   />
                 </span>
-                
+
                 <span className="flex items-end text-xl font-medium capitalize text-brand dark:text-white">
                   {nft?.metadata?.name}
                 </span>
@@ -178,7 +174,7 @@ export default function NftSinglePrice({
                 */}
               </span>
 
-                {/*
+              {/*
               <span className="flex flex-wrap items-center gap-[5px]">
                 <span className="rounded-lg bg-gray-100 px-3 py-2 text-sm font-medium leading-none text-brand dark:!bg-gray-700 dark:text-white">
                   RANK #5
@@ -234,7 +230,6 @@ export default function NftSinglePrice({
                 </span>
               </span>
               */}
-
             </div>
 
             <div
@@ -292,58 +287,58 @@ export default function NftSinglePrice({
           </div>
         </div>
       ) : (
-
-
-        <div className="flex flex-col justify-between gap-8 md:items-start lg:flex-row lg:items-center lg:gap-4">
+        <div className=" flex flex-col justify-between gap-2 md:items-start lg:flex-row lg:items-center lg:gap-4">
           <div>
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
-              
               <span className="flex items-center gap-2.5">
-
-                <span className="flex flex-col items-left gap-2.5 ">
-
-                  <div className='flex flex-col items-left justify-center lg:invisible'>
+                <span className="items-left flex flex-col gap-2.5 ">
+                  <div className="items-left flex flex-col justify-center lg:invisible">
                     {/*
                     <Bitcoin className="h-auto w-7 lg:w-9" />
                     */}
-                    <Link className=' text-left text-md capitalize text-blue-500 dark:text-white '
-                      href={`/`}
-                    > 
+                    <Link
+                      className=" text-md text-left capitalize text-blue-500 dark:text-white "
+                      href={`/horse`}
+                    >
                       Granderby Horse NFT
                     </Link>
-                    <div className='text-left text-3xl capitalize font-bold text-black dark:text-white'>
+                    <div className="text-left text-3xl font-bold capitalize text-black dark:text-white">
                       {nft?.metadata?.name}
                     </div>
 
-                    <div className="flex items-center gap-4 mt-5 ">
+                    <div className="mt-5 flex items-center gap-4 ">
                       <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
                         Owned by
                       </div>
                       <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
-                        {nft?.owner.substring(0, 6)}...
+                        {nft?.owner === address ? (
+                          <div className="text-xl font-bold text-blue-600">
+                            Me
+                          </div>
+                        ) : (
+                          <span>{nft?.owner.substring(0, 6)}...</span>
+                        )}
                       </div>
                     </div>
                   </div>
 
                   <Image
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
-                    src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png'}
+                    src={
+                      nft?.metadata?.image
+                        ? nft?.metadata?.image
+                        : '/default-nft.png'
+                    }
                     alt="nft"
                     width={1024}
                     height={1024}
                     className=" rounded-lg "
                   />
                 </span>
-
-
               </span>
-              
-    
-
             </div>
 
-
-                    {/*
+            {/*
             <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">
               <span className="text-2xl font-semibold xl:text-3xl">
                 {price}
@@ -393,12 +388,8 @@ export default function NftSinglePrice({
             <RadioGroupOption value="Year" />
           </RadioGroup>
           */}
-
         </div>
-
       )}
-
-      
 
       {/*
       <div className="py-4">

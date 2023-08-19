@@ -298,7 +298,7 @@ export default function NftSinglePrice({
                     */}
                     <Link
                       className=" text-md text-left capitalize text-blue-500 dark:text-white "
-                      href={`/horse`}
+                      href={`/`}
                     >
                       Granderby Horse NFT
                     </Link>

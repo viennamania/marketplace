@@ -7,7 +7,7 @@ import Feeds from '@/components/search/feeds-horse-inventory';
 import OwnedFeeds from '@/components/search/feeds-horse-owned';
 import ListedFeeds from '@/components/search/feeds-horse-listed';
 
-import RegisteredFeeds from '@/components/search/feeds-horse-registered';
+//import RegisteredFeeds from '@/components/search/feeds-horse-registered';
 
 import { useDrawer } from '@/components/drawer-views/context';
 
@@ -40,8 +40,8 @@ export default function Inventory() {
       path: 'owned',
     },
     {
-      title: 'Registered',
-      path: 'registered',
+      title: 'Listed',
+      path: 'listed',
     },
 
     /*
@@ -176,13 +176,15 @@ export default function Inventory() {
                     </div>
                   </div>
                 </div>
-                {/*
+                
                 <ListedFeeds />
-                */}
+                
                 {/*
                 <OwnedFeeds />
                 */}
+                {/*
                 <RegisteredFeeds />
+                */}
               </div>
             </TabPanel>
           </ParamTab>

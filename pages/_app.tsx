@@ -142,8 +142,9 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
       <InventoriesButton />
       <InventoriesDrawer />
 
-      
+      {/*
       <OpenseaGuideFooter />
+      */}
   
 
 

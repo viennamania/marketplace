@@ -216,7 +216,7 @@ export default function Feeds({ className }: { className?: string }) {
             <ConnectWallet
               theme='light'
             />
-            for your own horses
+            to see my owned horses
           </div>
         </>
       )

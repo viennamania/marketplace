@@ -182,11 +182,16 @@ export default function NftSinglePrice({
 
   const { contract } = useContract(nftDropContractAddressHorse, 'nft-drop');
 
+
   const { data: nft } = useNFT(contract, tokenid);
+
 
   const address = useAddress();
 
-  console.log('nft', nft);
+  
+  ///console.log('NftSinglePrice nft======', nft);
+
+
 
   const [grade, setGrade] = useState('grade-u');
 
@@ -214,7 +219,16 @@ export default function NftSinglePrice({
 
   useEffect(() => {
 
-    nft?.metadata?.attributes?.map((item: any) => {
+    /////const arr = Array.from(nft?.metadata?.attributes);
+
+    /////let name1:string = person.name!; 
+
+    let items: any = nft?.metadata?.attributes;
+
+
+    ///nft?.metadata?.attributes!.map((item: any) => {
+
+    items.map((item: any) => {
 
       if (item.trait_type === 'Grade') {
         setGrade(item.value);
@@ -223,6 +237,7 @@ export default function NftSinglePrice({
     });
 
   }, [nft]);
+
 
   return (
     <div className="h-full rounded-lg  bg-white p-4 shadow-card dark:bg-light-dark sm:p-6 md:p-8">

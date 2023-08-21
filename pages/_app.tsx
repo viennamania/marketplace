@@ -31,7 +31,7 @@ import {Hydrate, QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from "react-query/devtools";
 
 import ModalsContainer from '@/components/modal-views/container';
-////import DrawersContainer from '@/components/drawer-views/container';
+import DrawersContainer from '@/components/drawer-views/container';
 
 import InventoriesButton from '@/components/inventories/inventories-button';
 import InventoriesDrawer from '@/components/inventories/inventories-drawer';
@@ -135,9 +135,9 @@ function CustomApp({ Component, pageProps }: AppPropsWithLayout) {
 
       <ModalsContainer />
 
-      {/*
+      
       <DrawersContainer />
-      */}
+      
 
       <InventoriesButton />
       <InventoriesDrawer />

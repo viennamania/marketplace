@@ -242,7 +242,7 @@ export default function Feeds({ className }: { className?: string }) {
 
             <div
               className={cn(
-                'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
+                'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-2',
                 isGridCompact
                   ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
                   : '3xl:!grid-cols-3 4xl:!grid-cols-4',
@@ -273,7 +273,7 @@ export default function Feeds({ className }: { className?: string }) {
                           
                         />
                         <div className='w-full m-2'>
-                          <p className='text-md font-bold '>{nft?.metadata?.name}</p>
+                          <p className='text-xs '>{nft?.metadata?.name}</p>
                         </div>
 
                       </div>

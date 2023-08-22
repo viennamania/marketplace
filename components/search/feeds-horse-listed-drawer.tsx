@@ -27,8 +27,14 @@ import Image from "next/image";
 
 import { useRouter } from 'next/router';
 
-import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
+
+
+
+import {
+  nftDropContractAddressHorse,
+  marketplaceContractAddress
+} from '@/config/contractAddresses';
 
 import {
   ConnectWallet,
@@ -41,13 +47,13 @@ import {
   useTokenBalance,
   useNFTBalance,
   Web3Button,
+  useValidDirectListings,
 } from '@thirdweb-dev/react';
 
 
 
 
 export default function Feeds({ className }: { className?: string }) {
-  
   const { isGridCompact } = useGridSwitcher();
 
   const router = useRouter();
@@ -60,13 +66,18 @@ export default function Feeds({ className }: { className?: string }) {
     nftDropContractAddressHorse,
     'nft-drop'
   );
+  const { data: ownedNfts } = useOwnedNFTs(nftDropContract, address);
+
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace-v3"
+  );
+
   const {
-    data: ownedNfts,
-    isLoading: isLoadingOwnedNfts,
-  } = useOwnedNFTs(nftDropContract, address);
-
-
-  ////console.log("ownedNfts======>", ownedNfts);
+    data: directListings,
+    isLoading: loadingListings,
+    error,
+  } = useValidDirectListings(marketplace);
 
   /*
   const settings = {
@@ -209,40 +220,38 @@ export default function Feeds({ className }: { className?: string }) {
   return (
 
     <>
- 
-      {!address ? (
-        <>
-          <div className='flex flex-col items-center justify-center w-full h-40'>
-            <ConnectWallet
-              theme='light'
-            />
-            to see my owned horses
-          </div>
-        </>
-      )
-      :
-      (
-        <>
 
-          {
-          // If the listings are loading, show a loading message
-          isLoadingOwnedNfts ? (
-            <>
-              <div className="flex flex-col items-center justify-center ">
-                <div className='text-xl'>Loading my own horses...</div>
 
-                <span className="mt-10 h-screen w-full flex justify-center items-top">
-                  <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
-                </span>
+      {
+        // If the listings are loading, show a loading message
+        loadingListings ? (
+          <>
+            <div className="flex flex-col items-center justify-center ">
+              <div className='text-xl'>Loading my listings...</div>
+              <span className="mt-10 h-screen w-full flex justify-center items-top">
+                <span className="animate-spin relative flex h-10 w-10 rounded-sm bg-purple-400 opacity-75"></span>
+              </span>
+            </div>
+          </>
+        ) : (
 
-              </div>
-            </>
-          ) : (
+        <div className='flex'>
+
+{/*
+        {status === "success" && (
+
+          <InfiniteScroll
+            dataLength={data?.pages.length * 20}
+            next={fetchNextPage}
+            hasMore={hasNextPage ?? false}
+            loader={<h4>Loading...</h4>}
+          >
+        */}
 
 
             <div
               className={cn(
-                'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-4',
+                'grid grid-cols-2 gap-5 sm:grid-cols-2 md:grid-cols-2 ',
                 isGridCompact
                   ? '3xl:!grid-cols-4 4xl:!grid-cols-5'
                   : '3xl:!grid-cols-3 4xl:!grid-cols-4',
@@ -251,42 +260,57 @@ export default function Feeds({ className }: { className?: string }) {
             >
 
 
-                  {ownedNfts?.map((nft) => (
+                  {directListings?.map((listing) => (
 
-                      <div key={nft?.metadata?.id}
+
+                      <div key={listing.id}
                         className='relative overflow-hidden bg-white rounded-lg shadow-lg'
                         onClick={() =>
                           //setTokenid(nft.metadata.id.toString()),
                           //setIsOpen(true)
                           router.push(
-                            '/horse-details/' + nft?.metadata?.id
+                            `/listing/${listing.id}`
                           )
                         }
                       >
 
                         <Image
-                          src={nft?.metadata?.image ? nft?.metadata?.image : '/default-nft.png' }
-                          alt='nft'
-                          height={300}
-                          width={300}
+                          src={listing.asset?.image ? listing.asset?.image : "/default-nft.png"}
+                          alt="nft"
+                          height={500}
+                          width={500}
                           loading='lazy'
                           
                         />
-                        <div className='w-full m-2'>
-                          <p className='text-md font-bold '>{nft?.metadata?.name}</p>
+                        <div className='w-full m-2  '>
+                          <p className='text-xs'>{listing.asset?.name}</p>
+                        </div>
+
+                        <div className='w-full m-2 flex items-center justify-end pr-5'>
+                          
+                            <b>{listing.currencyValuePerToken.displayValue}</b>&nbsp;
+                            {listing.currencyValuePerToken.symbol}
+                          
                         </div>
 
                       </div>
-  
+
 
                   ))}
+                  
+
 
             </div>
+            
+{/*
+          </InfiniteScroll>
 
-          )}
+        )}
 
-        </>
+*/}
 
+
+      </div>
       )}
 
     </>

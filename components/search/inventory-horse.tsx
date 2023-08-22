@@ -4,8 +4,10 @@ import Button from '@/components/ui/button';
 
 import Feeds from '@/components/search/feeds-horse-inventory';
 
-import OwnedFeeds from '@/components/search/feeds-horse-owned';
-import ListedFeeds from '@/components/search/feeds-horse-listed';
+import OwnedFeeds from '@/components/search/feeds-horse-owned-drawer';
+
+import ListedFeeds from '@/components/search/feeds-horse-listed-drawer';
+
 
 //import RegisteredFeeds from '@/components/search/feeds-horse-registered';
 
@@ -26,6 +28,7 @@ import { OptionIcon } from '@/components/icons/option';
 import ParamTab, { TabPanel } from '@/components/ui/param-tab';
 
 export default function Inventory() {
+  
   const { openDrawer } = useDrawer();
 
   const tabMenu = [

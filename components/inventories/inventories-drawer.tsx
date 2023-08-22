@@ -361,6 +361,7 @@ export default function InventoriesDrawer() {
                   */}
 
                   <Inventory />
+                  
                 </div>
               </Scrollbar>
             </div>

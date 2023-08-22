@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useEffect, use } from 'react';
 import { format } from 'date-fns';
 import cn from 'classnames';
 import {
@@ -16,7 +16,10 @@ import { Bitcoin } from '@/components/icons/bitcoin';
 import Image from '@/components/ui/image';
 
 import { Refresh } from '@/components/icons/refresh';
+
+import Slider from 'rc-slider';
 import { RadioGroup } from '@/components/ui/radio-group';
+import Collapse from '@/components/ui/collapse';
 import { motion } from 'framer-motion';
 import {
   weeklyComparison,
@@ -42,10 +45,8 @@ import { Network, Alchemy } from 'alchemy-sdk';
 
 import Link from 'next/link';
 
-import {
-  nftDropContractAddressHorse,
-  stakingContractAddressHorseAAA,
-} from '@/config/contractAddresses';
+
+import { nftDropContractAddressHorse } from '@/config/contractAddresses';
 
 import {
   useAddress,
@@ -53,7 +54,6 @@ import {
   useContract,
   useNFT,
   Web3Button,
-  useContractRead,
 } from '@thirdweb-dev/react';
 
 interface RadioOptionProps {
@@ -96,6 +96,74 @@ interface NftDrawerProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+
+
+
+
+
+export function PriceRange() {
+  let [range, setRange] = useState({ min: 0, max: 1000 });
+
+  function handleRangeChange(value: any) {
+    setRange({
+      min: value[0],
+      max: value[1],
+    });
+  }
+  function handleMaxChange(max: number) {
+    setRange({
+      ...range,
+      max: max || range.min,
+    });
+  }
+  function handleMinChange(min: number) {
+    setRange({
+      ...range,
+      min: min || 0,
+    });
+  }
+
+  return (
+    <div className="p-5">
+
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <input
+          className="h-9 rounded-lg border-gray-200 text-sm text-gray-900 outline-none focus:border-gray-900 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-gray-500"
+          type="number"
+          value={range.min}
+          onChange={(e) => handleMinChange(parseInt(e.target.value))}
+          min="0"
+          max={range.max}
+        />
+        <input
+          className="h-9 rounded-lg border-gray-200 text-sm text-gray-900 outline-none focus:border-gray-900 focus:outline-none focus:ring-0 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-gray-500"
+          type="number"
+          value={range.max}
+          onChange={(e) => handleMaxChange(parseInt(e.target.value))}
+          min={range.min}
+        />
+      </div>
+
+      <div className="border h-10 ">
+      <Slider
+        className="h-10"
+        range
+        min={0}
+        max={1000}
+        value={[range.min, range.max]}
+        allowCross={false}
+        onChange={(value) => handleRangeChange(value)}
+      />
+      </div>
+
+    </div>
+  );
+}
+
+
+
+
+
 export default function NftSinglePrice({
   tokenid,
   isOpen,
@@ -112,27 +180,23 @@ export default function NftSinglePrice({
   const formattedDate = format(new Date(date * 1000), 'MMMM d, yyyy hh:mma');
   const { layout } = useLayout();
 
+  const { contract } = useContract(nftDropContractAddressHorse, 'nft-drop');
+
+
+  const { data: nft } = useNFT(contract, tokenid);
+
+
   const address = useAddress();
 
-  const { contract: nftDropContract } = useContract(
-    nftDropContractAddressHorse,
-    'nft-drop'
-  );
+  
+  ///console.log('NftSinglePrice nft======', nft);
 
-  const { data: nft } = useNFT(nftDropContract, tokenid);
 
-  console.log('nft', nft);
 
-  const { contract: contractStaking, isLoading: isLoadingContractStaking } =
-    useContract(stakingContractAddressHorseAAA);
+  const [grade, setGrade] = useState('grade-u');
 
-  const { data: stakerAddress, isLoading } = useContractRead(
-    contractStaking,
-    'stakerAddress',
-    [tokenid]
-  );
 
-  console.log('stakerAddress', stakerAddress);
+
 
   const handleOnChange = (value: string) => {
     setStatus(value);
@@ -152,43 +216,28 @@ export default function NftSinglePrice({
     }
   };
 
-  async function stakeNft(id: string) {
-    if (!address) return;
 
-    const isApproved = await nftDropContract?.isApproved(
-      address,
-      stakingContractAddressHorseAAA
-    );
+  useEffect(() => {
 
-    //onsole.log('isApproved', isApproved);
+    /////const arr = Array.from(nft?.metadata?.attributes);
 
-    if (!isApproved) {
-      const data = await nftDropContract?.setApprovalForAll(
-        stakingContractAddressHorseAAA,
-        true
-      );
+    /////let name1:string = person.name!; 
 
-      alert(data);
-    }
+    let items: any = nft?.metadata?.attributes;
 
-    const data = await contractStaking?.call('stake', [[id]]);
 
-    //console.log('staking data', data);
+    ///nft?.metadata?.attributes!.map((item: any) => {
 
-    if (data) {
-      alert('Your horse has been registered successfully');
-      /*
-      setSuccessMsgSnackbar('Your request has been sent successfully');
-      handleClickSucc();
-      */
-    } else {
-      alert(data);
-      /*
-      setErrMsgSnackbar(data);
-      handleClickErr();
-      */
-    }
-  }
+    items.map((item: any) => {
+
+      if (item.trait_type === 'Grade') {
+        setGrade(item.value);
+      }
+
+    });
+
+  }, [nft]);
+
 
   return (
     <div className="h-full rounded-lg  bg-white p-4 shadow-card dark:bg-light-dark sm:p-6 md:p-8">
@@ -344,99 +393,210 @@ export default function NftSinglePrice({
         </div>
       ) : (
         <div className=" flex flex-col justify-between gap-2 md:items-start lg:flex-row lg:items-center lg:gap-4">
+          
           <div>
+            
             <div className="flex flex-wrap items-center gap-3 text-sm uppercase tracking-wider text-gray-600 dark:text-gray-400 sm:text-base">
               <span className="flex items-center gap-2.5">
+                
                 <span className="items-left flex flex-col gap-2.5 ">
                   
-
-                  {/*
-                  <div className="items-left flex flex-col justify-center ">
-                    
+                  <div className="items-left  flex-col justify-center lg: hidden">
+                    {/*
+                    <Bitcoin className="h-auto w-7 lg:w-9" />
+                    */}
+                    <Link
+                      className=" text-md text-left capitalize text-blue-500 dark:text-white "
+                      href={`/`}
+                    >
+                      Granderby Horse NFT
+                    </Link>
                     <div className="text-left text-3xl font-bold capitalize text-black dark:text-white">
                       {nft?.metadata?.name}
                     </div>
 
-                    
                     <div className="mt-5 flex items-center gap-4 ">
                       <div className="w-[100px] text-sm tracking-wider text-[#6B7280]">
                         Owned by
                       </div>
                       <div className="rounded-lg bg-gray-100 px-3 pb-1 pt-[6px] text-sm font-medium text-gray-900 dark:bg-gray-700 dark:text-white">
-                        {stakerAddress &&
-                        stakerAddress ===
-                          '0x0000000000000000000000000000000000000000' ? (
-                          <>
-                            {nft?.owner === address ? (
-                              <div className="text-xl font-bold text-blue-600">
-                                Me
-                              </div>
-                            ) : (
-                              <span>{nft?.owner?.substring(0, 6)}...</span>
-                            )}
-                          </>
+                        {nft?.owner === address ? (
+                          <div className="text-xl font-bold text-blue-600">
+                            Me
+                          </div>
                         ) : (
-                          <>
-                            {stakerAddress && stakerAddress === address ? (
-                              <div className="text-xl font-bold text-blue-600">
-                                Me
-                              </div>
-                            ) : (
-                              <span>{stakerAddress?.substring(0, 6)}...</span>
-                            )}
-                          </>
+                          <span>{nft?.owner.substring(0, 6)}...</span>
                         )}
                       </div>
-
-                      
-                      {stakerAddress &&
-                        stakerAddress ===
-                          '0x0000000000000000000000000000000000000000' &&
-                        nft?.owner === address && (
-                          <Web3Button
-                            theme="light"
-                            contractAddress={stakingContractAddressHorseAAA}
-                            action={() => stakeNft(nft?.metadata?.id || '')}
-                          >
-                            Register
-                          </Web3Button>
-                      )}
-
-                      {stakerAddress !==
-                        '0x0000000000000000000000000000000000000000' && <></>}
-
-                      {stakerAddress && stakerAddress === address && (
-                        <div className="mt-2">
-                          <Web3Button
-                            theme="light"
-                            action={(contract) =>
-                              contract?.call('withdraw', [[nft?.metadata?.id]])
-                            }
-                            contractAddress={stakingContractAddressHorseAAA}
-                          >
-                            Unregister
-                          </Web3Button>
-                        </div>
-                      )}
-                      
-
                     </div>
-                  </div>
-                  */}
 
-                  <Image
-                    //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
-                    src={
-                      nft?.metadata?.image
-                        ? nft?.metadata?.image
-                        : '/default-nft.png'
-                    }
-                    alt="nft"
-                    width={1024}
-                    height={1024}
-                    className=" rounded-lg "
-                  />
+                  </div>
+
+                  <div className="items-left flex flex-col justify-center ">
+
+                    <Image
+                      //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"
+                      src={
+                        nft?.metadata?.image
+                          ? nft?.metadata?.image
+                          : '/default-nft.png'
+                      }
+                      alt="nft"
+                      width={1024}
+                      height={1024}
+                      className=" rounded-lg "
+                    />
+
+                    
+
+                    <div className='mt-2'>
+                    <Collapse label="Grades" initialOpen>
+
+                    <RadioGroup
+                          value={grade}
+                          //onChange={setGrade}
+                          className="grid grid-cols-2 gap-2 p-5"
+                        >
+                          <RadioGroup.Option value="U">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-u.png"
+                                  alt="Grade U"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade U
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+
+                          <RadioGroup.Option value="S">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-s.png"
+                                  alt="Grade S"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade S
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+
+                          <RadioGroup.Option value="A">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-a.png"
+                                  alt="Grade A"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade A
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+
+                          <RadioGroup.Option value="B">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-b.png"
+                                  alt="Grade B"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade B
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+
+                          <RadioGroup.Option value="C">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-c.png"
+                                  alt="Grade C"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade C
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+
+                          <RadioGroup.Option value="D">
+                            {({ checked }) => (
+                              <span
+                                className={`flex h-9 cursor-pointer items-center justify-center rounded-lg border border-solid text-center text-sm font-medium uppercase tracking-wide transition-all ${
+                                  checked
+                                    ? 'border-brand bg-brand text-white shadow-button'
+                                    : 'border-gray-200 bg-white text-brand dark:border-gray-700 dark:bg-gray-800 dark:text-white'
+                                }`}
+                              >
+                                <Image
+                                  src="/images/grade-d.png"
+                                  alt="Grade D"
+                                  width={15}
+                                  height={15}
+                                />
+                                &nbsp; Grade D
+                              </span>
+                            )}
+                          </RadioGroup.Option>
+                        </RadioGroup>
+
+                  
+                        </Collapse> 
+                        </div>
+
+                        <div className='mt-2'>
+
+
+                        <Collapse label="Speed" initialOpen>
+                          <PriceRange />
+                        </Collapse>
+
+                        </div>
+
+                 
+
+                  </div>
+
                 </span>
+
               </span>
             </div>
 
@@ -490,7 +650,11 @@ export default function NftSinglePrice({
             <RadioGroupOption value="Year" />
           </RadioGroup>
           */}
+          
+
+
         </div>
+
       )}
 
       {/*

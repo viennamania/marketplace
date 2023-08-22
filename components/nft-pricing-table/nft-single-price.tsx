@@ -488,8 +488,8 @@ export default function NftSinglePrice({
                 <span className="items-left flex flex-col gap-2.5 ">
                   
 
-                  {/*
-                  <div className="items-left flex flex-col justify-center ">
+                  
+                  <div className="items-left flex flex-col justify-center xl:hidden ">
                     
                     <div className="text-left text-3xl font-bold capitalize text-black dark:text-white">
                       {nft?.metadata?.name}
@@ -526,7 +526,7 @@ export default function NftSinglePrice({
                         )}
                       </div>
 
-                      
+                      {/*
                       {stakerAddress &&
                         stakerAddress ===
                           '0x0000000000000000000000000000000000000000' &&
@@ -556,11 +556,11 @@ export default function NftSinglePrice({
                           </Web3Button>
                         </div>
                       )}
-                      
+                          */}
 
                     </div>
                   </div>
-                  */}
+                  
 
                   <Image
                     //src="https://dshujxhbbpmz18304035.gcdn.ntruss.com/nft/HV/hrs/Hrs_00000000.png"

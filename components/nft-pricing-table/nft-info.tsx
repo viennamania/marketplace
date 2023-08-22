@@ -19,6 +19,7 @@ import {
   nftDropContractAddressHorse,
   stakingContractAddressHorseAAA,
   marketplaceContractAddress,
+  tokenContractAddressUSDC,
 } from '@/config/contractAddresses';
 
 import {
@@ -36,6 +37,7 @@ import {
 import { RaceIcon } from '@/components/icons/race-icon';
 
 function NftInfo({ nftMetadata }: any) {
+
   ///console.log('nftMetadata', nftMetadata);
 
   const [copyButtonStatus, setCopyButtonStatus] = useState(false);
@@ -107,6 +109,11 @@ function NftInfo({ nftMetadata }: any) {
   const [toAddress, setToAddress] = useState('');
   const [isSending, setIsSending] = useState(false);
 
+
+  const [price, setPrice] = useState('');
+
+
+
   async function transferNft(id: string, toAddress: string) {
     if (id === undefined) {
       alert(`🌊 Please enter a valid tokenId`);
@@ -144,6 +151,51 @@ function NftInfo({ nftMetadata }: any) {
   }
 
 
+  async function sellNft(id: string) {
+    if (!address) return;
+
+    /*
+    const isApproved = await nftDropContract?.isApproved(
+      address,
+      stakingContractAddressHorseAAA
+    );
+
+    if (!isApproved) {
+      await nftDropContract?.setApprovalForAll(stakingContractAddressHorseAAA, true);
+    }
+
+    const data = await stakingContract?.call('stake', [id]);
+    */
+
+    //console.log("data",data);
+
+
+    try {
+      const transaction =
+        await contractMarketplace?.directListings.createListing({
+          assetContractAddress: nftDropContractAddressHorse, // Contract Address of the NFT
+          tokenId: id, // Token ID of the NFT.
+          //buyoutPricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+          pricePerToken: price, // Maximum price, the auction will end immediately if a user pays this price.
+          ///currencyContractAddress: NATIVE_TOKEN_ADDRESS, // NATIVE_TOKEN_ADDRESS is the crpyto curency that is native to the network. i.e. Goerli ETH.
+          currencyContractAddress: tokenContractAddressUSDC,
+          
+          //listingDurationInSeconds: 60 * 60 * 24 * 7, // When the auction will be closed and no longer accept bids (1 Week)
+          //quantity: 1, // How many of the NFTs are being listed (useful for ERC 1155 tokens)
+          startTimestamp: new Date(), // When the listing will start
+          endTimestamp: new Date(
+            new Date().getTime() + 7 * 24 * 60 * 60 * 1000
+          ), // Optional - when the listing should end (default is 7 days from now)
+        });
+
+      return transaction;
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
 
   return (
     <div className="px-5 pb-0 lg:mt-0">
@@ -175,6 +227,8 @@ function NftInfo({ nftMetadata }: any) {
       {nftMetadata?.owner === address && (
         <>
           <div className="mt-5 flex flex-row items-center justify-start gap-2">
+
+            {/*
             <Web3Button
               theme="light"
               contractAddress={stakingContractAddressHorseAAA}
@@ -183,15 +237,30 @@ function NftInfo({ nftMetadata }: any) {
               Register
             </Web3Button>
             <span>for horse recording</span>
-            {/*
+            */}
+
+            
             <Web3Button
               theme="light"
               contractAddress={marketplaceContractAddress}
-              action={() => sellNft(nft.metadata.id)}
+              action={() => sellNft(nftMetadata?.metadata?.id)}
             >
               Sell
             </Web3Button>
-            */}
+
+            <input
+              className=" w-full text-black"
+              type="number"
+              name="price"
+              placeholder="Price"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            />
+            <span className='ml-2 text-xl font-bold text-blue-600'>USDC</span>
+            
+            
           </div>
 
           <div className="mt-2 flex flex-row items-center justify-center gap-2">

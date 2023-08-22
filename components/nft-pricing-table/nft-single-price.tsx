@@ -490,8 +490,15 @@ export default function NftSinglePrice({
 
                   
                   <div className="items-left flex flex-col justify-center xl:hidden ">
+
+                  <Link
+                      className=" text-lg text-left capitalize text-blue-500 dark:text-white "
+                      href={`/`}
+                    >
+                      Granderby Horse NFT
+                    </Link>
                     
-                    <div className="text-left text-3xl font-bold capitalize text-black dark:text-white">
+                    <div className="text-left text-2xl font-bold capitalize text-black dark:text-white">
                       {nft?.metadata?.name}
                     </div>
 
@@ -576,10 +583,41 @@ export default function NftSinglePrice({
                   />
                 </span>
               </span>
+
+      
+
+
             </div>
 
 
             <Grade />
+
+
+            {/* nft attributes details */}
+            <div className="mt-5 grid  grid-cols-3 items-start justify-between gap-2  ">
+              { nft?.metadata?.attributes?.map((attribute:any) => (
+                <div key={attribute?.trait_type}>
+                  <div className=" flex flex-col items-center gap-3 text-sm font-medium text-gray-900 dark:text-white xl:text-xl lg:flex-wrap 2xl:flex-nowrap
+                   bg-gray-100 rounded-md p-3  ">
+
+                    <span
+                      className={cn(
+                        'flex ',
+                        toggleCoin ? 'flex-row-reverse' : 'flex-row'
+                      )}
+                    >
+                      <span>{attribute?.trait_type}</span>
+                    </span>
+
+                    <span className="text-md  font-semibold xl:text-2xl">
+                      {attribute?.value?.toString().length  < 8 ?  attribute?.value?.toString() : attribute?.value?.toString().substring(0, 8)}...
+                    </span>
+
+                  </div>
+                </div>
+              ))}
+            </div>
+ 
 
             {/*
             <div className="mt-5 flex items-end gap-3 text-base font-medium text-gray-900 dark:text-white sm:text-xl lg:flex-wrap 2xl:flex-nowrap">

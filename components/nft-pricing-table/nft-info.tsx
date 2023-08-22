@@ -189,7 +189,7 @@ function NftInfo({ nftMetadata }: any) {
         });
 
       return transaction;
-      
+
     } catch (error) {
       console.error(error);
     }

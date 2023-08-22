@@ -25,6 +25,15 @@ import { LAYOUT_OPTIONS } from '@/lib/constants';
 
 import Inventory from '@/components/search/inventory-horse';
 
+
+import {
+  useAddress,
+  ConnectWallet,
+
+} from '@thirdweb-dev/react';
+
+
+
 const ColorPreset = [
   {
     label: 'Black',
@@ -127,6 +136,8 @@ function DirectionSwitcher() {
   ///const [direction, setDirection] = useLocalStorage('criptic-direction', 'rtl');
 
   useDirection(direction ? direction : 'ltr');
+
+
 
   return (
     <div className="px-6 pt-8">
@@ -298,6 +309,7 @@ export default function InventoriesDrawer() {
   
   const { isInventoriesOpen, closeInventories } = useInventoriesDrawer();
 
+  const address = useAddress();
   
   return (
 
@@ -334,6 +346,7 @@ export default function InventoriesDrawer() {
         >
           <div className="fixed inset-y-0 w-80 max-w-full bg-white/95 shadow-[0_0_80px_rgba(17,24,39,0.2)] backdrop-blur ltr:right-0 rtl:left-0 dark:bg-dark/90">
             <div className="h-full w-full ">
+              
               <div className=" flex h-16 flex-row items-center justify-between gap-6 border-b border-dashed border-gray-200 px-6 dark:border-gray-700">
                 <h3 className="mt-5 text-base font-medium uppercase text-gray-900 dark:text-white">
                   My inventory
@@ -350,6 +363,14 @@ export default function InventoriesDrawer() {
                   <Close className="h-auto w-2.5" />
                 </Button>
               </div>
+
+              {address &&
+                <div className="mt-3 flex item-center justify-center">
+
+                  <ConnectWallet />
+                </div>
+              }
+
 
               <Scrollbar style={{ height: 'calc(100% - 64px)' }}>
                 <div className="pb-8">

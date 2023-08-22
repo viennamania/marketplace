@@ -234,6 +234,11 @@ interface NftDrawerProps {
   setIsOpen: (isOpen: boolean) => void;
 }
 
+
+
+
+
+
 export default function NftSinglePrice({
   tokenid,
   isOpen,
@@ -260,6 +265,8 @@ export default function NftSinglePrice({
   const { data: nft } = useNFT(nftDropContract, tokenid);
 
   console.log('nft', nft);
+
+  const attributes : any = nft?.metadata?.attributes;
 
   const { contract: contractStaking, isLoading: isLoadingContractStaking } =
     useContract(stakingContractAddressHorseAAA);
@@ -595,7 +602,8 @@ export default function NftSinglePrice({
 
             {/* nft attributes details */}
             <div className="mt-5 grid  grid-cols-3 items-start justify-between gap-2  ">
-              { nft?.metadata?.attributes?.map((attribute:any) => (
+              {attributes?.map((attribute:any) => (
+                //nft?.metadata?.attributes?.map((attribute:any) => (
                 <div key={attribute?.trait_type}>
                   <div className=" flex flex-col items-center gap-3 text-sm font-medium text-gray-900 dark:text-white xl:text-xl lg:flex-wrap 2xl:flex-nowrap
                    bg-gray-100 rounded-md p-3  ">

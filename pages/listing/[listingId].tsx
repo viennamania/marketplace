@@ -46,27 +46,107 @@ import {
   useContract,
   useNFT,
   Web3Button,
+  useDirectListing,
+  useNetwork,
+  useNetworkMismatch,
+  ChainId,
+  useAddress,
 } from '@thirdweb-dev/react';
 
 import { get } from 'http';
 import { set } from 'date-fns';
+import { Button } from '@mui/base';
 
 
 
 
-function SinglePrice(tokenid: any) {
+
+
+function SinglePrice(listingId: any) {
+
+  console.log("listingId", listingId);
+
   const [isOpen, setIsOpen] = useState(false);
   const { layout } = useLayout();
   const isMounted = useIsMounted();
   const breakpoint = useBreakpoint();
 
- 
+
+  const address = useAddress();
+
+  const { contract: marketplace } = useContract(
+    marketplaceContractAddress,
+    "marketplace-v3"
+  );
+
+
+  const {
+    //mutateAsync: createDirectListing,
+    data: directListing,
+    isLoading: loadingListing,
+    error,
+  } = useDirectListing(marketplace, listingId.listingId);
+
+
+  
+  //console.log("directListing", directListing);
+
+  /*
+  if (loadingListing) {
+    return <div className={styles.loadingOrError}>Loading...</div>;
+  }
+
+  
+
+  if (!directListing) {
+    return <div className={styles.loadingOrError}>Listing not found</div>;
+  }
+  */
+
+    // Hooks to detect user is on the right network and switch them if they are not
+  const networkMismatch = useNetworkMismatch();
+  const [ ,switchNetwork] = useNetwork();
+
 
   const { contract } = useContract(
     nftDropContractAddressHorse,
     'nft-drop'
   );
-  const { data: nftMetadata } = useNFT(contract, tokenid.tokenid);
+  const { data: nftMetadata } = useNFT(contract, directListing?.tokenId);
+
+
+  async function buyNft() {
+
+    try {
+      // Ensure user is on the correct network
+      
+      if (networkMismatch) {
+        switchNetwork && switchNetwork(ChainId.Polygon);
+        return;
+      }
+
+      // Simple one-liner for buying the NFT
+      /*
+      await marketplace?.buyFromListing(listingId, 1);
+      */
+
+      // The ID of the listing you want to buy from
+      //const listingId = 0;
+      // Quantity of the asset you want to buy
+      const quantityDesired = 1;
+
+      await marketplace?.directListings?.buyFromListing(listingId, quantityDesired, address);
+
+
+      alert("NFT bought successfully!");
+
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    
+  }
+
 
 
   return (
@@ -80,12 +160,39 @@ function SinglePrice(tokenid: any) {
         ${layout === LAYOUT_OPTIONS.RETRO ? '' : 'lg:w-2/3'}`}
         >
 
+          <div className='flex flex-row  gap-5 items-center justify-center'>
+          <div className='text-xl font-bold xl:text-2xl'>
+            {/*
+            <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
+            {directListing.buyoutCurrencyValuePerToken.symbol}
+                */}
+            <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
+            {directListing?.currencyValuePerToken.symbol}
+          </div>
+
           
+
+          <Web3Button
+            theme='light'
+            action={(contract) =>
+              //contract?.call('withdraw', [[nft.metadata.id]])
+              buyNft()
+            }
+            contractAddress={marketplaceContractAddress}
+          >
+              <span className="flex items-center gap-2">
+                {/*<InfoIcon className="h-3 w-3" /> */} Buy
+              </span>
+          </Web3Button>
+          </div>
+
+
           <NftSinglePrice
-            tokenid={tokenid.tokenid}
+            tokenid={directListing?.tokenId}
             isOpen={isOpen}
             setIsOpen={setIsOpen}
           />
+
         </div>
         
         
@@ -152,9 +259,11 @@ function SinglePrice(tokenid: any) {
 const AssetSinglePrice: NextPageWithLayout = () => {
   const router = useRouter();
 
-  console.log('id======', router.query.tokenid);
 
-  return <SinglePrice tokenid={router.query.tokenid} />;
+  const { listingId } = router.query as { listingId: string };
+
+  return <SinglePrice listingId={listingId} />;
+
 };
 
 AssetSinglePrice.getLayout = function getLayout(page: any) {

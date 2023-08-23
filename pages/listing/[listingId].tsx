@@ -51,6 +51,7 @@ import {
   useNetworkMismatch,
   ChainId,
   useAddress,
+  useTokenBalance,
 } from '@thirdweb-dev/react';
 
 import { get } from 'http';
@@ -73,6 +74,21 @@ function SinglePrice(listingId: any) {
 
 
   const address = useAddress();
+
+
+  const { contract: tokenContractGRD } = useContract(
+    tokenContractAddressGRD,
+    'token'
+  );
+  const { data: tokenBalanceGRD } = useTokenBalance(tokenContractGRD, address);
+
+  const { contract: tokenContractUSDC } = useContract(
+    tokenContractAddressUSDC,
+    'token'
+  );
+  const { data: tokenBalanceUSDC, isLoading: isLoadingTokenBalanceUSDC } = useTokenBalance(tokenContractUSDC, address);
+
+
 
   const { contract: marketplace } = useContract(
     marketplaceContractAddress,
@@ -127,7 +143,7 @@ function SinglePrice(listingId: any) {
 
       // Simple one-liner for buying the NFT
       /*
-      await marketplace?.buyFromListing(listingId, 1);
+      await marketplace?.buyFromListing(listingId.listingId, 1);
       */
 
       // The ID of the listing you want to buy from
@@ -135,7 +151,7 @@ function SinglePrice(listingId: any) {
       // Quantity of the asset you want to buy
       const quantityDesired = 1;
 
-      await marketplace?.directListings?.buyFromListing(listingId, quantityDesired, address);
+      await marketplace?.directListings?.buyFromListing(listingId?.listingId, quantityDesired, address);
 
 
       alert("NFT bought successfully!");
@@ -160,31 +176,63 @@ function SinglePrice(listingId: any) {
         ${layout === LAYOUT_OPTIONS.RETRO ? '' : 'lg:w-2/3'}`}
         >
 
-          <div className='flex flex-row  gap-5 items-center justify-center'>
-          <div className='text-xl font-bold xl:text-2xl'>
-            {/*
-            <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
-            {directListing.buyoutCurrencyValuePerToken.symbol}
-                */}
-            <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
-            {directListing?.currencyValuePerToken.symbol}
-          </div>
+          {!directListing ? (
+            <>
+   
+            </>
+            
+          ) : (
+            
+            <div className='flex flex-row  gap-5 items-center justify-center'>
+              <div className='text-xl font-bold xl:text-2xl'>
+                {/*
+                <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
+                {directListing.buyoutCurrencyValuePerToken.symbol}
+                    */}
+                <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
+                {directListing?.currencyValuePerToken.symbol}
+              </div>
+
+              <Web3Button
+                theme='light'
+                action={(contract) =>
+                  //contract?.call('withdraw', [[nft.metadata.id]])
+                  buyNft()
+                }
+                contractAddress={marketplaceContractAddress}
+              >
+                  <span className="flex items-center gap-2">
+                    {/*<InfoIcon className="h-3 w-3" /> */} Buy
+                  </span>
+              </Web3Button>
+
+            </div>
+
+          )}
 
           
+          { address && (  
 
-          <Web3Button
-            theme='light'
-            action={(contract) =>
-              //contract?.call('withdraw', [[nft.metadata.id]])
-              buyNft()
-            }
-            contractAddress={marketplaceContractAddress}
-          >
-              <span className="flex items-center gap-2">
-                {/*<InfoIcon className="h-3 w-3" /> */} Buy
+            <div className='mt-3 flex flex-row items-center justify-center  gap-2'>
+
+              <span className='text-md  xl:text-xl'>
+              My Balance:
               </span>
-          </Web3Button>
-          </div>
+
+              {isLoadingTokenBalanceUSDC && (
+                <div className=' text-md  xl:text-xl'>
+                  Loading...
+                </div>
+              )}
+              <div className='text-md  xl:text-xl'>
+                {tokenBalanceUSDC?.displayValue}{' '}{tokenBalanceUSDC?.symbol}
+              </div>
+
+            </div>
+
+          )}
+
+         
 
 
           <NftSinglePrice

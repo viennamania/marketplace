@@ -226,8 +226,10 @@ function NftInfo({ nftMetadata }: any) {
       </div>
 
       {nftMetadata?.owner === address && (
-        <>
-          <div className="mt-5 flex flex-row items-center justify-start gap-2">
+
+        <div className='mt-5 flex flex-col gap-2 items-start justify-center'>
+
+          <div className=" flex flex-row items-center justify-start gap-2">
 
             {/*
             <Web3Button
@@ -264,7 +266,7 @@ function NftInfo({ nftMetadata }: any) {
             
           </div>
 
-          <div className="mt-2 flex flex-row items-center justify-center gap-2">
+          <div className=" flex flex-row items-center justify-start gap-2">
             <div className=" flex flex-row justify-center">
               {/*{isTransferTokensLoading ? (*/}
 
@@ -333,7 +335,9 @@ function NftInfo({ nftMetadata }: any) {
               }}
             />
           </div>
-        </>
+
+        </div>
+
       )}
 
       <PriceHistoryTable />

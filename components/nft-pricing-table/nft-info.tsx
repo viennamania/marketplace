@@ -198,7 +198,8 @@ function NftInfo({ nftMetadata }: any) {
 
 
   return (
-    <div className="px-5 pb-0 lg:mt-0">
+    <div className="px-5 pb-0 lg:mt-0 ">
+
       <div className="items-left invisible flex flex-col justify-between lg:visible">
         <Link
           className="text-md flex text-left capitalize text-blue-500 dark:text-white "

@@ -176,7 +176,10 @@ function SinglePrice(listingId: any) {
         ${layout === LAYOUT_OPTIONS.RETRO ? '' : 'lg:w-2/3'}`}
         >
 
-          {!directListing ? (
+
+
+
+          {!directListing || directListing.quantity === "0" ? (
             <>
    
             </>
@@ -206,31 +209,35 @@ function SinglePrice(listingId: any) {
                   </span>
               </Web3Button>
 
+
+              { address && (  
+
+                <div className=' flex flex-row items-center justify-center  gap-2'>
+
+                  <span className='text-md  xl:text-xl'>
+                  My Balance:
+                  </span>
+
+                  {isLoadingTokenBalanceUSDC && (
+                    <div className=' text-md  xl:text-xl'>
+                      Loading...
+                    </div>
+                  )}
+                  <div className='text-md  xl:text-xl'>
+                    {tokenBalanceUSDC?.displayValue}{' '}{tokenBalanceUSDC?.symbol}
+                  </div>
+
+                </div>
+
+              )}
+
+
             </div>
 
           )}
 
           
-          { address && (  
 
-            <div className='mt-3 flex flex-row items-center justify-center  gap-2'>
-
-              <span className='text-md  xl:text-xl'>
-              My Balance:
-              </span>
-
-              {isLoadingTokenBalanceUSDC && (
-                <div className=' text-md  xl:text-xl'>
-                  Loading...
-                </div>
-              )}
-              <div className='text-md  xl:text-xl'>
-                {tokenBalanceUSDC?.displayValue}{' '}{tokenBalanceUSDC?.symbol}
-              </div>
-
-            </div>
-
-          )}
 
          
 
@@ -249,7 +256,7 @@ function SinglePrice(listingId: any) {
           <InfoDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
         ) : (
 
-          <div className="w-full rounded-lg bg-white py-8 shadow-card dark:bg-light-dark ">
+          <div className="w-full rounded-lg bg-white py-0 shadow-card dark:bg-light-dark ">
 
             {/*
             <h2 className="px-8 text-base font-medium uppercase text-gray-700 dark:text-gray-200">

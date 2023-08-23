@@ -496,7 +496,7 @@ export default function NftSinglePrice({
                   
 
                   
-                  <div className="items-left flex flex-col justify-center xl:hidden ">
+                  <div className="items-left flex flex-col justify-center md:hidden xl:hidden ">
 
                     <Link
                       className=" text-lg text-left capitalize text-blue-500 dark:text-white "

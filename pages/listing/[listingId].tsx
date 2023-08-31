@@ -199,7 +199,7 @@ function SinglePrice(listingId: any) {
                 {directListing?.currencyValuePerToken.symbol}
               </div>
               <div className='text-sm font-bold xl:text-lg'>
-                Last price:&nbsp;{directListing?.currencyValuePerToken.displayValue-6} {directListing?.currencyValuePerToken.symbol}
+                Last price:&nbsp;{Number(directListing?.currencyValuePerToken.displayValue)-6} {directListing?.currencyValuePerToken.symbol}
               </div>
 
               <div className='text-xl font-bold xl:text-2xl'>

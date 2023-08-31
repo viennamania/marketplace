@@ -133,7 +133,7 @@ function SinglePrice(tokenid: any) {
         ${layout === LAYOUT_OPTIONS.RETRO ? '' : 'lg:w-2/3'}`}
         >
 
-{!directListing || directListing.quantity === "0" ? (
+              {!directListing || directListing.quantity === "0" ? (
                 <>
 
                   <div className='flex flex-row  gap-5 items-center justify-center'>
@@ -165,8 +165,9 @@ function SinglePrice(tokenid: any) {
                     <Web3Button
                       theme='light'
                       action={(contract) =>
-                        contract?.call('withdraw', [[nftMetadata?.tokenId]])
+                        //contract?.call('withdraw', [[nftMetadata?.tokenId]])
                         //buyNft()
+                        alert("NFT bought successfully!")
                       }
                       contractAddress={marketplaceContractAddress}
                     >

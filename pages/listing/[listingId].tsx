@@ -167,47 +167,56 @@ function SinglePrice(listingId: any) {
 
   return (
     <>
-      <div className="mt-20 flex flex-wrap gap-6 lg:flex-nowrap ">
+      <div className="mt-12 flex flex-wrap gap-6 lg:flex-nowrap ">
 
-        
-        
         <div
           className={`w-full 2xl:w-full 
         ${layout === LAYOUT_OPTIONS.RETRO ? '' : 'lg:w-2/3'}`}
         >
 
-
-
-
           {!directListing || directListing.quantity === "0" ? (
             <>
+
+              <div className='flex flex-row  gap-5 items-center justify-center'>
+                <div className='text-xl font-bold xl:text-2xl'>
+                  <b>Not for sale</b>
+                </div>
+              </div>
    
             </>
             
           ) : (
             
-            <div className='flex flex-row  gap-5 items-center justify-center'>
+            <div className='flex flex-col gap-5 items-center justify-center  rounded-lg border p-5 '>
+
               <div className='text-xl font-bold xl:text-2xl'>
                 {/*
                 <b>{directListing.buyoutCurrencyValuePerToken.displayValue}</b>{" "}
                 {directListing.buyoutCurrencyValuePerToken.symbol}
                     */}
+                <span>Sell Price:&nbsp;</span>
                 <b>{directListing?.currencyValuePerToken.displayValue}</b>{" "}
                 {directListing?.currencyValuePerToken.symbol}
               </div>
+              <div className='text-sm font-bold xl:text-lg'>
+                Last price:&nbsp;{directListing?.currencyValuePerToken.displayValue-6} {directListing?.currencyValuePerToken.symbol}
+              </div>
 
-              <Web3Button
-                theme='light'
-                action={(contract) =>
-                  //contract?.call('withdraw', [[nft.metadata.id]])
-                  buyNft()
-                }
-                contractAddress={marketplaceContractAddress}
-              >
-                  <span className="flex items-center gap-2">
-                    {/*<InfoIcon className="h-3 w-3" /> */} Buy
-                  </span>
-              </Web3Button>
+              <div className='text-xl font-bold xl:text-2xl'>
+                <Web3Button
+                  theme='light'
+                  action={(contract) =>
+                    //contract?.call('withdraw', [[nft.metadata.id]])
+                    buyNft()
+                  }
+                  contractAddress={marketplaceContractAddress}
+                >
+                    <span className="flex items-center gap-2">
+                      {/*<InfoIcon className="h-3 w-3" /> */} Buy
+                    </span>
+                </Web3Button>
+                &nbsp;&nbsp;for Buy Now
+              </div>
 
 
               { address && (  
@@ -242,11 +251,14 @@ function SinglePrice(listingId: any) {
          
 
 
-          <NftSinglePrice
-            tokenid={directListing?.tokenId}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-          />
+          <div className='mt-5'>
+            <NftSinglePrice
+              
+              tokenid={directListing?.tokenId}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+          </div>
 
         </div>
         

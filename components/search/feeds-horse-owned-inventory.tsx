@@ -240,8 +240,9 @@ export default function OwnedFeeds({ className }: { className?: string }) {
                 {ownedNfts?.length == 0 ? (
                   <>
                     <h4 className="flex flex-col justify-center ">
-                      You don't own any horses yet.
+                      You don&apos;t own any horses yet.
                     </h4>
+                    {/*
                     <Button
                       className="w-full"
                       title="Go"
@@ -263,6 +264,7 @@ export default function OwnedFeeds({ className }: { className?: string }) {
                         Granderby Market
                       </div>
                     </Button>
+                    */}
                   </>
                 ) : (
                   <div className="mb-2">

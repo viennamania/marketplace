@@ -48,6 +48,9 @@ import {
   Web3Button,
   useValidDirectListings,
   useTokenBalance,
+  useNetwork,
+  useNetworkMismatch,
+  ChainId,
 } from '@thirdweb-dev/react';
 
 import { get } from 'http';
@@ -71,7 +74,9 @@ function SinglePrice(tokenid: any) {
     tokenContractAddressUSDC,
     'token'
   );
-  const { data: tokenBalanceUSDC, isLoading: isLoadingTokenBalanceUSDC } = useTokenBalance(tokenContractUSDC, address);
+  const { data: tokenBalanceUSDC, isLoading: isLoadingTokenBalanceUSDC} = useTokenBalance(
+    tokenContractUSDC, address
+  );
 
 
 
@@ -121,6 +126,43 @@ function SinglePrice(tokenid: any) {
   console.log("directListing", directListing);
 
 
+  // Hooks to detect user is on the right network and switch them if they are not
+  const networkMismatch = useNetworkMismatch();
+  const [ ,switchNetwork] = useNetwork();
+  
+  async function buyNft() {
+
+    try {
+      // Ensure user is on the correct network
+      
+      if (networkMismatch) {
+        switchNetwork && switchNetwork(ChainId.Polygon);
+        return;
+      }
+
+      // Simple one-liner for buying the NFT
+      /*
+      await marketplace?.buyFromListing(listingId.listingId, 1);
+      */
+
+      // The ID of the listing you want to buy from
+      //const listingId = 0;
+      // Quantity of the asset you want to buy
+      const quantityDesired = 1;
+
+      await marketplace?.directListings?.buyFromListing(directListing?.listingId, quantityDesired, address);
+
+
+      alert("NFT bought successfully!");
+
+    } catch (error) {
+      console.error(error);
+      alert(error);
+    }
+    
+  }
+
+
   
   return (
     <>
@@ -166,8 +208,8 @@ function SinglePrice(tokenid: any) {
                       theme='light'
                       action={(contract) =>
                         //contract?.call('withdraw', [[nftMetadata?.tokenId]])
-                        //buyNft()
-                        alert("NFT bought successfully!")
+                        buyNft()
+                        ///alert("NFT bought successfully!")
                       }
                       contractAddress={marketplaceContractAddress}
                     >

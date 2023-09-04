@@ -124,7 +124,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       txid: "txid",
     })
 
-  } catch (error) {
+  } catch (error: any) {
     console.log("error===", error);
     res.json({
       success: false,

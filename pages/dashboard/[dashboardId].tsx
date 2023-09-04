@@ -506,7 +506,7 @@ const DashboardPage: NextPage = () => {
       //setSuccess(true);
       alert("Success");
     } else {
-      alert("Failed");
+      alert(apiResponse.message);
       //setError(true);
     }
 

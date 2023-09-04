@@ -80,9 +80,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
 
-    const sdk = ThirdwebSDK.fromPrivateKey(String(privatekey), "polygon");
+
+    const sdk = ThirdwebSDK.fromPrivateKey(
+      String(privatekey),
+      "polygon",
+      {
+        gasless: {
+          openzeppelin: {
+            relayerUrl: process.env.NEXT_PUBLIC_OPENZEPPELIN_URL || "",
+          },
+        },
+      }
+    );
 
 
+    // sdk gasless setup
+    //sdk.setRelayer("https://relayer.thirdweb.net");
+
+    
+    
     
 
 
@@ -94,7 +110,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     /////const listings = await contract.directListings.getAllValid();
 
     const result = await contract.erc721.transfer(toaddress, tokenid);
-    console.log("result", result);
+
+    ///console.log("result", result);
 
     /*
     {

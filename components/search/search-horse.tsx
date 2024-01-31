@@ -64,6 +64,7 @@ export default function Search() {
   return (
     <>
       <div className="mt-10 flex flex-col text-2xl font-bold text-gray-900 dark:text-white sm:text-2xl">
+
         <div className="justify-left flex flex-row items-center">
 
           <Image
@@ -82,21 +83,35 @@ export default function Search() {
         </span>
       </div>
 
+      {/*
       <div className="grid 2xl:grid-cols-[280px_minmax(auto,_1fr)] 4xl:grid-cols-[320px_minmax(auto,_1fr)]">
+      */}
 
+      <div className="flex w-full ">
+
+        {/* Filters */}
+        {/*
         <div className="mt-10 hidden border-dashed border-gray-200 ltr:border-r ltr:pr-8 rtl:border-l rtl:pl-8 dark:border-gray-700 2xl:block">
           <Filters />
         </div>
+        */}
 
-        <div className="m-3 block">
+      
+        
+
+        <div className="m-3 block ">
+          
           <ParamTab tabMenu={tabMenu}>
 
             {/* Total list of items */}
             <TabPanel className="focus:outline-none  ">
+
               <div className="2xl:ltr:pl-8 2xl:rtl:pr-8 4xl:ltr:pl-10 4xl:rtl:pr-10">
                 
                 <div className="relative z-10 mb-6 flex items-center justify-between ">
+
                   <div className="items-right flex w-full justify-end">
+
                     <div className="flex gap-6 3xl:gap-8 ">
                       <SortList />
 
@@ -116,6 +131,8 @@ export default function Search() {
                           <OptionIcon className="relative h-auto w-[18px]" />
                         </Button>
                       </div>
+
+
                     </div>
                   </div>
                 </div>

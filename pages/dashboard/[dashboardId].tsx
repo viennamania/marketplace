@@ -537,9 +537,15 @@ const DashboardPage: NextPage = () => {
   return (
 
     <div className=" text-sm leading-loose p-10 mt-20 text-justify">
+
+      {/* wallet connect */}
+      <div className="flex flex-row justify-center items-center gap-2">
+        <ConnectWallet />
+      </div>
+      {/* wallet connect */}
       
 
-      <div className="flex flex-col items-center justify-center gap-3 bg-gray-800 pb-5 pt-10 text-white ">
+      <div className="mt-5 flex flex-col items-center justify-center gap-3 bg-gray-800 pb-5 pt-10 text-white ">
 
         <div className="text-2xl font-bold">Wallet List</div>
 

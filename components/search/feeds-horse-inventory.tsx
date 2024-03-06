@@ -256,7 +256,8 @@ export default function Feeds({ className }: { className?: string }) {
               )}
             >
               {page.nfts?.map((nft: any) => (
-                <div
+
+                <button
                   key={nft?.tokenId}
                   className="relative overflow-hidden rounded-lg bg-white shadow-lg"
                   onClick={() =>
@@ -277,7 +278,8 @@ export default function Feeds({ className }: { className?: string }) {
                   <div className="m-2 w-full">
                     <p className="text-sm ">{nft?.title}</p>
                   </div>
-                </div>
+                </button>
+
               ))}
             </div>
           ))}

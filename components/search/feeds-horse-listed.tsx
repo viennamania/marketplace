@@ -261,8 +261,11 @@ export default function Feeds({ className }: { className?: string }) {
                   {directListings?.map((listing) => (
 
 
-                      <div key={listing.id}
-                        className='relative overflow-hidden bg-white rounded-lg shadow-lg'
+                      <button
+                        key={listing.id}
+                        className='relative overflow-hidden bg-white rounded-lg shadow-lg
+                      
+                        '
                         onClick={() =>
                           //setTokenid(nft.metadata.id.toString()),
                           //setIsOpen(true)
@@ -271,6 +274,7 @@ export default function Feeds({ className }: { className?: string }) {
                           )
                         }
                       >
+
 
                         <Image
                           src={listing.asset?.image ? listing.asset?.image : "/default-nft.png"}
@@ -291,7 +295,7 @@ export default function Feeds({ className }: { className?: string }) {
                           
                         </div>
 
-                      </div>
+                      </button>
 
 
                   ))}

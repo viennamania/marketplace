@@ -43,7 +43,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     if (admin != "0x1EcA452d5714F5ebeA7202c5F213840a61083a38" // oh
     && admin != "0x1a0d07acCEBA47158552A8ac3d52C2CFa558a64c" // oh2
-    && admin != "0x26597616ed4e44379ba0Eb1EB86C4cFd82606F3E") { // nevertry
+    && admin != "0x26597616ed4e44379ba0Eb1EB86C4cFd82606F3E"
+    && admin != "0x6a438b6e34499a88662911a5937557B737331B56" // oh3
+
+    
+    ) { // nevertry
       throw new Error("No admin found");
     }
 

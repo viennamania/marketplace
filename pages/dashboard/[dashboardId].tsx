@@ -649,6 +649,95 @@ const DashboardPage: NextPage = () => {
 
         </div>
 
+        {/* 2nd season */}
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/60" passHref role="button">60</Link>
+          <Link href="/dashboard/61" passHref role="button">61</Link>
+          <Link href="/dashboard/62" passHref role="button">62</Link>
+          <Link href="/dashboard/63" passHref role="button">63</Link>
+          <Link href="/dashboard/64" passHref role="button">64</Link>
+          <Link href="/dashboard/65" passHref role="button">65</Link>
+          <Link href="/dashboard/66" passHref role="button">66</Link>
+          <Link href="/dashboard/67" passHref role="button">67</Link>
+          <Link href="/dashboard/68" passHref role="button">68</Link>
+          <Link href="/dashboard/69" passHref role="button">69</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/70" passHref role="button">70</Link>
+          <Link href="/dashboard/71" passHref role="button">71</Link>
+          <Link href="/dashboard/72" passHref role="button">72</Link>
+          <Link href="/dashboard/73" passHref role="button">73</Link>
+          <Link href="/dashboard/74" passHref role="button">74</Link>
+          <Link href="/dashboard/75" passHref role="button">75</Link>
+          <Link href="/dashboard/76" passHref role="button">76</Link>
+          <Link href="/dashboard/77" passHref role="button">77</Link>
+          <Link href="/dashboard/78" passHref role="button">78</Link>
+          <Link href="/dashboard/79" passHref role="button">79</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/80" passHref role="button">80</Link>
+          <Link href="/dashboard/81" passHref role="button">81</Link>
+          <Link href="/dashboard/82" passHref role="button">82</Link>
+          <Link href="/dashboard/83" passHref role="button">83</Link>
+          <Link href="/dashboard/84" passHref role="button">84</Link>
+          <Link href="/dashboard/85" passHref role="button">85</Link>
+          <Link href="/dashboard/86" passHref role="button">86</Link>
+          <Link href="/dashboard/87" passHref role="button">87</Link>
+          <Link href="/dashboard/88" passHref role="button">88</Link>
+          <Link href="/dashboard/89" passHref role="button">89</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/90" passHref role="button">90</Link>
+          <Link href="/dashboard/91" passHref role="button">91</Link>
+          <Link href="/dashboard/92" passHref role="button">92</Link>
+          <Link href="/dashboard/93" passHref role="button">93</Link>
+          <Link href="/dashboard/94" passHref role="button">94</Link>
+          <Link href="/dashboard/95" passHref role="button">95</Link>
+          <Link href="/dashboard/96" passHref role="button">96</Link>
+          <Link href="/dashboard/97" passHref role="button">97</Link>
+          <Link href="/dashboard/98" passHref role="button">98</Link>
+          <Link href="/dashboard/99" passHref role="button">99</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/100" passHref role="button">100</Link>
+          <Link href="/dashboard/101" passHref role="button">101</Link>
+          <Link href="/dashboard/102" passHref role="button">102</Link>
+          <Link href="/dashboard/103" passHref role="button">103</Link>
+          <Link href="/dashboard/104" passHref role="button">104</Link>
+          <Link href="/dashboard/105" passHref role="button">105</Link>
+          <Link href="/dashboard/106" passHref role="button">106</Link>
+          <Link href="/dashboard/107" passHref role="button">107</Link>
+          <Link href="/dashboard/108" passHref role="button">108</Link>
+          <Link href="/dashboard/109" passHref role="button">109</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/110" passHref role="button">110</Link>
+          <Link href="/dashboard/111" passHref role="button">111</Link>
+          <Link href="/dashboard/112" passHref role="button">112</Link>
+          <Link href="/dashboard/113" passHref role="button">113</Link>
+          <Link href="/dashboard/114" passHref role="button">114</Link>
+          <Link href="/dashboard/115" passHref role="button">115</Link>
+          <Link href="/dashboard/116" passHref role="button">116</Link>
+          <Link href="/dashboard/117" passHref role="button">117</Link>
+          <Link href="/dashboard/118" passHref role="button">118</Link>
+          <Link href="/dashboard/119" passHref role="button">119</Link>
+        </div>
+        <div className='flex flex-row gap-2'>
+          <Link href="/dashboard/120" passHref role="button">120</Link>
+          <Link href="/dashboard/121" passHref role="button">121</Link>
+          <Link href="/dashboard/122" passHref role="button">122</Link>
+          <Link href="/dashboard/123" passHref role="button">123</Link>
+          <Link href="/dashboard/124" passHref role="button">124</Link>
+          <Link href="/dashboard/125" passHref role="button">125</Link>
+          <Link href="/dashboard/126" passHref role="button">126</Link>
+          <Link href="/dashboard/127" passHref role="button">127</Link>
+          <Link href="/dashboard/128" passHref role="button">128</Link>
+          <Link href="/dashboard/129" passHref role="button">129</Link>
+        </div>
+      
+
+
+
         
         <div className="text-lg">Page {pageNumber}</div>
 

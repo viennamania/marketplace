@@ -81,7 +81,7 @@ export default function Inventory() {
           />
           <span className="ml-3">Granderby Horse NFT</span>
         </div>
-        <span className="mt-3 text-sm">Items 3,645 · Created Jun 2023</span>
+        <span className="mt-3 text-sm">Items 7,079 · Created Jun 2023</span>
       </div>
       */}
 

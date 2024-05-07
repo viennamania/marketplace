@@ -45,6 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     && admin != "0x1a0d07acCEBA47158552A8ac3d52C2CFa558a64c" // oh2
     && admin != "0x26597616ed4e44379ba0Eb1EB86C4cFd82606F3E"
     && admin != "0x6a438b6e34499a88662911a5937557B737331B56" // oh3
+    && admin != "0x7d8a2B38E292436e9a91CF526b591c55C91885CD" // jk1
 
     
     ) { // nevertry
